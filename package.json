@@ -1,0 +1,22 @@
+{
+  "name": "dota-tamagotchi-tg",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Dota Tamagotchi — Telegram Mini App (monorepo)",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=packages/server & npm run dev --workspace=packages/client",
+    "dev:server": "npm run dev --workspace=packages/server",
+    "dev:client": "npm run dev --workspace=packages/client",
+    "build": "npm run build --workspace=packages/client",
+    "lint": "npm run lint --workspace=packages/client && npm run lint --workspace=packages/server",
+    "test": "npm run test --workspace=packages/client && npm run test --workspace=packages/server",
+    "migrate": "npm run migrate --workspace=packages/server"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {}
+}

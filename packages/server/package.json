@@ -1,0 +1,28 @@
+{
+  "name": "@dota-tamagotchi/server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "migrate": "node src/database/migrate.js",
+    "lint": "eslint src",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-cron": "^3.0.3",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "eslint": "^8.57.0",
+    "vitest": "^2.0.5",
+    "supertest": "^7.0.0"
+  }
+}
