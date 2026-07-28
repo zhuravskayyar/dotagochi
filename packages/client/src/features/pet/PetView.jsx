@@ -96,6 +96,7 @@ export function PetView() {
             <div className="hero-stage">
               <div className="stage-smoke stage-smoke--one" />
               <div className="stage-smoke stage-smoke--two" />
+              <div className="crt-overlay" aria-hidden="true"><i /></div>
               <div className={`pet ${pet.is_sleeping ? 'sleepy' : ''} ${hunger < 30 ? 'hungry' : ''}`}>
                 <div className="pet-crown" /><div className="pet-body" /><div className="pet-eye left" /><div className="pet-eye right" /><div className="pet-mouth" />
               </div>
