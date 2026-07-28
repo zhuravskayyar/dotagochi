@@ -7,12 +7,26 @@ export const petController = {
   },
 
   feed(req, res) {
-    const pet = petService.feed(req.params.userId);
-    res.json(pet);
+    res.json(petService.feed(req.params.userId));
   },
 
   play(req, res) {
-    const pet = petService.play(req.params.userId);
-    res.json(pet);
+    res.json(petService.play(req.params.userId));
+  },
+
+  train(req, res) {
+    res.json(petService.train(req.params.userId));
+  },
+
+  heal(req, res) {
+    res.json(petService.heal(req.params.userId));
+  },
+
+  sleep(req, res) {
+    res.json(petService.sleep(req.params.userId));
+  },
+
+  quest(req, res) {
+    res.json(petService.quest(req.params.userId));
   },
 };

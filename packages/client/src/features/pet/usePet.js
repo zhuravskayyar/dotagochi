@@ -1,37 +1,37 @@
 import { useCallback, useEffect, useState } from 'react';
 import { petApi } from './petApi.js';
+import { loadDemoPet, runDemoAction } from './demoPet.js';
+
+const isStaticDemo = import.meta.env.VITE_STATIC_DEMO === 'true';
 
 export function usePet(userId) {
   const [pet, setPet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState('');
 
   const load = useCallback(async () => {
+    if (!userId) { setPet(null); setLoading(false); return; }
     setLoading(true);
     try {
-      const data = await petApi.getPet(userId);
-      setPet(data);
+      setPet(isStaticDemo ? loadDemoPet(userId) : await petApi.getPet(userId));
       setError(null);
-    } catch (err) {
-      setError(err);
-    } finally {
-      setLoading(false);
     }
+    catch (err) { setError(err); }
+    finally { setLoading(false); }
   }, [userId]);
 
-  useEffect(() => {
-    load();
-  }, [load]);
+  useEffect(() => { load(); }, [load]);
 
-  const feed = useCallback(async () => {
-    const updated = await petApi.feed(userId);
-    setPet(updated);
+  const action = useCallback(async (name) => {
+    try {
+      const response = isStaticDemo ? runDemoAction(userId, name) : await petApi[name](userId);
+      setPet(response.pet);
+      setMessage(response.message);
+      setTimeout(() => setMessage(''), 1800);
+      setError(null);
+    } catch (err) { setError(err); }
   }, [userId]);
 
-  const play = useCallback(async () => {
-    const updated = await petApi.play(userId);
-    setPet(updated);
-  }, [userId]);
-
-  return { pet, loading, error, feed, play, reload: load };
+  return { pet, loading, error, message, action, reload: load };
 }

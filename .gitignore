@@ -8,5 +8,6 @@ build/
 # sqlite database files (keep migrations, not the data)
 packages/server/src/database/*.sqlite
 packages/server/src/database/*.sqlite-journal
+packages/server/*.sqlite*
 
 coverage/

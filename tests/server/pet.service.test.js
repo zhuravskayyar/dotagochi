@@ -7,14 +7,17 @@ process.env.DATABASE_PATH = path.join(process.cwd(), '../../packages/server/src/
 const { petService } = await import('../../packages/server/src/features/pet/pet.service.js');
 const { db } = await import('../../packages/server/src/database/connection.js');
 
-const migrationSql = fs.readFileSync(
-  path.join(process.cwd(), '../../packages/server/src/database/migrations/001_init.sql'),
-  'utf-8'
-);
-db.exec(migrationSql);
+for (const migration of ['001_init.sql', '002_tamagotchi_stats.sql']) {
+  const migrationSql = fs.readFileSync(
+    path.join(process.cwd(), `../../packages/server/src/database/migrations/${migration}`),
+    'utf-8'
+  );
+  db.exec(migrationSql);
+}
 
 describe('petService', () => {
   afterAll(() => {
+    db.close();
     const dbFile = process.env.DATABASE_PATH;
     for (const suffix of ['', '-wal', '-shm']) {
       const f = dbFile + suffix;
@@ -30,7 +33,7 @@ describe('petService', () => {
 
   it('feed increases hunger, capped at 100', () => {
     petService.getPet('test-user-2');
-    const pet = petService.feed('test-user-2');
-    expect(pet.hunger).toBeLessThanOrEqual(100);
+    const result = petService.feed('test-user-2');
+    expect(result.pet.hunger).toBeLessThanOrEqual(100);
   });
 });

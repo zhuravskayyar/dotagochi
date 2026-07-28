@@ -13,8 +13,13 @@ export function startBot() {
   bot = new Telegraf(config.botToken);
   registerCommands(bot);
 
-  bot.launch();
-  console.log('[bot] Telegram bot started');
+  bot.launch()
+    .then(() => console.log('[bot] Telegram bot started'))
+    .catch((error) => {
+      // A missing/expired token must not take down the Tamagotchi API.
+      console.warn(`[bot] Telegram bot was not started: ${error.message}`);
+      bot = null;
+    });
   return bot;
 }
 

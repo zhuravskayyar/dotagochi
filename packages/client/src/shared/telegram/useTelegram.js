@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
 import { getTelegramWebApp } from './webApp.js';
 
+const fallbackUserId = import.meta.env.VITE_DEV_USER_ID || 'dev-user';
+
 export function useTelegram() {
   const [isReady, setIsReady] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(fallbackUserId);
 
   useEffect(() => {
     const webApp = getTelegramWebApp();
     if (webApp) {
       webApp.ready();
       webApp.expand();
-      setUserId(webApp.initDataUnsafe?.user?.id ?? 'dev-user');
+      const telegramUserId = webApp.initDataUnsafe?.user?.id;
+      setUserId(telegramUserId ? String(telegramUserId) : fallbackUserId);
     } else {
-      // Режим разработки вне Telegram
-      setUserId('dev-user');
+      setUserId(fallbackUserId);
     }
     setIsReady(true);
   }, []);
