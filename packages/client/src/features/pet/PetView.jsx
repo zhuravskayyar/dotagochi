@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTelegram } from '../../shared/telegram/useTelegram.js';
 import { usePet } from './usePet.js';
 import { ProgressBar } from '../../design-system/components/ProgressBar.jsx';
+import { ChromaKeyVideo } from './ChromaKeyVideo.jsx';
 
 const actions = [
   { id: 'feed', label: 'ЇЖА' }, { id: 'train', label: 'ТРЕНУВАННЯ' },
@@ -97,9 +98,10 @@ export function PetView() {
               <div className="stage-smoke stage-smoke--one" />
               <div className="stage-smoke stage-smoke--two" />
               <div className="crt-overlay" aria-hidden="true"><i /></div>
-              <div className={`pet ${pet.is_sleeping ? 'sleepy' : ''} ${hunger < 30 ? 'hungry' : ''}`}>
-                <div className="pet-crown" /><div className="pet-body" /><div className="pet-eye left" /><div className="pet-eye right" /><div className="pet-mouth" />
-              </div>
+              <ChromaKeyVideo
+                src={assetUrl('characters/pudge-chroma-v1.mp4')}
+                className={`${pet.is_sleeping ? 'is-sleeping' : ''} ${hunger < 30 ? 'is-hungry' : ''}`}
+              />
               <div className="pet-name">{pet.name}</div>
             </div>
             <div className="stats-grid">

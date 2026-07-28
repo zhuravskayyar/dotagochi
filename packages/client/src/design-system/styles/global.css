@@ -422,6 +422,42 @@ button img { user-select: none; pointer-events: none; }
   animation: crtJitter 6.5s steps(1, end) infinite;
 }
 
+.chroma-character {
+  position: relative;
+  z-index: 3;
+  width: 262px;
+  height: 262px;
+  margin: 0 0 -12px;
+  animation: petFloat 4.2s ease-in-out infinite;
+  filter:
+    drop-shadow(0 13px 9px #000c)
+    drop-shadow(0 0 9px #b84d273d);
+  transition: filter .25s ease, opacity .25s ease;
+}
+
+.chroma-character video {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chroma-character canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.chroma-character.is-sleeping {
+  opacity: .8;
+  filter: saturate(.55) brightness(.62) drop-shadow(0 12px 8px #000d);
+}
+
+.chroma-character.is-hungry {
+  filter: saturate(.68) brightness(.82) drop-shadow(0 12px 8px #000d);
+}
+
 .pet {
   position: relative;
   z-index: 3;
@@ -787,6 +823,7 @@ button img { user-select: none; pointer-events: none; }
   .currency-rack { gap: 3px; }
   .currency { font-size: 9px; }
   .hero-stage { height: 350px; }
+  .chroma-character { width: 232px; height: 232px; margin-bottom: -6px; }
   .pet { width: 174px; height: 174px; }
   .pet-crown { left: 58px; }
   .pet-eye.left { left: 61px; }
