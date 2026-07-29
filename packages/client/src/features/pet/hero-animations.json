@@ -14,5 +14,10 @@
     "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",
     "wakeSrc": "assets/ui/characters/pudge-wake-v1.mp4",
     "aspectRatio": 1
+  },
+  "sniper": {
+    "src": "assets/heroes/sniper/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/sniper/sprite-v1.png",
+    "aspectRatio": 1
   }
 }

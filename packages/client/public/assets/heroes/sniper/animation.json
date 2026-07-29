@@ -1,0 +1,10 @@
+{
+  "hero": "sniper",
+  "version": 1,
+  "chromaKey": "0x4cdf3e",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/sniper/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/sniper/sprite-v1.png",
+  "aspectRatio": 1
+}

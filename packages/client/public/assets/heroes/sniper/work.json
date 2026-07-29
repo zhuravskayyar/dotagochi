@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T10:21:43.059Z",
+  "work": {
+    "importedAt": "2026-07-29T10:21:43.058Z",
+    "version": 1,
+    "chromaKey": "0x4cdf3e",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "5ae47fd3-3fc8-455c-bd1b-2da55982cc11.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/sniper/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/sniper/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T10:21:43.058Z",
+      "version": 1,
+      "chromaKey": "0x4cdf3e",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "5ae47fd3-3fc8-455c-bd1b-2da55982cc11.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/sniper/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/sniper/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
