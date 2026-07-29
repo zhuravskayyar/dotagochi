@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T19:06:41.646Z",
+  "work": {
+    "importedAt": "2026-07-29T19:06:41.646Z",
+    "version": 1,
+    "chromaKey": "0x51e136",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "11b4d273-8fe0-4178-b78f-c216aed2dcda.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/axe/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/axe/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T19:06:41.646Z",
+      "version": 1,
+      "chromaKey": "0x51e136",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "11b4d273-8fe0-4178-b78f-c216aed2dcda.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/axe/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/axe/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}

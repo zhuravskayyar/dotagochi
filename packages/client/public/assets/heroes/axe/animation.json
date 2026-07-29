@@ -1,0 +1,10 @@
+{
+  "hero": "axe",
+  "version": 1,
+  "chromaKey": "0x51e136",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/axe/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/axe/sprite-v1.png",
+  "aspectRatio": 1
+}
