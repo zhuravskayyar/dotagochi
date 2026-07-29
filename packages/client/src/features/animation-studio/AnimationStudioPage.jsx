@@ -326,10 +326,8 @@ export function AnimationStudioPage() {
                   <a
                     className="studio-full-preview-link"
                     href={`${import.meta.env.BASE_URL}tamagotchi-preview?hero=${selectedHero.slug}`}
-                    target="_blank"
-                    rel="noreferrer"
                   >
-                    ВІДКРИТИ ПОВНЕ ПРЕВ’Ю ТАМАГОЧІ ↗
+                    ВІДКРИТИ ПОВНЕ ПРЕВ’Ю ОКРЕМО ↗
                   </a>
                 )}
               </div>
