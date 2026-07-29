@@ -22,6 +22,15 @@ done
 
 cd "$project_root"
 
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo "Checking GitHub for team updates..."
+  if [[ -n "$(git status --porcelain)" ]]; then
+    echo "Local changes found. Automatic pull was skipped to protect your work." >&2
+  elif ! GIT_TERMINAL_PROMPT=0 git pull --ff-only origin main; then
+    echo "Could not receive GitHub updates. Starting the current local version." >&2
+  fi
+fi
+
 echo "Checking and installing project dependencies..."
 npm install --no-audit --no-fund
 npm run sync:animations

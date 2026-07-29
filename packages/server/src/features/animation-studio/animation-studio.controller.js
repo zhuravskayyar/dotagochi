@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import { animationStudioService } from './animation-studio.service.js';
+import { gitSyncService } from './git-sync.service.js';
 
 function uploadedPaths(files = {}) {
   return Object.values(files)
@@ -50,6 +51,27 @@ export const animationStudioController = {
       next(error);
     } finally {
       await cleanupUploads(req.files);
+    }
+  },
+
+  async pushHero(req, res, next) {
+    try {
+      const heroes = await animationStudioService.listHeroes();
+      const hero = heroes.find((item) => item.slug === req.body?.hero);
+      if (!hero) {
+        return res.status(404).json({ error: 'Героя не знайдено.' });
+      }
+      res.json(await gitSyncService.pushHero(hero.slug, hero.name));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async pullChanges(req, res, next) {
+    try {
+      res.json(await gitSyncService.pullChanges());
+    } catch (error) {
+      next(error);
     }
   },
 };

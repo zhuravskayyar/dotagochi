@@ -29,4 +29,18 @@ export const animationStudioApi = {
       body: formData,
     });
   },
+
+  pushHero(hero) {
+    return request('/git/push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ hero }),
+    });
+  },
+
+  pullChanges() {
+    return request('/git/pull', {
+      method: 'POST',
+    });
+  },
 };

@@ -3,9 +3,17 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { AnimationStudioPage } from '../../packages/client/src/features/animation-studio/AnimationStudioPage.jsx';
 import { HeroAnimationPreviewPage } from '../../packages/client/src/features/animation-studio/HeroAnimationPreviewPage.jsx';
 
-const { importSpy, listSpy, statusSpy } = vi.hoisted(() => ({
+const {
+  importSpy,
+  listSpy,
+  pullSpy,
+  pushSpy,
+  statusSpy,
+} = vi.hoisted(() => ({
   importSpy: vi.fn(),
   listSpy: vi.fn(),
+  pullSpy: vi.fn(),
+  pushSpy: vi.fn(),
   statusSpy: vi.fn(),
 }));
 
@@ -16,6 +24,8 @@ vi.mock(
       listHeroes: listSpy,
       setCompleted: statusSpy,
       importAnimation: importSpy,
+      pushHero: pushSpy,
+      pullChanges: pullSpy,
     },
   }),
 );
@@ -90,6 +100,18 @@ describe('AnimationStudioPage', () => {
         }],
       },
     });
+    pushSpy.mockResolvedValue({
+      operation: 'push',
+      committed: true,
+      commit: 'abc1234',
+      message: 'Збережено й відправлено: Axe · abc1234',
+    });
+    pullSpy.mockResolvedValue({
+      operation: 'pull',
+      changed: false,
+      commit: 'abc1234',
+      message: 'Уже актуально · abc1234',
+    });
     window.history.replaceState({}, '', '/');
     URL.createObjectURL = vi.fn(() => 'blob:idle-preview');
     URL.revokeObjectURL = vi.fn();
@@ -139,5 +161,22 @@ describe('AnimationStudioPage', () => {
       name: 'Прев’ю Drow Ranger',
     })).toBeTruthy();
     expect(screen.getByText('ПОВНЕ ПРЕВ’Ю ТАМАГОЧІ')).toBeTruthy();
+  });
+
+  it('pushes the selected hero and can receive team changes', async () => {
+    render(<AnimationStudioPage />);
+    await screen.findByRole('heading', { name: 'Axe' });
+
+    fireEvent.click(screen.getByRole('button', {
+      name: 'ЗБЕРЕГТИ Й ВІДПРАВИТИ',
+    }));
+    await waitFor(() => expect(pushSpy).toHaveBeenCalledWith('axe'));
+    expect(await screen.findByText(/Збережено й відправлено/)).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', {
+      name: 'ОТРИМАТИ ЗМІНИ',
+    }));
+    await waitFor(() => expect(pullSpy).toHaveBeenCalledTimes(1));
+    expect(await screen.findByText(/Уже актуально/)).toBeTruthy();
   });
 });

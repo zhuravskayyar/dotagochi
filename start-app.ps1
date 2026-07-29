@@ -9,6 +9,44 @@ $serverUrl = 'http://127.0.0.1:3001/api/health'
 $clientUrl = 'http://127.0.0.1:5173'
 $studioUrl = "$clientUrl/animation-studio"
 
+function Update-ProjectFromGit {
+    if (-not (Test-Path (Join-Path $projectRoot '.git'))) {
+        return
+    }
+
+    Write-Host 'Checking GitHub for team updates...'
+    $previousGitTerminalPrompt = $env:GIT_TERMINAL_PROMPT
+    Push-Location $projectRoot
+    try {
+        $localChanges = & git status --porcelain 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning 'Git status failed. Starting the current local version.'
+            return
+        }
+        if ($localChanges) {
+            Write-Warning 'Local changes found. Automatic pull was skipped to protect your work.'
+            return
+        }
+
+        $env:GIT_TERMINAL_PROMPT = '0'
+        & git pull --ff-only origin main
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning 'Could not receive GitHub updates. Starting the current local version.'
+        }
+    }
+    finally {
+        if ($null -eq $previousGitTerminalPrompt) {
+            Remove-Item Env:\GIT_TERMINAL_PROMPT -ErrorAction SilentlyContinue
+        }
+        else {
+            $env:GIT_TERMINAL_PROMPT = $previousGitTerminalPrompt
+        }
+        Pop-Location
+    }
+}
+
+Update-ProjectFromGit
+
 Write-Host 'Checking and installing project dependencies...'
 Push-Location $projectRoot
 try {

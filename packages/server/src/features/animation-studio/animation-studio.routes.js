@@ -65,6 +65,8 @@ animationStudioRoutes.patch(
   '/heroes/:hero/status',
   animationStudioController.setCompleted,
 );
+animationStudioRoutes.post('/git/push', animationStudioController.pushHero);
+animationStudioRoutes.post('/git/pull', animationStudioController.pullChanges);
 animationStudioRoutes.post(
   '/heroes/:hero/import',
   upload.fields([

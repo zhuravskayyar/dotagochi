@@ -75,6 +75,7 @@ export function AnimationStudioPage() {
   const [previewAspect, setPreviewAspect] = useState(1);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [syncing, setSyncing] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -187,10 +188,8 @@ export function AnimationStudioPage() {
     setSettings((current) => ({ ...current, [name]: value }));
   };
 
-  const submitImport = async (event) => {
-    event.preventDefault();
-    if (!selectedHero || !files.idle) return;
-
+  const importSelectedHero = async () => {
+    if (!selectedHero || !files.idle) return null;
     setSaving(true);
     setError('');
     setMessage('ОБРОБКА АНІМАЦІЇ...');
@@ -216,11 +215,60 @@ export function AnimationStudioPage() {
       });
       setMessage(`ГОТОВО: ${payload.hero.name} · KEY ${payload.hero.chromaKey || 'OFF'}`);
       setFiles({ idle: null, image: null, sleep: null, wake: null });
+      return payload.hero;
     } catch (importError) {
       setError(importError.message);
       setMessage('');
+      throw importError;
     } finally {
       setSaving(false);
+    }
+  };
+
+  const submitImport = async (event) => {
+    event.preventDefault();
+    try {
+      await importSelectedHero();
+    } catch {
+      // The import error is already shown inside Studio.
+    }
+  };
+
+  const saveAndPush = async () => {
+    if (!selectedHero) return;
+    setSyncing('push');
+    setError('');
+    setMessage(files.idle ? 'ІМПОРТ І ВІДПРАВЛЕННЯ...' : 'ВІДПРАВЛЕННЯ НА GITHUB...');
+    try {
+      if (files.idle) await importSelectedHero();
+      const payload = await animationStudioApi.pushHero(selectedHero.slug);
+      setMessage(payload.message);
+      await loadHeroes();
+    } catch (syncError) {
+      setError(syncError.message);
+      setMessage('');
+    } finally {
+      setSyncing('');
+    }
+  };
+
+  const pullChanges = async () => {
+    if (Object.values(files).some(Boolean)) {
+      setError('Є вибрані, але ще не імпортовані файли. Спочатку збережіть їх або виберіть іншого героя.');
+      return;
+    }
+    setSyncing('pull');
+    setError('');
+    setMessage('ОТРИМАННЯ ЗМІН ІЗ GITHUB...');
+    try {
+      const payload = await animationStudioApi.pullChanges();
+      setMessage(payload.message);
+      await loadHeroes();
+    } catch (syncError) {
+      setError(syncError.message);
+      setMessage('');
+    } finally {
+      setSyncing('');
     }
   };
 
@@ -331,6 +379,34 @@ export function AnimationStudioPage() {
                   </a>
                 )}
               </div>
+
+              <section className="studio-git-sync" aria-label="Синхронізація зі співробітником">
+                <div>
+                  <span>КОМАНДНА СИНХРОНІЗАЦІЯ</span>
+                  <strong>GITHUB · MAIN</strong>
+                  <small>
+                    Надішліть папку поточного героя або отримайте готові роботи колеги.
+                  </small>
+                </div>
+                <div className="studio-git-sync-buttons">
+                  <button
+                    className="studio-git-push"
+                    type="button"
+                    disabled={!selectedHero || Boolean(syncing) || saving}
+                    onClick={saveAndPush}
+                  >
+                    {syncing === 'push' ? 'ВІДПРАВЛЕННЯ...' : 'ЗБЕРЕГТИ Й ВІДПРАВИТИ'}
+                  </button>
+                  <button
+                    className="studio-git-pull"
+                    type="button"
+                    disabled={Boolean(syncing) || saving}
+                    onClick={pullChanges}
+                  >
+                    {syncing === 'pull' ? 'ОТРИМАННЯ...' : 'ОТРИМАТИ ЗМІНИ'}
+                  </button>
+                </div>
+              </section>
 
               <form className="studio-import-form" onSubmit={submitImport}>
                 <div className="studio-file-grid">
