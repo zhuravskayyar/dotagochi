@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T10:27:38.495Z",
+  "work": {
+    "importedAt": "2026-07-29T10:27:38.495Z",
+    "version": 1,
+    "chromaKey": "0x4fe546",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "1a7dfcc1-092c-49f6-894f-210fbd0ea47e.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/rubick/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/rubick/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T10:27:38.495Z",
+      "version": 1,
+      "chromaKey": "0x4fe546",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "1a7dfcc1-092c-49f6-894f-210fbd0ea47e.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/rubick/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/rubick/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
