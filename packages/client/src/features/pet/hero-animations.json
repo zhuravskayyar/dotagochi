@@ -1,0 +1,18 @@
+{
+  "drow_ranger": {
+    "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
+    "aspectRatio": 0.824716
+  },
+  "earthshaker": {
+    "src": "assets/heroes/earthshaker/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/earthshaker/sprite-v1.png",
+    "aspectRatio": 1
+  },
+  "pudge": {
+    "src": "assets/ui/characters/pudge-chroma-v1.mp4",
+    "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",
+    "wakeSrc": "assets/ui/characters/pudge-wake-v1.mp4",
+    "aspectRatio": 1
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "hero": "earthshaker",
+  "version": 1,
+  "chromaKey": "0x43df3b",
+  "similarity": 0.01,
+  "blend": 0.1,
+  "src": "assets/heroes/earthshaker/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/earthshaker/sprite-v1.png",
+  "aspectRatio": 1
+}

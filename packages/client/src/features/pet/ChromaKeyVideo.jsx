@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const vertexShaderSource = `
   attribute vec2 a_position;
@@ -150,9 +150,13 @@ export function ChromaKeyVideo({
   src,
   sleepSrc,
   wakeSrc,
+  fallbackSrc,
+  label = 'Герой',
+  aspectRatio = 1,
   sleeping = false,
   className = '',
 }) {
+  const [videoReady, setVideoReady] = useState(false);
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
   const phaseRef = useRef('idle');
@@ -183,7 +187,9 @@ export function ChromaKeyVideo({
     const start = () => {
       cancelFrame();
       renderer ||= createWebGlRenderer(canvas, video) || createCanvasRenderer(canvas, video);
+      if (!renderer) return;
       render();
+      setVideoReady(true);
     };
 
     video.addEventListener('playing', start);
@@ -197,6 +203,7 @@ export function ChromaKeyVideo({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return undefined;
+    setVideoReady(false);
 
     const switchClip = (nextSrc, phase, shouldLoop = false) => {
       if (!nextSrc) return;
@@ -261,9 +268,20 @@ export function ChromaKeyVideo({
   }, [sleeping, sleepSrc, src, wakeSrc]);
 
   return (
-    <div className={`chroma-character ${className}`.trim()}>
+    <div
+      className={`chroma-character ${className}`.trim()}
+      style={{ '--chroma-aspect': aspectRatio }}
+    >
+      {fallbackSrc && (
+        <img
+          className={`chroma-fallback ${videoReady ? 'is-hidden' : ''}`}
+          src={fallbackSrc}
+          alt=""
+          aria-hidden="true"
+        />
+      )}
       <video ref={videoRef} src={src} muted loop autoPlay playsInline preload="auto" aria-hidden="true" />
-      <canvas ref={canvasRef} width="640" height="640" role="img" aria-label="Пудж" />
+      <canvas ref={canvasRef} width="640" height="640" role="img" aria-label={label} />
     </div>
   );
 }

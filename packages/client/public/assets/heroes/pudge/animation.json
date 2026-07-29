@@ -1,0 +1,9 @@
+{
+  "hero": "pudge",
+  "version": 1,
+  "chromaKey": "runtime",
+  "src": "assets/ui/characters/pudge-chroma-v1.mp4",
+  "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",
+  "wakeSrc": "assets/ui/characters/pudge-wake-v1.mp4",
+  "aspectRatio": 1
+}

@@ -14,4 +14,6 @@ export const config = {
   botToken: process.env.BOT_TOKEN || '',
   adminToken: process.env.ADMIN_TOKEN || 'change_me',
   webAppUrl: process.env.WEBAPP_URL || '',
+  animationStudioEnabled:
+    env !== 'production' || process.env.ANIMATION_STUDIO_ENABLED === 'true',
 };

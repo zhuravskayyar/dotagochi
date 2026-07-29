@@ -7,14 +7,18 @@
     "packages/*"
   ],
   "scripts": {
+    "predev": "npm run sync:animations",
     "dev": "npm run dev --workspace=packages/server & npm run dev --workspace=packages/client",
+    "predev:client": "npm run sync:animations",
     "dev:server": "npm run dev --workspace=packages/server",
     "dev:client": "npm run dev --workspace=packages/client",
-    "build": "npm run build --workspace=packages/client",
+    "build": "npm run sync:animations && npm run build --workspace=packages/client",
     "lint": "npm run lint --workspace=packages/client && npm run lint --workspace=packages/server",
     "test": "npm run test --workspace=packages/client && npm run test --workspace=packages/server",
     "migrate": "npm run migrate --workspace=packages/server",
-    "sync:heroes": "node packages/server/src/tools/sync-dota-heroes.js"
+    "sync:heroes": "node packages/server/src/tools/sync-dota-heroes.js",
+    "sync:animations": "node scripts/sync-hero-animations.mjs",
+    "add:animation": "node scripts/import-hero-animation.mjs"
   },
   "engines": {
     "node": ">=18"

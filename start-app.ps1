@@ -1,11 +1,13 @@
 param(
-    [switch]$NoBrowser
+    [switch]$NoBrowser,
+    [switch]$Game
 )
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $serverUrl = 'http://127.0.0.1:3001/api/health'
 $clientUrl = 'http://127.0.0.1:5173'
+$studioUrl = "$clientUrl/animation-studio"
 
 Write-Host 'Checking and installing project dependencies...'
 Push-Location $projectRoot
@@ -13,6 +15,11 @@ try {
     & npm.cmd install --no-audit --no-fund
     if ($LASTEXITCODE -ne 0) {
         throw "npm install failed with exit code $LASTEXITCODE."
+    }
+
+    & npm.cmd run sync:animations
+    if ($LASTEXITCODE -ne 0) {
+        throw "Animation registry sync failed with exit code $LASTEXITCODE."
     }
 }
 finally {
@@ -77,5 +84,6 @@ if (-not $clientReady) {
 }
 
 if (-not $NoBrowser) {
-    Start-Process $clientUrl
+    $launchUrl = if ($Game) { $clientUrl } else { $studioUrl }
+    Start-Process $launchUrl
 }

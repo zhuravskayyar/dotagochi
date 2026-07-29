@@ -3,6 +3,7 @@ import { useTelegram } from '../../shared/telegram/useTelegram.js';
 import { usePet } from './usePet.js';
 import { ProgressBar } from '../../design-system/components/ProgressBar.jsx';
 import { ChromaKeyVideo } from './ChromaKeyVideo.jsx';
+import heroAnimations from './hero-animations.json';
 import { EggGenerationView } from '../egg-generation/EggGenerationView.jsx';
 import { useNotifications } from '../notifications/useNotifications.js';
 
@@ -27,6 +28,7 @@ const buttonLessons = [
 ];
 
 const assetUrl = (path) => `${import.meta.env.BASE_URL}assets/ui/${path}`;
+const publicAssetUrl = (path) => `${import.meta.env.BASE_URL}${path}`;
 
 let uiAudioContext;
 
@@ -81,7 +83,22 @@ export function PetView() {
   const damage = 18 + heroLevel * 5;
   const combo = Math.max(1, Math.floor(mood / 20));
   const heroSlug = pet.hero_slug || 'pudge';
-  const isAnimatedPudge = heroSlug === 'pudge';
+  const heroAnimationConfig = heroAnimations[heroSlug];
+  const heroAnimation = heroAnimationConfig
+    ? {
+        ...heroAnimationConfig,
+        src: publicAssetUrl(heroAnimationConfig.src),
+        sleepSrc: heroAnimationConfig.sleepSrc
+          ? publicAssetUrl(heroAnimationConfig.sleepSrc)
+          : undefined,
+        wakeSrc: heroAnimationConfig.wakeSrc
+          ? publicAssetUrl(heroAnimationConfig.wakeSrc)
+          : undefined,
+        fallbackSrc: heroAnimationConfig.fallbackSrc
+          ? publicAssetUrl(heroAnimationConfig.fallbackSrc)
+          : undefined,
+      }
+    : null;
   const rpgStats = [
     { id: 'xp', label: 'XP', value: `${xp} / 100` },
     { id: 'armor', label: 'ARMOR', value: armor },
@@ -125,11 +142,14 @@ export function PetView() {
               <div className="stage-smoke stage-smoke--one" />
               <div className="stage-smoke stage-smoke--two" />
               <div className="crt-overlay" aria-hidden="true"><i /></div>
-              {isAnimatedPudge ? (
+              {heroAnimation ? (
                 <ChromaKeyVideo
-                  src={assetUrl('characters/pudge-chroma-v1.mp4')}
-                  sleepSrc={assetUrl('characters/pudge-sleep-v1.mp4')}
-                  wakeSrc={assetUrl('characters/pudge-wake-v1.mp4')}
+                  src={heroAnimation.src}
+                  sleepSrc={heroAnimation.sleepSrc}
+                  wakeSrc={heroAnimation.wakeSrc}
+                  fallbackSrc={heroAnimation.fallbackSrc}
+                  label={pet.hero_name || pet.name}
+                  aspectRatio={heroAnimation.aspectRatio}
                   sleeping={Boolean(pet.is_sleeping)}
                   className={`${pet.is_sleeping ? 'is-sleeping' : ''} ${hunger < 30 ? 'is-hungry' : ''}`}
                 />
@@ -225,6 +245,14 @@ export function PetView() {
             >
               НАЗАД ДО СТАТУСУ
             </button>
+            {import.meta.env.DEV && (
+              <a
+                className="settings-studio-link"
+                href={`${import.meta.env.BASE_URL}animation-studio`}
+              >
+                ANIMATION STUDIO
+              </a>
+            )}
           </div>
         )}
         <div className={`message ${message ? 'is-visible' : ''}`}>{message}</div>

@@ -6,6 +6,7 @@ import { petRoutes } from './features/pet/pet.routes.js';
 import { heroRebirthRoutes } from './features/hero-rebirth/hero-rebirth.routes.js';
 import { eggGenerationRoutes } from './features/egg-generation/egg-generation.routes.js';
 import { notificationsRoutes } from './features/notifications/notifications.routes.js';
+import { animationStudioRoutes } from './features/animation-studio/animation-studio.routes.js';
 import { adminRoutes } from './admin/admin.routes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { requestLogger } from './middlewares/requestLogger.js';
@@ -26,6 +27,7 @@ app.use('/api/pet', petRoutes);
 app.use('/api/hero-rebirth', heroRebirthRoutes);
 app.use('/api/egg-generation', eggGenerationRoutes);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/animation-studio', animationStudioRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.use(errorHandler);
