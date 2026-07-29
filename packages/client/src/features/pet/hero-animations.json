@@ -40,6 +40,11 @@
     "fallbackSrc": "assets/heroes/sniper/sprite-v1.png",
     "aspectRatio": 1
   },
+  "spectre": {
+    "src": "assets/heroes/spectre/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/spectre/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "tinker": {
     "src": "assets/heroes/tinker/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/tinker/sprite-v1.png",

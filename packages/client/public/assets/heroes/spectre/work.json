@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T18:58:12.378Z",
+  "work": {
+    "importedAt": "2026-07-29T18:58:12.378Z",
+    "version": 1,
+    "chromaKey": "0x49da51",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "fa6b46e1-7484-4f0b-a86f-af09cdbdb2c0.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/spectre/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/spectre/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T18:58:12.378Z",
+      "version": 1,
+      "chromaKey": "0x49da51",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "fa6b46e1-7484-4f0b-a86f-af09cdbdb2c0.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/spectre/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/spectre/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "hero": "spectre",
+  "version": 1,
+  "chromaKey": "0x49da51",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/spectre/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/spectre/sprite-v1.png",
+  "aspectRatio": 1
+}
