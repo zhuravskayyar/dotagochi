@@ -7,6 +7,7 @@ import { validateHeroSlug } from '../../../../../scripts/import-hero-animation.m
 const execFileAsync = promisify(execFile);
 const featureDir = path.dirname(fileURLToPath(import.meta.url));
 export const projectRoot = path.resolve(featureDir, '../../../../..');
+const toolsBin = path.join(projectRoot, '.tools', 'bin');
 const registryPath = 'packages/client/src/features/pet/hero-animations.json';
 const syncScript = path.join(projectRoot, 'scripts/sync-hero-animations.mjs');
 
@@ -27,6 +28,7 @@ async function defaultRun(command, args) {
       env: {
         ...process.env,
         GIT_TERMINAL_PROMPT: '0',
+        PATH: `${toolsBin}${path.delimiter}${process.env.PATH || ''}`,
       },
       maxBuffer: 5 * 1024 * 1024,
       windowsHide: true,

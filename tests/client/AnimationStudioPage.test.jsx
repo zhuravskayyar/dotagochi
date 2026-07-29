@@ -4,12 +4,16 @@ import { AnimationStudioPage } from '../../packages/client/src/features/animatio
 import { HeroAnimationPreviewPage } from '../../packages/client/src/features/animation-studio/HeroAnimationPreviewPage.jsx';
 
 const {
+  githubConnectSpy,
+  githubStatusSpy,
   importSpy,
   listSpy,
   pullSpy,
   pushSpy,
   statusSpy,
 } = vi.hoisted(() => ({
+  githubConnectSpy: vi.fn(),
+  githubStatusSpy: vi.fn(),
   importSpy: vi.fn(),
   listSpy: vi.fn(),
   pullSpy: vi.fn(),
@@ -24,6 +28,8 @@ vi.mock(
       listHeroes: listSpy,
       setCompleted: statusSpy,
       importAnimation: importSpy,
+      githubStatus: githubStatusSpy,
+      connectGithub: githubConnectSpy,
       pushHero: pushSpy,
       pullChanges: pullSpy,
     },
@@ -64,6 +70,26 @@ const heroes = [
 
 describe('AnimationStudioPage', () => {
   beforeEach(() => {
+    githubStatusSpy.mockResolvedValue({
+      cliInstalled: true,
+      authenticated: false,
+      phase: 'idle',
+      message: '',
+      userCode: '',
+      verificationUri: 'https://github.com/login/device',
+      profile: null,
+      persistent: false,
+    });
+    githubConnectSpy.mockResolvedValue({
+      cliInstalled: true,
+      authenticated: false,
+      phase: 'authorizing',
+      message: 'Введіть код ABCD-EFGH у GitHub.',
+      userCode: 'ABCD-EFGH',
+      verificationUri: 'https://github.com/login/device',
+      profile: null,
+      persistent: false,
+    });
     listSpy.mockResolvedValue({ heroes });
     statusSpy.mockImplementation(async (slug, completed) => ({
       hero: {
@@ -113,6 +139,7 @@ describe('AnimationStudioPage', () => {
       message: 'Уже актуально · abc1234',
     });
     window.history.replaceState({}, '', '/');
+    window.open = vi.fn();
     URL.createObjectURL = vi.fn(() => 'blob:idle-preview');
     URL.revokeObjectURL = vi.fn();
   });
@@ -178,5 +205,22 @@ describe('AnimationStudioPage', () => {
     }));
     await waitFor(() => expect(pullSpy).toHaveBeenCalledTimes(1));
     expect(await screen.findByText(/Уже актуально/)).toBeTruthy();
+  });
+
+  it('starts browser GitHub login and shows the device code', async () => {
+    render(<AnimationStudioPage />);
+    await screen.findByRole('heading', { name: 'Axe' });
+
+    fireEvent.click(await screen.findByRole('button', {
+      name: 'УВІЙТИ ЧЕРЕЗ GITHUB',
+    }));
+
+    await waitFor(() => expect(githubConnectSpy).toHaveBeenCalledTimes(1));
+    expect(window.open).toHaveBeenCalledWith(
+      'https://github.com/login/device',
+      '_blank',
+      'noopener,noreferrer',
+    );
+    expect(await screen.findByText(/КОД ABCD-EFGH/)).toBeTruthy();
   });
 });

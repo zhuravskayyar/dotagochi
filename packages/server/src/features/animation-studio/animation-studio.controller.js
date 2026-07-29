@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import { animationStudioService } from './animation-studio.service.js';
 import { gitSyncService } from './git-sync.service.js';
+import { githubAuthService } from './github-auth.service.js';
 
 function uploadedPaths(files = {}) {
   return Object.values(files)
@@ -70,6 +71,22 @@ export const animationStudioController = {
   async pullChanges(req, res, next) {
     try {
       res.json(await gitSyncService.pullChanges());
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async githubStatus(req, res, next) {
+    try {
+      res.json(await githubAuthService.status());
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async connectGithub(req, res, next) {
+    try {
+      res.json(await githubAuthService.connect());
     } catch (error) {
       next(error);
     }

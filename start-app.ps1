@@ -5,6 +5,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$env:Path = "$(Join-Path $projectRoot '.tools\bin');$env:Path"
 $serverUrl = 'http://127.0.0.1:3001/api/health'
 $clientUrl = 'http://127.0.0.1:5173'
 $studioUrl = "$clientUrl/animation-studio"

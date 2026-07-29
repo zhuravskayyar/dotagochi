@@ -1835,6 +1835,94 @@ button img { user-select: none; pointer-events: none; }
   opacity: .55;
 }
 
+.studio-github-auth {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid #3e4245;
+  background: #090b0dcc;
+}
+
+.studio-github-auth.is-connected {
+  border-color: #3d624c;
+  background: linear-gradient(90deg, #102117, #090c0a);
+}
+
+.studio-github-profile {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.studio-github-profile > img,
+.studio-github-profile > i {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border: 1px solid #555e65;
+  border-radius: 50%;
+}
+
+.studio-github-profile > img {
+  object-fit: cover;
+}
+
+.studio-github-profile > i {
+  display: grid;
+  place-items: center;
+  color: #d2d7db;
+  background: #1b1f23;
+  font: 800 9px/1 monospace;
+}
+
+.studio-github-profile > div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.studio-github-profile strong {
+  overflow: hidden;
+  color: #d6ddd9;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.studio-github-profile small {
+  overflow: hidden;
+  max-width: 510px;
+  color: #738078;
+  font: 7px/1.35 monospace;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.studio-github-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.studio-github-actions a {
+  color: #d6a85e;
+  font: 800 7px/1 monospace;
+  letter-spacing: .5px;
+  text-decoration: none;
+}
+
+.studio-git-sync .studio-github-connect {
+  min-height: 36px;
+  border-color: #626a70;
+  color: #e5e8ea;
+  background: linear-gradient(#2b3035, #15181b);
+}
+
 .studio-saved-work {
   margin-top: 12px;
   padding: 12px;
@@ -2108,6 +2196,9 @@ button img { user-select: none; pointer-events: none; }
   .studio-preview-panel { height: 390px; }
   .studio-git-sync { grid-template-columns: 1fr; }
   .studio-git-sync-buttons { width: 100%; }
+  .studio-github-auth { align-items: stretch; flex-direction: column; }
+  .studio-github-actions { align-items: stretch; flex-direction: column; }
+  .studio-github-profile small { max-width: 250px; white-space: normal; }
   .studio-file-grid { grid-template-columns: 1fr 1fr; }
   .studio-advanced > div { grid-template-columns: 1fr 1fr; }
 }

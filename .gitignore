@@ -11,6 +11,7 @@ packages/server/src/database/*.sqlite-journal
 packages/server/*.sqlite*
 
 coverage/
+.tools/
 
 # Local QA/work folders that are not part of the shared application.
 /tamagotchi-project/

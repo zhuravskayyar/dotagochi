@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { animationStudioApi } from './animationStudioApi.js';
 import { TamagotchiDevicePreview } from './TamagotchiDevicePreview.jsx';
 
@@ -76,6 +76,8 @@ export function AnimationStudioPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [syncing, setSyncing] = useState('');
+  const [githubAuth, setGithubAuth] = useState(null);
+  const [githubBusy, setGithubBusy] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -104,6 +106,29 @@ export function AnimationStudioPage() {
   useEffect(() => {
     loadHeroes();
   }, []);
+
+  const loadGithubAuth = useCallback(async () => {
+    try {
+      setGithubAuth(await animationStudioApi.githubStatus());
+    } catch (statusError) {
+      setGithubAuth({
+        authenticated: false,
+        phase: 'error',
+        message: statusError.message,
+        profile: null,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    loadGithubAuth();
+  }, [loadGithubAuth]);
+
+  useEffect(() => {
+    if (!['authorizing', 'installing'].includes(githubAuth?.phase)) return undefined;
+    const interval = window.setInterval(loadGithubAuth, 1500);
+    return () => window.clearInterval(interval);
+  }, [githubAuth?.phase, loadGithubAuth]);
 
   const savedPreviewUrl = selectedHero?.animation?.src
     ? publicAssetUrl(selectedHero.animation.src)
@@ -272,6 +297,30 @@ export function AnimationStudioPage() {
     }
   };
 
+  const connectGithub = async () => {
+    setGithubBusy(true);
+    setError('');
+    window.open(
+      githubAuth?.verificationUri || 'https://github.com/login/device',
+      '_blank',
+      'noopener,noreferrer',
+    );
+    try {
+      setGithubAuth(await animationStudioApi.connectGithub());
+    } catch (connectError) {
+      setGithubAuth((current) => ({
+        ...current,
+        authenticated: false,
+        phase: 'error',
+        message: connectError.message,
+        profile: null,
+      }));
+      setError(connectError.message);
+    } finally {
+      setGithubBusy(false);
+    }
+  };
+
   return (
     <main className="animation-studio">
       <header className="studio-header">
@@ -405,6 +454,65 @@ export function AnimationStudioPage() {
                   >
                     {syncing === 'pull' ? 'ОТРИМАННЯ...' : 'ОТРИМАТИ ЗМІНИ'}
                   </button>
+                </div>
+                <div
+                  className={`studio-github-auth ${githubAuth?.authenticated ? 'is-connected' : ''}`}
+                  aria-live="polite"
+                >
+                  <div className="studio-github-profile">
+                    {githubAuth?.profile?.avatarUrl ? (
+                      <img
+                        src={githubAuth.profile.avatarUrl}
+                        alt=""
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <i aria-hidden="true">GH</i>
+                    )}
+                    <div>
+                      <span>
+                        {githubAuth?.authenticated ? 'GITHUB ПІДКЛЮЧЕНО' : 'GITHUB AUTH'}
+                      </span>
+                      <strong>
+                        {githubAuth?.profile
+                          ? `@${githubAuth.profile.login}`
+                          : githubAuth?.phase === 'authorizing'
+                            ? 'ПІДТВЕРДІТЬ ВХІД У БРАУЗЕРІ'
+                            : 'ПІДКЛЮЧІТЬ СВІЙ АКАУНТ'}
+                      </strong>
+                      <small>
+                        {githubAuth?.authenticated
+                          ? `${githubAuth.profile.name} · ${githubAuth.profile.email} · сесію збережено`
+                          : githubAuth?.message
+                            || 'Ім’я автора commit і доступ для push налаштуються автоматично.'}
+                      </small>
+                    </div>
+                  </div>
+                  {!githubAuth?.authenticated && (
+                    <div className="studio-github-actions">
+                      {githubAuth?.userCode && (
+                        <a
+                          href={githubAuth.verificationUri}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          КОД {githubAuth.userCode} · ВІДКРИТИ GITHUB ↗
+                        </a>
+                      )}
+                      <button
+                        className="studio-github-connect"
+                        type="button"
+                        disabled={githubBusy || ['authorizing', 'installing'].includes(githubAuth?.phase)}
+                        onClick={connectGithub}
+                      >
+                        {githubBusy || githubAuth?.phase === 'installing'
+                          ? 'ПІДГОТОВКА...'
+                          : githubAuth?.phase === 'authorizing'
+                            ? 'ОЧІКУЮ ВХІД...'
+                            : 'УВІЙТИ ЧЕРЕЗ GITHUB'}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </section>
 

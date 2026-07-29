@@ -2,6 +2,7 @@
 set -euo pipefail
 
 project_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export PATH="$project_root/.tools/bin:$PATH"
 server_url="http://127.0.0.1:3001/api/health"
 client_url="http://127.0.0.1:5173"
 studio_url="${client_url}/animation-studio"
