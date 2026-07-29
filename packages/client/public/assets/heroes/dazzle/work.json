@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T18:39:26.821Z",
+  "work": {
+    "importedAt": "2026-07-29T18:39:26.821Z",
+    "version": 1,
+    "chromaKey": "0x49da4f",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "85593c0e-71c4-4324-9d7e-897e1282a7d6.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/dazzle/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/dazzle/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T18:39:26.821Z",
+      "version": 1,
+      "chromaKey": "0x49da4f",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "85593c0e-71c4-4324-9d7e-897e1282a7d6.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/dazzle/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/dazzle/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}

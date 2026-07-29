@@ -9,6 +9,11 @@
     "fallbackSrc": "assets/heroes/ancient_apparition/sprite-v1.png",
     "aspectRatio": 1
   },
+  "dazzle": {
+    "src": "assets/heroes/dazzle/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/dazzle/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "drow_ranger": {
     "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
