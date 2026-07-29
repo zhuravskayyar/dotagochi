@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T10:30:53.888Z",
+  "work": {
+    "importedAt": "2026-07-29T10:30:53.888Z",
+    "version": 1,
+    "chromaKey": "0x48de3f",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "2f5ba7a6-49ab-4272-b9b8-25d8dd6e36ab.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/tinker/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/tinker/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T10:30:53.888Z",
+      "version": 1,
+      "chromaKey": "0x48de3f",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "2f5ba7a6-49ab-4272-b9b8-25d8dd6e36ab.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/tinker/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/tinker/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
