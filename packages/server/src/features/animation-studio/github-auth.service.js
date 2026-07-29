@@ -28,7 +28,10 @@ function cleanOutput(value = '') {
     .slice(-maxOutputLength);
 }
 
-function commandEnvironment({ clearGitHubTokens = false } = {}) {
+function commandEnvironment({
+  clearGitHubTokens = false,
+  interactiveGitHubLogin = false,
+} = {}) {
   const environment = {
     ...process.env,
     PATH: `${toolsBin}${path.delimiter}${process.env.PATH || ''}`,
@@ -36,6 +39,12 @@ function commandEnvironment({ clearGitHubTokens = false } = {}) {
   if (clearGitHubTokens) {
     delete environment.GH_TOKEN;
     delete environment.GITHUB_TOKEN;
+  }
+  if (interactiveGitHubLogin) {
+    delete environment.CI;
+    delete environment.GITHUB_ACTIONS;
+    delete environment.GH_PROMPT_DISABLED;
+    delete environment.GH_BROWSER;
   }
   return environment;
 }
@@ -349,7 +358,10 @@ export function createGitHubAuthService({
         ['auth', 'login', '--hostname', githubHost, '--git-protocol', 'https', '--web'],
         {
           cwd: projectRoot,
-          env: commandEnvironment({ clearGitHubTokens: true }),
+          env: commandEnvironment({
+            clearGitHubTokens: true,
+            interactiveGitHubLogin: true,
+          }),
           windowsHide: true,
           stdio: ['ignore', 'pipe', 'pipe'],
         },
@@ -357,6 +369,10 @@ export function createGitHubAuthService({
       loginProcess = child;
       let loginSettled = false;
       let output = '';
+      let signalCodeReady;
+      const codeReady = new Promise((resolve) => {
+        signalCodeReady = resolve;
+      });
       const appendOutput = (chunk) => {
         output = `${output}${chunk}`.slice(-maxOutputLength);
         const parsed = parseLoginOutput(output);
@@ -368,17 +384,23 @@ export function createGitHubAuthService({
             ? `Введіть код ${parsed.userCode} у GitHub.`
             : state.message,
         };
+        if (parsed.userCode) signalCodeReady();
       };
       child.stdout?.on('data', appendOutput);
       child.stderr?.on('data', appendOutput);
       const settleLogin = (code) => {
         if (loginSettled) return;
         loginSettled = true;
+        signalCodeReady();
         finishLogin(gh, code);
       };
       child.once('error', () => settleLogin(1));
       child.once('close', (code) => settleLogin(code ?? 1));
 
+      await Promise.race([
+        codeReady,
+        new Promise((resolve) => setTimeout(resolve, 2_000)),
+      ]);
       return response(gh);
     },
   };
