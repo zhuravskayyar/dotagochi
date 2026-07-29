@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T18:26:56.167Z",
+  "work": {
+    "importedAt": "2026-07-29T18:26:56.167Z",
+    "version": 1,
+    "chromaKey": "0x38db35",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "2c911363-fd5a-4f20-892b-8f01f949a041.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/ancient_apparition/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/ancient_apparition/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T18:26:56.167Z",
+      "version": 1,
+      "chromaKey": "0x38db35",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "2c911363-fd5a-4f20-892b-8f01f949a041.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/ancient_apparition/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/ancient_apparition/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}

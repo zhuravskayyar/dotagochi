@@ -1,0 +1,10 @@
+{
+  "hero": "ancient_apparition",
+  "version": 1,
+  "chromaKey": "0x38db35",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/ancient_apparition/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/ancient_apparition/sprite-v1.png",
+  "aspectRatio": 1
+}

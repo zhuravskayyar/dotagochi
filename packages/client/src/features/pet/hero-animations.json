@@ -4,6 +4,11 @@
     "fallbackSrc": "assets/heroes/alchemist/sprite-v1.png",
     "aspectRatio": 1
   },
+  "ancient_apparition": {
+    "src": "assets/heroes/ancient_apparition/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/ancient_apparition/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "drow_ranger": {
     "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
