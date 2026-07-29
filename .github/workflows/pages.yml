@@ -1,4 +1,4 @@
-name: Deploy static demo to GitHub Pages
+name: Deploy Linux installer page to GitHub Pages
 
 on:
   push:
@@ -20,26 +20,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build static demo
-        run: npm run build
-        env:
-          VITE_BASE_PATH: /tgdota2/
-          VITE_STATIC_DEMO: 'true'
-          VITE_DEV_USER_ID: github-pages-demo
+      - name: Prepare installer site
+        run: |
+          mkdir -p pages-dist
+          cp index.html install-linux.sh pages-dist/
+          touch pages-dist/.nojekyll
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: packages/client/dist
+          path: pages-dist
 
   deploy:
     environment:
