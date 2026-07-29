@@ -36,6 +36,13 @@ echo "Checking and installing project dependencies..."
 npm install --no-audit --no-fund
 npm run sync:animations
 
+local_commit="$(git rev-parse --short HEAD 2>/dev/null || printf 'unknown')"
+local_instance="$(
+  node -e \
+    'const {createHash}=require("node:crypto"); const fs=require("node:fs"); const root=fs.realpathSync(process.argv[1]); process.stdout.write(createHash("sha256").update(root).digest("hex").slice(0,16))' \
+    "$project_root"
+)"
+
 check_endpoint() {
   local url="$1"
   if command -v curl >/dev/null 2>&1; then
@@ -46,6 +53,50 @@ check_endpoint() {
       "$url"
   fi
 }
+
+read_server_metadata() {
+  local metadata
+  if ! metadata="$(
+    node -e \
+      'fetch(process.argv[1]).then(async r=>{const d=await r.json();if(d.app!=="dota-tamagotchi"||!d.instance||!d.commit||!d.pid)process.exit(2);process.stdout.write(`${d.instance}\n${d.commit}\n${d.pid}`)}).catch(()=>process.exit(1))' \
+      "$server_url"
+  )"; then
+    return 1
+  fi
+  mapfile -t server_metadata <<<"$metadata"
+}
+
+server_is_current() {
+  read_server_metadata &&
+    [[ "${server_metadata[0]}" == "$local_instance" ]] &&
+    [[ "${server_metadata[1]}" == "$local_commit" ]]
+}
+
+if check_endpoint "$server_url" && ! server_is_current; then
+  if ! read_server_metadata; then
+    echo "Port 3001 is occupied by an old or unknown server. Stop it once and run Studio again." >&2
+    exit 1
+  fi
+  if [[ "${server_metadata[0]}" != "$local_instance" ]]; then
+    echo "Port 3001 is used by another Dota Tamagotchi project. Stop it before starting this copy." >&2
+    exit 1
+  fi
+  if [[ ! "${server_metadata[2]}" =~ ^[0-9]+$ ]]; then
+    echo "The running backend returned an invalid process ID." >&2
+    exit 1
+  fi
+
+  echo "Restarting the backend after a project update..."
+  kill "${server_metadata[2]}"
+  restart_deadline=$((SECONDS + 10))
+  while check_endpoint "$server_url" && ! server_is_current; do
+    if (( SECONDS >= restart_deadline )); then
+      echo "The old backend did not stop or reload within 10 seconds." >&2
+      exit 1
+    fi
+    sleep 1
+  done
+fi
 
 if ! check_endpoint "$server_url"; then
   echo "Starting backend..."

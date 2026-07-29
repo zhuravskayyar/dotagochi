@@ -51,6 +51,48 @@ node_is_supported() {
     [[ "$(node -p 'Number(process.versions.node.split(`.`)[0]) >= 18')" == "true" ]]
 }
 
+run_as_root() {
+  if [[ "${EUID}" -eq 0 ]]; then
+    "$@"
+  elif command -v sudo >/dev/null 2>&1; then
+    sudo "$@"
+  else
+    echo "Для встановлення Git потрібні права адміністратора або команда sudo." >&2
+    exit 1
+  fi
+}
+
+install_git() {
+  if command -v git >/dev/null 2>&1; then
+    echo "✓ Git $(git --version | awk '{print $3}') уже готовий."
+    return
+  fi
+
+  echo "Встановлюю Git для синхронізації Studio..."
+  if command -v apt-get >/dev/null 2>&1; then
+    run_as_root apt-get update
+    run_as_root apt-get install -y git
+  elif command -v dnf >/dev/null 2>&1; then
+    run_as_root dnf install -y git
+  elif command -v yum >/dev/null 2>&1; then
+    run_as_root yum install -y git
+  elif command -v pacman >/dev/null 2>&1; then
+    run_as_root pacman -Sy --needed --noconfirm git
+  elif command -v zypper >/dev/null 2>&1; then
+    run_as_root zypper --non-interactive install git
+  elif command -v apk >/dev/null 2>&1; then
+    run_as_root apk add git
+  else
+    echo "Не вдалося визначити пакетний менеджер. Встановіть Git і запустіть інсталятор ще раз." >&2
+    exit 1
+  fi
+
+  if ! command -v git >/dev/null 2>&1; then
+    echo "Git не встановлено. Запустіть інсталятор ще раз після ручного встановлення Git." >&2
+    exit 1
+  fi
+}
+
 install_node() {
   if node_is_supported; then
     echo "✓ Node.js $(node --version) і npm $(npm --version) уже готові."
@@ -119,13 +161,29 @@ prepare_project() {
   tar -xzf "${downloaded_archive}" --strip-components=1 -C "${project_dir}"
 }
 
+prepare_git_repository() {
+  if [[ -d "${project_dir}/.git" ]]; then
+    return
+  fi
+
+  echo "Підключаю локальні файли до GitHub для pull і push..."
+  rm -f -- "${project_dir}/.download-complete"
+  git -C "${project_dir}" init
+  git -C "${project_dir}" remote add origin "${REPOSITORY_URL}"
+  git -C "${project_dir}" fetch --depth 1 origin main
+  git -C "${project_dir}" reset --mixed FETCH_HEAD
+  git -C "${project_dir}" branch -M main
+}
+
 echo
 echo "Dota Tamagotchi — автоматичне встановлення для Linux"
 echo "====================================================="
 echo
 
 install_node
+install_git
 prepare_project
+prepare_git_repository
 
 cd -- "${project_dir}"
 

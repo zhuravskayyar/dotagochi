@@ -65,6 +65,24 @@ finally {
     Pop-Location
 }
 
+$localCommit = (& git -C $projectRoot rev-parse --short HEAD 2>$null)
+if (-not $localCommit) {
+    $localCommit = 'unknown'
+}
+else {
+    $localCommit = $localCommit.Trim()
+}
+$resolvedProjectRoot = (Resolve-Path $projectRoot).Path
+$sha256 = [System.Security.Cryptography.SHA256]::Create()
+try {
+    $rootBytes = [System.Text.Encoding]::UTF8.GetBytes($resolvedProjectRoot)
+    $hashBytes = $sha256.ComputeHash($rootBytes)
+    $localInstance = -join ($hashBytes[0..7] | ForEach-Object { $_.ToString('x2') })
+}
+finally {
+    $sha256.Dispose()
+}
+
 function Test-AppEndpoint {
     param([string]$Url)
 
@@ -74,6 +92,24 @@ function Test-AppEndpoint {
     }
     catch {
         return $false
+    }
+}
+
+function Get-ServerMetadata {
+    try {
+        $metadata = Invoke-RestMethod -Uri $serverUrl -TimeoutSec 2
+        if (
+            $metadata.app -ne 'dota-tamagotchi' -or
+            -not $metadata.instance -or
+            -not $metadata.commit -or
+            -not $metadata.pid
+        ) {
+            return $null
+        }
+        return $metadata
+    }
+    catch {
+        return $null
     }
 }
 
@@ -91,6 +127,45 @@ function Start-AppService {
 
 $serverRunning = Test-AppEndpoint -Url $serverUrl
 $clientRunning = Test-AppEndpoint -Url $clientUrl
+
+if ($serverRunning) {
+    $serverMetadata = Get-ServerMetadata
+    if (-not $serverMetadata) {
+        throw 'Port 3001 is occupied by an old or unknown server. Stop it once and run Studio again.'
+    }
+    if ($serverMetadata.instance -ne $localInstance) {
+        throw 'Port 3001 is used by another Dota Tamagotchi project. Stop it before starting this copy.'
+    }
+    if ($serverMetadata.commit -ne $localCommit) {
+        Write-Host 'Restarting the backend after a project update...'
+        Stop-Process -Id ([int]$serverMetadata.pid) -ErrorAction Stop
+
+        $restartDeadline = [DateTime]::UtcNow.AddSeconds(10)
+        do {
+            Start-Sleep -Milliseconds 500
+            $serverRunning = Test-AppEndpoint -Url $serverUrl
+            if (-not $serverRunning) {
+                break
+            }
+            $serverMetadata = Get-ServerMetadata
+            if (
+                $serverMetadata -and
+                $serverMetadata.instance -eq $localInstance -and
+                $serverMetadata.commit -eq $localCommit
+            ) {
+                break
+            }
+        } while ([DateTime]::UtcNow -lt $restartDeadline)
+
+        if ($serverRunning -and (
+            -not $serverMetadata -or
+            $serverMetadata.instance -ne $localInstance -or
+            $serverMetadata.commit -ne $localCommit
+        )) {
+            throw 'The old backend did not stop or reload within 10 seconds.'
+        }
+    }
+}
 
 if (-not $serverRunning) {
     Write-Host 'Starting backend...'

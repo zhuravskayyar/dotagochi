@@ -1,4 +1,8 @@
 import 'dotenv/config';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import { config } from './config/index.js';
@@ -13,6 +17,25 @@ import { requestLogger } from './middlewares/requestLogger.js';
 import { startBot } from './bot/bot.js';
 import { startNotificationCron } from './features/notifications/notifications.cron.js';
 
+const projectRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../../..',
+);
+const serverInstance = createHash('sha256')
+  .update(projectRoot)
+  .digest('hex')
+  .slice(0, 16);
+let serverCommit = 'unknown';
+try {
+  serverCommit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], {
+    cwd: projectRoot,
+    encoding: 'utf8',
+    windowsHide: true,
+  }).trim();
+} catch {
+  // The game can still run from an exported source archive without Git metadata.
+}
+
 const app = express();
 
 app.use(cors());
@@ -20,7 +43,14 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', env: config.env });
+  res.json({
+    status: 'ok',
+    env: config.env,
+    app: 'dota-tamagotchi',
+    instance: serverInstance,
+    commit: serverCommit,
+    pid: process.pid,
+  });
 });
 
 app.use('/api/pet', petRoutes);

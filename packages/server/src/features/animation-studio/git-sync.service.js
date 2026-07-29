@@ -92,6 +92,49 @@ export function createGitSyncService(run = defaultRun) {
     }
   };
 
+  const pullWithRebase = async () => {
+    try {
+      return await git(['pull', '--rebase', 'origin', 'main']);
+    } catch (pullError) {
+      let conflicts = [];
+      try {
+        const result = await git(['diff', '--name-only', '--diff-filter=U']);
+        conflicts = parsePathList(result.stdout);
+      } catch {
+        // A network or authentication failure may happen before a rebase starts.
+      }
+
+      if (conflicts.length && conflicts.every((file) => file === registryPath)) {
+        try {
+          await run(process.execPath, [syncScript]);
+          await git(['add', '--', registryPath]);
+          await git(['-c', 'core.editor=true', 'rebase', '--continue']);
+          return {
+            stdout: 'Отримані зміни об’єднано з локальною анімацією.',
+            stderr: '',
+          };
+        } catch {
+          // Fall through to abort so the repository never remains mid-rebase.
+        }
+      }
+
+      try {
+        await git(['rebase', '--abort']);
+      } catch {
+        // There is nothing to abort when pull failed before starting a rebase.
+      }
+
+      const conflictDetail = conflicts.length
+        ? ` Конфліктні файли: ${conflicts.join(', ')}.`
+        : '';
+      throw studioError(
+        `Не вдалося безпечно об’єднати зміни з GitHub.${conflictDetail} `
+        + `Ваш локальний коміт збережено. Отримайте допомогу перед повторним push. `
+        + `Git: ${pullError.message}`,
+      );
+    }
+  };
+
   return {
     async pushHero(heroSlug, heroName = heroSlug) {
       return runLocked(async () => {
@@ -122,6 +165,7 @@ export function createGitSyncService(run = defaultRun) {
           committed = true;
         }
 
+        await pullWithRebase();
         const pushResult = await git(['push', 'origin', 'main']);
         const { stdout: commit } = await git(['rev-parse', '--short', 'HEAD']);
         return {
@@ -148,7 +192,7 @@ export function createGitSyncService(run = defaultRun) {
         }
 
         const { stdout: before } = await git(['rev-parse', '--short', 'HEAD']);
-        const pullResult = await git(['pull', '--ff-only', 'origin', 'main']);
+        const pullResult = await pullWithRebase();
         await run(process.execPath, [syncScript]);
         const syncStatus = await git(['status', '--porcelain', '--', registryPath]);
         if (syncStatus.stdout) {
