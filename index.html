@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b0f">
+  <meta name="description" content="Автоматичне встановлення Dota Tamagotchi для Linux.">
+  <title>Dota Tamagotchi — встановлення для Linux</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b0f;
+      --panel: rgba(20, 23, 29, .86);
+      --panel-solid: #14171d;
+      --line: rgba(255, 255, 255, .11);
+      --text: #f4f1e8;
+      --muted: #a9abb2;
+      --accent: #d7ff45;
+      --accent-strong: #bcec21;
+      --danger: #ff7a70;
+      --success: #7de2a8;
+      --shadow: 0 24px 80px rgba(0, 0, 0, .45);
+      --radius-lg: 30px;
+      --radius-md: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 82% 3%, rgba(161, 208, 34, .18), transparent 28rem),
+        radial-gradient(circle at 6% 56%, rgba(96, 108, 255, .12), transparent 31rem),
+        var(--bg);
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      content: "";
+      opacity: .24;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      color: #111;
+      background: var(--accent);
+      border-radius: 11px;
+      box-shadow: 0 0 28px rgba(215, 255, 69, .25);
+    }
+
+    .support-link {
+      color: var(--muted);
+      font-size: .92rem;
+      font-weight: 650;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .support-link:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(330px, .72fr);
+      gap: 62px;
+      align-items: center;
+      min-height: 690px;
+      padding: 52px 0 74px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 22px;
+      color: var(--accent);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 1px;
+      content: "";
+      background: currentColor;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(3.5rem, 8vw, 7.35rem);
+      font-weight: 840;
+      letter-spacing: -.072em;
+      line-height: .88;
+    }
+
+    h1 span {
+      display: block;
+      color: var(--accent);
+    }
+
+    .lead {
+      max-width: 630px;
+      margin: 30px 0 0;
+      color: #c4c3c1;
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+      line-height: 1.65;
+    }
+
+    .compatibility {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .compatibility li {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 13px;
+      color: #d7d6d2;
+      background: rgba(255, 255, 255, .045);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    .compatibility li::before {
+      width: 7px;
+      height: 7px;
+      content: "";
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(125, 226, 168, .55);
+    }
+
+    .installer-card {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      padding: 30px;
+      background: linear-gradient(145deg, rgba(28, 32, 39, .96), rgba(14, 16, 21, .94));
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .installer-card::after {
+      position: absolute;
+      right: -90px;
+      bottom: -120px;
+      width: 260px;
+      height: 260px;
+      content: "";
+      background: rgba(215, 255, 69, .12);
+      border-radius: 50%;
+      filter: blur(14px);
+    }
+
+    .card-kicker {
+      margin: 0;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .installer-card h2 {
+      margin: 10px 0 10px;
+      font-size: 1.85rem;
+      letter-spacing: -.035em;
+    }
+
+    .installer-card > p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .96rem;
+      line-height: 1.55;
+    }
+
+    .install-button {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 26px;
+      padding: 19px 20px;
+      color: #101206;
+      background: var(--accent);
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 850;
+      box-shadow: 0 15px 42px rgba(215, 255, 69, .18);
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    .install-button:hover {
+      background: #e0ff6c;
+      box-shadow: 0 18px 48px rgba(215, 255, 69, .25);
+      transform: translateY(-2px);
+    }
+
+    .install-button:active {
+      transform: translateY(0);
+    }
+
+    .install-button:disabled {
+      cursor: wait;
+      opacity: .72;
+      transform: none;
+    }
+
+    .button-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      place-items: center;
+      background: rgba(0, 0, 0, .1);
+      border-radius: 10px;
+    }
+
+    .progress {
+      position: relative;
+      z-index: 1;
+      display: none;
+      height: 7px;
+      overflow: hidden;
+      margin-top: 16px;
+      background: rgba(255, 255, 255, .08);
+      border-radius: 999px;
+    }
+
+    .progress.visible {
+      display: block;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: var(--accent);
+      border-radius: inherit;
+      transition: width .18s ease;
+    }
+
+    .progress.indeterminate .progress-bar {
+      width: 40%;
+      animation: loading 1.15s ease-in-out infinite;
+    }
+
+    @keyframes loading {
+      from { transform: translateX(-110%); }
+      to { transform: translateX(270%); }
+    }
+
+    .status {
+      position: relative;
+      z-index: 1;
+      min-height: 42px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: .84rem;
+      line-height: 1.5;
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .command-box {
+      position: relative;
+      z-index: 1;
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(0, 0, 0, .28);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .command-box.visible {
+      display: block;
+    }
+
+    .command-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .command {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .command code {
+      overflow-x: auto;
+      color: #f6f4ec;
+      font-size: .83rem;
+      white-space: nowrap;
+    }
+
+    .copy-button {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      color: var(--text);
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      cursor: pointer;
+      font: inherit;
+      font-size: .76rem;
+      font-weight: 750;
+    }
+
+    .privacy-note {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      color: #8d9098;
+      font-size: .76rem;
+      line-height: 1.45;
+    }
+
+    .privacy-note svg {
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .section {
+      padding: 88px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 38px;
+    }
+
+    .section-heading h2 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(2.15rem, 5vw, 4rem);
+      letter-spacing: -.055em;
+      line-height: 1;
+    }
+
+    .section-heading p {
+      max-width: 420px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .step {
+      min-height: 220px;
+      padding: 25px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .step-number {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      margin-bottom: 30px;
+      color: var(--accent);
+      background: rgba(215, 255, 69, .08);
+      border: 1px solid rgba(215, 255, 69, .18);
+      border-radius: 12px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .step h3 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .support-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 38px;
+      align-items: center;
+      padding: clamp(28px, 5vw, 52px);
+      background:
+        linear-gradient(110deg, rgba(215, 255, 69, .1), transparent 45%),
+        var(--panel-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+    }
+
+    .support-panel h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      letter-spacing: -.05em;
+    }
+
+    .support-panel p {
+      max-width: 670px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .outline-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 190px;
+      padding: 15px 18px;
+      color: var(--text);
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+
+    .outline-button:hover {
+      background: rgba(255, 255, 255, .08);
+      border-color: rgba(255, 255, 255, .34);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 32px 0 44px;
+      color: #777a82;
+      font-size: .8rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 44px;
+        padding-top: 60px;
+      }
+
+      .hero-copy {
+        max-width: 700px;
+      }
+
+      .installer-card {
+        max-width: 620px;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 18px;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .topbar {
+        padding-top: 20px;
+      }
+
+      .support-link {
+        font-size: 0;
+      }
+
+      .support-link::after {
+        content: "Підтримка";
+        font-size: .84rem;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 48px 0 64px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 15.8vw, 4.15rem);
+      }
+
+      .hero-copy {
+        min-width: 0;
+      }
+
+      .installer-card {
+        padding: 22px;
+        border-radius: 24px;
+      }
+
+      .install-button {
+        gap: 10px;
+        padding: 16px;
+        font-size: .91rem;
+        text-align: left;
+      }
+
+      .button-icon {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .support-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .outline-button {
+        width: 100%;
+      }
+
+      footer {
+        display: block;
+      }
+
+      footer span {
+        display: block;
+        margin-top: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">D</span>
+        Dota Tamagotchi
+      </div>
+      <a class="support-link" href="#support">Потрібна допомога?</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Linux installer</p>
+          <h1 id="page-title">Один клік. <span>І готово.</span></h1>
+          <p class="lead">
+            Вибери папку — сторінка збереже всі файли проєкту та
+            інсталятор. Він сам перевірить Node.js, поставить залежності,
+            підготує базу й відкриє застосунок.
+          </p>
+          <ul class="compatibility" aria-label="Сумісність">
+            <li>Ubuntu / Debian</li>
+            <li>Fedora</li>
+            <li>Arch Linux</li>
+            <li>Node.js 18+</li>
+          </ul>
+        </div>
+
+        <aside class="installer-card" aria-labelledby="installer-title">
+          <p class="card-kicker">Комплект для Linux</p>
+          <h2 id="installer-title">Завантажити проєкт</h2>
+          <p>Без секретних ключів, локальної бази й зайвих Windows-файлів.</p>
+
+          <button class="install-button" id="installButton" type="button">
+            <span id="buttonText">Вибрати папку й завантажити</span>
+            <span class="button-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+
+          <div class="progress" id="progress" aria-hidden="true">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <div class="status" id="status" role="status" aria-live="polite">
+            Рекомендовано відкрити сторінку в Chrome або Chromium.
+          </div>
+
+          <div class="command-box" id="commandBox">
+            <span class="command-label">Потім відкрий вибрану папку в терміналі</span>
+            <div class="command">
+              <code id="commandText">bash install-dota-tamagotchi.sh</code>
+              <button class="copy-button" id="copyButton" type="button">Копіювати</button>
+            </div>
+          </div>
+
+          <div class="privacy-note">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 10V7a5 5 0 0 1 10 0v3m-11 0h12v10H6V10Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            Браузер бачить лише папку, яку ти сам дозволиш. Особисті файли не читаються.
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" aria-labelledby="steps-title">
+        <div class="section-heading">
+          <h2 id="steps-title">Три прості дії</h2>
+          <p>Інсталятор залишає всі файли в одній папці та не потребує прав адміністратора.</p>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-number">01</span>
+            <h3>Вибери папку</h3>
+            <p>Наприклад, «Документи». Туди потраплять усі файли проєкту та інсталятор.</p>
+          </li>
+          <li class="step">
+            <span class="step-number">02</span>
+            <h3>Відкрий термінал</h3>
+            <p>У вибраній папці натисни правою кнопкою та обери «Відкрити в терміналі».</p>
+          </li>
+          <li class="step">
+            <span class="step-number">03</span>
+            <h3>Встав одну команду</h3>
+            <p><code>bash install-dota-tamagotchi.sh</code> — решту інсталятор зробить сам.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="support" aria-labelledby="support-title">
+        <div class="support-panel">
+          <div>
+            <h2 id="support-title">Не запустилося? Допоможемо.</h2>
+            <p>
+              Створи звернення й додай текст помилки з термінала. Так буде видно,
+              на якому кроці зупинилась установка, і проблему можна швидко виправити.
+            </p>
+          </div>
+          <a class="outline-button" href="https://github.com/zhuravskayyar/dotagochi/issues/new" target="_blank" rel="noreferrer">
+            Написати в підтримку
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Dota Tamagotchi</strong>
+      <span>Linux installer · без паролів і прихованих файлів</span>
+    </footer>
+  </div>
+
+  <script type="text/plain" id="installerSource">#!/usr/bin/env bash
+set -Eeuo pipefail
+readonly REPOSITORY_URL="https://github.com/zhuravskayyar/dotagochi.git"
+readonly ARCHIVE_URL="https://codeload.github.com/zhuravskayyar/dotagochi/tar.gz/refs/heads/main"
+readonly NVM_VERSION="v0.40.3"
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+project_dir="${script_dir}/dota-tamagotchi"
+browser_project_dir="${script_dir}/dota-tamagotchi-source"
+project_archive="${script_dir}/dota-tamagotchi-source.tar.gz"
+temporary_dir=""
+cleanup() {
+  if [[ -n "${temporary_dir}" && -d "${temporary_dir}" ]]; then rm -rf -- "${temporary_dir}"; fi
+}
+on_error() {
+  local exit_code=$?
+  echo
+  echo "Інсталяцію зупинено через помилку." >&2
+  echo "Підтримка: https://github.com/zhuravskayyar/dotagochi/issues/new" >&2
+  exit "${exit_code}"
+}
+trap cleanup EXIT
+trap on_error ERR
+download_file() {
+  local url="$1" destination="$2"
+  if command -v curl >/dev/null 2>&1; then
+    curl --fail --location --retry 3 --progress-bar --output "${destination}" "${url}"
+  elif command -v wget >/dev/null 2>&1; then
+    wget --tries=3 --output-document="${destination}" "${url}"
+  else
+    echo "Потрібна команда curl або wget. Ubuntu/Debian: sudo apt update && sudo apt install -y curl" >&2
+    exit 1
+  fi
+}
+node_is_supported() {
+  command -v node >/dev/null 2>&1 && command -v npm >/dev/null 2>&1 &&
+    [[ "$(node -p 'Number(process.versions.node.split(`.`)[0]) >= 18')" == "true" ]]
+}
+install_node() {
+  if node_is_supported; then
+    echo "✓ Node.js $(node --version) і npm $(npm --version) уже готові."
+    return
+  fi
+  echo "Встановлюю актуальну LTS-версію Node.js у профіль користувача..."
+  temporary_dir="$(mktemp -d "${TMPDIR:-/tmp}/dota-tamagotchi.XXXXXX")"
+  local nvm_installer="${temporary_dir}/install-nvm.sh"
+  download_file "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh" "${nvm_installer}"
+  export NVM_DIR="${NVM_DIR:-${HOME}/.nvm}"
+  PROFILE=/dev/null bash "${nvm_installer}"
+  source "${NVM_DIR}/nvm.sh"
+  nvm install --lts
+  nvm use --lts
+  if ! node_is_supported; then echo "Не вдалося підготувати Node.js 18 або новіший." >&2; exit 1; fi
+}
+prepare_project() {
+  if [[ -f "${project_dir}/package.json" ]]; then echo "✓ Проєкт уже є у ${project_dir}"; return; fi
+  if [[ -e "${project_dir}" ]]; then
+    echo "Папка ${project_dir} вже існує, але не схожа на цей проєкт." >&2
+    exit 1
+  fi
+  if [[ -f "${browser_project_dir}/package.json" ]] &&
+    [[ "$(cat "${browser_project_dir}/.download-complete" 2>/dev/null || true)" == "complete" ]]; then
+    echo "Готую файли, завантажені браузером..."
+    mv -- "${browser_project_dir}" "${project_dir}"
+    return
+  fi
+  mkdir -p -- "${project_dir}"
+  if [[ -s "${project_archive}" ]]; then
+    echo "Розпаковую завантажений комплект..."
+    tar -xzf "${project_archive}" --strip-components=1 -C "${project_dir}"
+  elif command -v git >/dev/null 2>&1; then
+    echo "Завантажую проєкт із GitHub..."
+    rmdir -- "${project_dir}"
+    git clone --depth 1 "${REPOSITORY_URL}" "${project_dir}"
+  else
+    echo "Завантажую архів проєкту..."
+    temporary_dir="$(mktemp -d "${TMPDIR:-/tmp}/dota-tamagotchi.XXXXXX")"
+    local downloaded_archive="${temporary_dir}/project.tar.gz"
+    download_file "${ARCHIVE_URL}" "${downloaded_archive}"
+    tar -xzf "${downloaded_archive}" --strip-components=1 -C "${project_dir}"
+  fi
+}
+echo
+echo "Dota Tamagotchi — автоматичне встановлення для Linux"
+echo "====================================================="
+echo
+install_node
+prepare_project
+cd -- "${project_dir}"
+if [[ ! -f .env ]]; then cp .env.example .env; echo "✓ Створено локальний файл налаштувань .env"; fi
+echo "Встановлюю залежності проєкту..."
+npm install --no-audit --no-fund
+echo "Готую локальну базу даних..."
+npm run migrate
+chmod +x start-app.sh
+echo
+echo "✓ Готово. Проєкт встановлено у: ${project_dir}"
+echo "Наступний запуск: cd \"${project_dir}\" && ./start-app.sh"
+echo
+exec ./start-app.sh
+</script>
+
+  <script>
+    const TREE_URL = "https://api.github.com/repos/zhuravskayyar/dotagochi/git/trees/main?recursive=1";
+    const RAW_BASE_URL = "https://raw.githubusercontent.com/zhuravskayyar/dotagochi/main/";
+    const PROJECT_DIRECTORY = "dota-tamagotchi-source";
+    const INSTALLER_NAME = "install-dota-tamagotchi.sh";
+    const EXCLUDED_LINUX_FILES = new Set([
+      "start-app.ps1",
+      "Запуск Dota Tamagotchi.lnk"
+    ]);
+
+    const installButton = document.getElementById("installButton");
+    const buttonText = document.getElementById("buttonText");
+    const status = document.getElementById("status");
+    const progress = document.getElementById("progress");
+    const progressBar = document.getElementById("progressBar");
+    const commandBox = document.getElementById("commandBox");
+    const copyButton = document.getElementById("copyButton");
+    const commandText = document.getElementById("commandText");
+    const installerSource = document.getElementById("installerSource").textContent.trimStart();
+
+    function setBusy(isBusy) {
+      installButton.disabled = isBusy;
+      buttonText.textContent = isBusy ? "Завантажую комплект…" : "Вибрати папку й завантажити";
+    }
+
+    function setStatus(message, type = "") {
+      status.textContent = message;
+      status.className = `status ${type}`.trim();
+    }
+
+    function showProgress(percent) {
+      progress.classList.add("visible");
+      if (typeof percent === "number") {
+        progress.classList.remove("indeterminate");
+        progressBar.style.width = `${Math.min(100, Math.max(0, percent))}%`;
+      } else {
+        progress.classList.add("indeterminate");
+        progressBar.style.width = "";
+      }
+    }
+
+    function hideProgress() {
+      progress.classList.remove("visible", "indeterminate");
+      progressBar.style.width = "0";
+    }
+
+    async function writeTextFile(directoryHandle, name, contents) {
+      const fileHandle = await directoryHandle.getFileHandle(name, { create: true });
+      const writable = await fileHandle.createWritable();
+      await writable.write(contents);
+      await writable.close();
+    }
+
+    function encodeGitHubPath(path) {
+      return path.split("/").map(encodeURIComponent).join("/");
+    }
+
+    async function getDirectory(rootHandle, cache, path) {
+      if (!path) return rootHandle;
+      if (cache.has(path)) return cache.get(path);
+
+      const parts = path.split("/");
+      const parentPath = parts.slice(0, -1).join("/");
+      const parentHandle = await getDirectory(rootHandle, cache, parentPath);
+      const handle = await parentHandle.getDirectoryHandle(parts.at(-1), { create: true });
+      cache.set(path, handle);
+      return handle;
+    }
+
+    async function downloadProjectTo(parentHandle) {
+      setStatus("Отримую список файлів проєкту…");
+      showProgress();
+
+      const treeResponse = await fetch(TREE_URL, {
+        headers: { Accept: "application/vnd.github+json" }
+      });
+      if (!treeResponse.ok) {
+        throw new Error(`GitHub API відповів кодом ${treeResponse.status}`);
+      }
+
+      const tree = await treeResponse.json();
+      if (tree.truncated) {
+        throw new Error("GitHub повернув неповний список файлів");
+      }
+
+      const files = tree.tree.filter((entry) =>
+        entry.type === "blob" && !EXCLUDED_LINUX_FILES.has(entry.path)
+      );
+      const projectHandle = await parentHandle.getDirectoryHandle(PROJECT_DIRECTORY, { create: true });
+      const directoryCache = new Map([["", projectHandle]]);
+      await writeTextFile(projectHandle, ".download-complete", "incomplete");
+
+      let completed = 0;
+      let nextIndex = 0;
+
+      async function worker() {
+        while (nextIndex < files.length) {
+          const file = files[nextIndex++];
+          const separator = file.path.lastIndexOf("/");
+          const directoryPath = separator === -1 ? "" : file.path.slice(0, separator);
+          const fileName = separator === -1 ? file.path : file.path.slice(separator + 1);
+          const targetDirectory = await getDirectory(projectHandle, directoryCache, directoryPath);
+          const response = await fetch(`${RAW_BASE_URL}${encodeGitHubPath(file.path)}`);
+
+          if (!response.ok) {
+            throw new Error(`Не вдалося завантажити ${file.path} (${response.status})`);
+          }
+
+          const fileHandle = await targetDirectory.getFileHandle(fileName, { create: true });
+          const writable = await fileHandle.createWritable();
+          try {
+            await writable.write(await response.arrayBuffer());
+            await writable.close();
+          } catch (error) {
+            await writable.abort();
+            throw error;
+          }
+
+          completed += 1;
+          showProgress((completed / files.length) * 100);
+          setStatus(`Завантажено ${completed} із ${files.length} файлів…`);
+        }
+      }
+
+      await Promise.all(Array.from({ length: 6 }, worker));
+      await writeTextFile(projectHandle, ".download-complete", "complete");
+      return files.length;
+    }
+
+    function fallbackDownload() {
+      const blob = new Blob([installerSource], { type: "text/x-shellscript;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = INSTALLER_NAME;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      setStatus(
+        "Інсталятор завантажено. Відкрий папку завантажень у терміналі та запусти команду нижче.",
+        "success"
+      );
+      commandBox.classList.add("visible");
+    }
+
+    async function install() {
+      setBusy(true);
+      commandBox.classList.remove("visible");
+      setStatus("Очікую вибір папки…");
+
+      try {
+        if (!("showDirectoryPicker" in window)) {
+          fallbackDownload();
+          return;
+        }
+
+        const directoryHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+        await writeTextFile(directoryHandle, INSTALLER_NAME, installerSource);
+
+        try {
+          const fileCount = await downloadProjectTo(directoryHandle);
+          setStatus(
+            `Готово: ${fileCount} файлів збережено у «${directoryHandle.name}». Тепер запусти одну команду нижче.`,
+            "success"
+          );
+        } catch (downloadError) {
+          console.warn("Project pre-download failed; installer will download it.", downloadError);
+          setStatus(
+            `Частину файлів не вдалося зберегти, але інсталятор готовий у «${directoryHandle.name}» і сам докачає проєкт.`,
+            "success"
+          );
+        }
+
+        commandBox.classList.add("visible");
+      } catch (error) {
+        if (error?.name === "AbortError") {
+          setStatus("Вибір папки скасовано. Нічого не було змінено.");
+        } else {
+          console.error(error);
+          setStatus("Не вдалося зберегти комплект. Спробуй Chrome/Chromium або напиши в підтримку.", "error");
+        }
+      } finally {
+        hideProgress();
+        setBusy(false);
+      }
+    }
+
+    async function copyCommand() {
+      try {
+        await navigator.clipboard.writeText(commandText.textContent);
+        copyButton.textContent = "Скопійовано";
+        setTimeout(() => {
+          copyButton.textContent = "Копіювати";
+        }, 1800);
+      } catch {
+        const range = document.createRange();
+        range.selectNodeContents(commandText);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+
+    installButton.addEventListener("click", install);
+    copyButton.addEventListener("click", copyCommand);
+  </script>
+</body>
+</html>
