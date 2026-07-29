@@ -1,0 +1,10 @@
+{
+  "hero": "alchemist",
+  "version": 1,
+  "chromaKey": "0x52e84d",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/alchemist/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/alchemist/sprite-v1.png",
+  "aspectRatio": 1
+}

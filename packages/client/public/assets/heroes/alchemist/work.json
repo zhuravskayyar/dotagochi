@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-29T17:36:36.571Z",
+  "work": {
+    "importedAt": "2026-07-29T17:36:36.571Z",
+    "version": 1,
+    "chromaKey": "0x52e84d",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "0b8802a7-3807-4e44-9608-68c721ab76f2.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/alchemist/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/alchemist/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-29T17:36:36.571Z",
+      "version": 1,
+      "chromaKey": "0x52e84d",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "0b8802a7-3807-4e44-9608-68c721ab76f2.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/alchemist/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/alchemist/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}

@@ -1,4 +1,9 @@
 {
+  "alchemist": {
+    "src": "assets/heroes/alchemist/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/alchemist/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "drow_ranger": {
     "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
