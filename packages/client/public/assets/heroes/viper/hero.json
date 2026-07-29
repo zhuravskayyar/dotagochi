@@ -1,0 +1,9 @@
+{
+  "id": 47,
+  "slug": "viper",
+  "internalName": "npc_dota_hero_viper",
+  "name": "Viper",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/viper/portrait.png"
+}

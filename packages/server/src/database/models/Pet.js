@@ -6,7 +6,12 @@ export const Pet = {
   },
 
   createForUser(userId) {
-    db.prepare('INSERT INTO pets (user_id) VALUES (?)').run(userId);
+    const now = Date.now();
+    db.prepare(
+      `INSERT INTO pets (
+        user_id, name, life_stage, stage_started_at_ms, last_update_ms
+      ) VALUES (?, ?, 'egg', ?, ?)`
+    ).run(userId, 'Таємниче яйце', now, now);
     return Pet.findByUserId(userId);
   },
 

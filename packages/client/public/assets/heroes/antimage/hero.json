@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "slug": "antimage",
+  "internalName": "npc_dota_hero_antimage",
+  "name": "Anti-Mage",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/antimage/portrait.png"
+}

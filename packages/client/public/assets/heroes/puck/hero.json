@@ -1,0 +1,9 @@
+{
+  "id": 13,
+  "slug": "puck",
+  "internalName": "npc_dota_hero_puck",
+  "name": "Puck",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/puck/portrait.png"
+}

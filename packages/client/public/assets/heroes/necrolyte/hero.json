@@ -1,0 +1,9 @@
+{
+  "id": 36,
+  "slug": "necrolyte",
+  "internalName": "npc_dota_hero_necrolyte",
+  "name": "Necrophos",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/necrolyte/portrait.png"
+}

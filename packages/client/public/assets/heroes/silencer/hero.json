@@ -1,0 +1,9 @@
+{
+  "id": 75,
+  "slug": "silencer",
+  "internalName": "npc_dota_hero_silencer",
+  "name": "Silencer",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/silencer/portrait.png"
+}

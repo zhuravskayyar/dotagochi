@@ -1,0 +1,9 @@
+{
+  "id": 136,
+  "slug": "marci",
+  "internalName": "npc_dota_hero_marci",
+  "name": "Marci",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/marci/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 6,
+  "slug": "drow_ranger",
+  "internalName": "npc_dota_hero_drow_ranger",
+  "name": "Drow Ranger",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/drow_ranger/portrait.png"
+}

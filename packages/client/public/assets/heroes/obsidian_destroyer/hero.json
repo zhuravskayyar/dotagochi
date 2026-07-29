@@ -1,0 +1,9 @@
+{
+  "id": 76,
+  "slug": "obsidian_destroyer",
+  "internalName": "npc_dota_hero_obsidian_destroyer",
+  "name": "Outworld Destroyer",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/obsidian_destroyer/portrait.png"
+}

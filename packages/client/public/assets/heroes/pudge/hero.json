@@ -1,0 +1,9 @@
+{
+  "id": 14,
+  "slug": "pudge",
+  "internalName": "npc_dota_hero_pudge",
+  "name": "Pudge",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/pudge/portrait.png"
+}

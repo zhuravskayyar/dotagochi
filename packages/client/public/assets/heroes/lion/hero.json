@@ -1,0 +1,9 @@
+{
+  "id": 26,
+  "slug": "lion",
+  "internalName": "npc_dota_hero_lion",
+  "name": "Lion",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/lion/portrait.png"
+}

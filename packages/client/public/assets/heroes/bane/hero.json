@@ -1,0 +1,9 @@
+{
+  "id": 3,
+  "slug": "bane",
+  "internalName": "npc_dota_hero_bane",
+  "name": "Bane",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/bane/portrait.png"
+}

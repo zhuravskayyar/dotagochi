@@ -1,0 +1,9 @@
+{
+  "id": 91,
+  "slug": "wisp",
+  "internalName": "npc_dota_hero_wisp",
+  "name": "Io",
+  "primaryAttribute": 3,
+  "complexity": 3,
+  "portrait": "/assets/heroes/wisp/portrait.png"
+}

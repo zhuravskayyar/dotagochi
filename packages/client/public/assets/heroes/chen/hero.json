@@ -1,0 +1,9 @@
+{
+  "id": 66,
+  "slug": "chen",
+  "internalName": "npc_dota_hero_chen",
+  "name": "Chen",
+  "primaryAttribute": 2,
+  "complexity": 3,
+  "portrait": "/assets/heroes/chen/portrait.png"
+}

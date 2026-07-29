@@ -1,0 +1,9 @@
+{
+  "id": 8,
+  "slug": "juggernaut",
+  "internalName": "npc_dota_hero_juggernaut",
+  "name": "Juggernaut",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/juggernaut/portrait.png"
+}

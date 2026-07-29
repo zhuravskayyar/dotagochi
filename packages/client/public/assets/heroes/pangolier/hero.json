@@ -1,0 +1,9 @@
+{
+  "id": 120,
+  "slug": "pangolier",
+  "internalName": "npc_dota_hero_pangolier",
+  "name": "Pangolier",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/pangolier/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 55,
+  "slug": "dark_seer",
+  "internalName": "npc_dota_hero_dark_seer",
+  "name": "Dark Seer",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/dark_seer/portrait.png"
+}

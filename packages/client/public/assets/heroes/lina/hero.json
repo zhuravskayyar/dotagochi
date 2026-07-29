@@ -1,0 +1,9 @@
+{
+  "id": 25,
+  "slug": "lina",
+  "internalName": "npc_dota_hero_lina",
+  "name": "Lina",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/lina/portrait.png"
+}

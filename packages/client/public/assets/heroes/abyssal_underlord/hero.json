@@ -1,0 +1,9 @@
+{
+  "id": 108,
+  "slug": "abyssal_underlord",
+  "internalName": "npc_dota_hero_abyssal_underlord",
+  "name": "Underlord",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/abyssal_underlord/portrait.png"
+}

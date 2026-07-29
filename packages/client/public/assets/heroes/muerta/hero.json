@@ -1,0 +1,9 @@
+{
+  "id": 138,
+  "slug": "muerta",
+  "internalName": "npc_dota_hero_muerta",
+  "name": "Muerta",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/muerta/portrait.png"
+}

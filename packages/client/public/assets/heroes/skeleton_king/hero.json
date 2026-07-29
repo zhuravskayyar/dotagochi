@@ -1,0 +1,9 @@
+{
+  "id": 42,
+  "slug": "skeleton_king",
+  "internalName": "npc_dota_hero_skeleton_king",
+  "name": "Wraith King",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/skeleton_king/portrait.png"
+}

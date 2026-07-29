@@ -1,0 +1,9 @@
+{
+  "id": 53,
+  "slug": "furion",
+  "internalName": "npc_dota_hero_furion",
+  "name": "Nature's Prophet",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/furion/portrait.png"
+}

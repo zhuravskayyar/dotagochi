@@ -1,0 +1,9 @@
+{
+  "id": 71,
+  "slug": "spirit_breaker",
+  "internalName": "npc_dota_hero_spirit_breaker",
+  "name": "Spirit Breaker",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/spirit_breaker/portrait.png"
+}

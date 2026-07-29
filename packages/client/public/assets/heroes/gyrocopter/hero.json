@@ -1,0 +1,9 @@
+{
+  "id": 72,
+  "slug": "gyrocopter",
+  "internalName": "npc_dota_hero_gyrocopter",
+  "name": "Gyrocopter",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/gyrocopter/portrait.png"
+}

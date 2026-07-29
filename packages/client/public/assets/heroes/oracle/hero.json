@@ -1,0 +1,9 @@
+{
+  "id": 111,
+  "slug": "oracle",
+  "internalName": "npc_dota_hero_oracle",
+  "name": "Oracle",
+  "primaryAttribute": 2,
+  "complexity": 3,
+  "portrait": "/assets/heroes/oracle/portrait.png"
+}

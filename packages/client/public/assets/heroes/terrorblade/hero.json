@@ -1,0 +1,9 @@
+{
+  "id": 109,
+  "slug": "terrorblade",
+  "internalName": "npc_dota_hero_terrorblade",
+  "name": "Terrorblade",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/terrorblade/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 2,
+  "slug": "axe",
+  "internalName": "npc_dota_hero_axe",
+  "name": "Axe",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/axe/portrait.png"
+}

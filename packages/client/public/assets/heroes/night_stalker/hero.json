@@ -1,0 +1,9 @@
+{
+  "id": 60,
+  "slug": "night_stalker",
+  "internalName": "npc_dota_hero_night_stalker",
+  "name": "Night Stalker",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/night_stalker/portrait.png"
+}

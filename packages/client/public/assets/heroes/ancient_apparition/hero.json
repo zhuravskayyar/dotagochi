@@ -1,0 +1,9 @@
+{
+  "id": 68,
+  "slug": "ancient_apparition",
+  "internalName": "npc_dota_hero_ancient_apparition",
+  "name": "Ancient Apparition",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/ancient_apparition/portrait.png"
+}

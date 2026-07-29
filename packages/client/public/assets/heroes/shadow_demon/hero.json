@@ -1,0 +1,9 @@
+{
+  "id": 79,
+  "slug": "shadow_demon",
+  "internalName": "npc_dota_hero_shadow_demon",
+  "name": "Shadow Demon",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/shadow_demon/portrait.png"
+}

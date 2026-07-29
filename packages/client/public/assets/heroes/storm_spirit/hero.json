@@ -1,0 +1,9 @@
+{
+  "id": 17,
+  "slug": "storm_spirit",
+  "internalName": "npc_dota_hero_storm_spirit",
+  "name": "Storm Spirit",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/storm_spirit/portrait.png"
+}

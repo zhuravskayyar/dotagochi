@@ -1,0 +1,9 @@
+{
+  "id": 49,
+  "slug": "dragon_knight",
+  "internalName": "npc_dota_hero_dragon_knight",
+  "name": "Dragon Knight",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/dragon_knight/portrait.png"
+}

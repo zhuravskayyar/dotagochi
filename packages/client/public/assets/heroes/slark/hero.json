@@ -1,0 +1,9 @@
+{
+  "id": 93,
+  "slug": "slark",
+  "internalName": "npc_dota_hero_slark",
+  "name": "Slark",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/slark/portrait.png"
+}

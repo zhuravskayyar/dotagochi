@@ -1,0 +1,9 @@
+{
+  "id": 112,
+  "slug": "winter_wyvern",
+  "internalName": "npc_dota_hero_winter_wyvern",
+  "name": "Winter Wyvern",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/winter_wyvern/portrait.png"
+}

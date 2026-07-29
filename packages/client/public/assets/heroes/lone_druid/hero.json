@@ -1,0 +1,9 @@
+{
+  "id": 80,
+  "slug": "lone_druid",
+  "internalName": "npc_dota_hero_lone_druid",
+  "name": "Lone Druid",
+  "primaryAttribute": 1,
+  "complexity": 3,
+  "portrait": "/assets/heroes/lone_druid/portrait.png"
+}

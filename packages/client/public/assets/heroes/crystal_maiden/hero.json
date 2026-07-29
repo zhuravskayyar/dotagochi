@@ -1,0 +1,9 @@
+{
+  "id": 5,
+  "slug": "crystal_maiden",
+  "internalName": "npc_dota_hero_crystal_maiden",
+  "name": "Crystal Maiden",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/crystal_maiden/portrait.png"
+}

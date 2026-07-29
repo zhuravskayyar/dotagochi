@@ -1,0 +1,9 @@
+{
+  "id": 96,
+  "slug": "centaur",
+  "internalName": "npc_dota_hero_centaur",
+  "name": "Centaur Warrunner",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/centaur/portrait.png"
+}

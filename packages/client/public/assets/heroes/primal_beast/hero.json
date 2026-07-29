@@ -1,0 +1,9 @@
+{
+  "id": 137,
+  "slug": "primal_beast",
+  "internalName": "npc_dota_hero_primal_beast",
+  "name": "Primal Beast",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/primal_beast/portrait.png"
+}

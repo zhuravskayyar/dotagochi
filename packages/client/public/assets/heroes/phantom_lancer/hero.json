@@ -1,0 +1,9 @@
+{
+  "id": 12,
+  "slug": "phantom_lancer",
+  "internalName": "npc_dota_hero_phantom_lancer",
+  "name": "Phantom Lancer",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/phantom_lancer/portrait.png"
+}

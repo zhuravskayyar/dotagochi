@@ -1,0 +1,9 @@
+{
+  "id": 110,
+  "slug": "phoenix",
+  "internalName": "npc_dota_hero_phoenix",
+  "name": "Phoenix",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/phoenix/portrait.png"
+}

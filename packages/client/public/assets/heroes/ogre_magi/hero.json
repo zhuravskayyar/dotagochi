@@ -1,0 +1,9 @@
+{
+  "id": 84,
+  "slug": "ogre_magi",
+  "internalName": "npc_dota_hero_ogre_magi",
+  "name": "Ogre Magi",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/ogre_magi/portrait.png"
+}

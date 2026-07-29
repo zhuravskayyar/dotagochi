@@ -1,0 +1,9 @@
+{
+  "id": 89,
+  "slug": "naga_siren",
+  "internalName": "npc_dota_hero_naga_siren",
+  "name": "Naga Siren",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/naga_siren/portrait.png"
+}

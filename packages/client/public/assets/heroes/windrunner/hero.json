@@ -1,0 +1,9 @@
+{
+  "id": 21,
+  "slug": "windrunner",
+  "internalName": "npc_dota_hero_windrunner",
+  "name": "Windranger",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/windrunner/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 63,
+  "slug": "weaver",
+  "internalName": "npc_dota_hero_weaver",
+  "name": "Weaver",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/weaver/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 104,
+  "slug": "legion_commander",
+  "internalName": "npc_dota_hero_legion_commander",
+  "name": "Legion Commander",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/legion_commander/portrait.png"
+}

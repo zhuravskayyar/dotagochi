@@ -1,0 +1,9 @@
+{
+  "id": 44,
+  "slug": "phantom_assassin",
+  "internalName": "npc_dota_hero_phantom_assassin",
+  "name": "Phantom Assassin",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/phantom_assassin/portrait.png"
+}

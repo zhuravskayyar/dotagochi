@@ -1,0 +1,9 @@
+{
+  "id": 82,
+  "slug": "meepo",
+  "internalName": "npc_dota_hero_meepo",
+  "name": "Meepo",
+  "primaryAttribute": 1,
+  "complexity": 3,
+  "portrait": "/assets/heroes/meepo/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 87,
+  "slug": "disruptor",
+  "internalName": "npc_dota_hero_disruptor",
+  "name": "Disruptor",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/disruptor/portrait.png"
+}

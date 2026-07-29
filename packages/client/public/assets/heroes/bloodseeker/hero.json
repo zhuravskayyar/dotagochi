@@ -1,0 +1,9 @@
+{
+  "id": 4,
+  "slug": "bloodseeker",
+  "internalName": "npc_dota_hero_bloodseeker",
+  "name": "Bloodseeker",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/bloodseeker/portrait.png"
+}

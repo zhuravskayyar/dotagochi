@@ -1,0 +1,9 @@
+{
+  "id": 155,
+  "slug": "largo",
+  "internalName": "npc_dota_hero_largo",
+  "name": "Largo",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/largo/portrait.png"
+}

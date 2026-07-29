@@ -8,5 +8,11 @@ export function useNotifications(userId) {
     notificationsApi.getSettings(userId).then(setSettings).catch(() => setSettings(null));
   }, [userId]);
 
-  return { settings, setSettings };
+  const updateSettings = async (values) => {
+    const next = await notificationsApi.updateSettings(userId, values);
+    setSettings(next);
+    return next;
+  };
+
+  return { settings, setSettings, updateSettings };
 }

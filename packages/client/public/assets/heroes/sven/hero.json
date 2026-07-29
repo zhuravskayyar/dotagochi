@@ -1,0 +1,9 @@
+{
+  "id": 18,
+  "slug": "sven",
+  "internalName": "npc_dota_hero_sven",
+  "name": "Sven",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/sven/portrait.png"
+}

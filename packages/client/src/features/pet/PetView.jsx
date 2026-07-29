@@ -3,10 +3,27 @@ import { useTelegram } from '../../shared/telegram/useTelegram.js';
 import { usePet } from './usePet.js';
 import { ProgressBar } from '../../design-system/components/ProgressBar.jsx';
 import { ChromaKeyVideo } from './ChromaKeyVideo.jsx';
+import { EggGenerationView } from '../egg-generation/EggGenerationView.jsx';
+import { useNotifications } from '../notifications/useNotifications.js';
 
 const actions = [
   { id: 'feed', label: 'ЇЖА' }, { id: 'train', label: 'ТРЕНУВАННЯ' },
   { id: 'heal', label: 'ЛІКУВАННЯ' }, { id: 'sleep', label: 'СОН' }, { id: 'quest', label: 'КВЕСТ' },
+];
+
+const actionLessons = [
+  { id: 'feed', title: 'ЇЖА', text: '+25 ситості, +5 настрою, коштує 5 золота.' },
+  { id: 'train', title: 'ТРЕНУВАННЯ', text: '+15 XP, витрачає 20 енергії та 10 ситості.' },
+  { id: 'heal', title: 'ЛІКУВАННЯ', text: '+30 HP, коштує 10 золота.' },
+  { id: 'sleep', title: 'СОН', text: 'Вкладає героя спати або будить його. Сон відновлює енергію.' },
+  { id: 'quest', title: 'КВЕСТ', text: '+25 XP, +20 золота, але витрачає енергію та ситість.' },
+];
+
+const buttonLessons = [
+  { title: 'STATUS', text: 'Показує всі характеристики та відкриває налаштування.' },
+  { title: 'SELECT', text: 'Повертає на головний екран вибору дії.' },
+  { title: 'DECIDE', text: 'Підтверджує та виконує вибрану верхню дію.' },
+  { title: 'CANCEL', text: 'Скасовує вибір, повертає на головний екран і вибирає їжу.' },
 ];
 
 const assetUrl = (path) => `${import.meta.env.BASE_URL}assets/ui/${path}`;
@@ -33,13 +50,18 @@ function playUiClick(accent = false) {
 
 export function PetView() {
   const { userId } = useTelegram();
-  const { pet, loading, error, message, action } = usePet(userId);
+  const { pet, loading, error, message, action, reload } = usePet(userId);
+  const { settings: notificationSettings, updateSettings } = useNotifications(userId);
   const [view, setView] = useState('home');
   const [selectedAction, setSelectedAction] = useState(0);
 
   if (loading) return <div className="app-loading">Завантаження стану героя...</div>;
   if (error) return <div className="app-loading">Не вдалося завантажити стан героя</div>;
   if (!pet) return <div className="app-loading">Героя не знайдено</div>;
+
+  if (pet.life_stage === 'egg') {
+    return <EggGenerationView userId={userId} onHatched={reload} />;
+  }
 
   const runAction = async (id) => { await action(id); };
   const runSelectedAction = () => {
@@ -58,6 +80,8 @@ export function PetView() {
   const armor = 12 + heroLevel * 3;
   const damage = 18 + heroLevel * 5;
   const combo = Math.max(1, Math.floor(mood / 20));
+  const heroSlug = pet.hero_slug || 'pudge';
+  const isAnimatedPudge = heroSlug === 'pudge';
   const rpgStats = [
     { id: 'xp', label: 'XP', value: `${xp} / 100` },
     { id: 'armor', label: 'ARMOR', value: armor },
@@ -72,11 +96,14 @@ export function PetView() {
         <div className="action-grid">
           {actions.map((item, index) => (
             <button className={`action-button ${selectedAction === index ? 'is-selected' : ''}`} key={item.id}
-              onClick={() => { playUiClick(index === selectedAction); setSelectedAction(index); runAction(item.id); }}>
+              onClick={() => { playUiClick(index === selectedAction); setSelectedAction(index); }}>
               <img className="action-icon" src={assetUrl(`icons-v1/${item.id}.png`)} alt="" />
               <span>{item.label}</span>
             </button>
           ))}
+        </div>
+        <div className="selection-hint">
+          ОБРАНО: <strong>{actions[selectedAction].label}</strong> · НАТИСНИ DECIDE
         </div>
         <div className="hero-overview">
           <div className="level-chip">
@@ -98,10 +125,21 @@ export function PetView() {
               <div className="stage-smoke stage-smoke--one" />
               <div className="stage-smoke stage-smoke--two" />
               <div className="crt-overlay" aria-hidden="true"><i /></div>
-              <ChromaKeyVideo
-                src={assetUrl('characters/pudge-chroma-v1.mp4')}
-                className={`${pet.is_sleeping ? 'is-sleeping' : ''} ${hunger < 30 ? 'is-hungry' : ''}`}
-              />
+              {isAnimatedPudge ? (
+                <ChromaKeyVideo
+                  src={assetUrl('characters/pudge-chroma-v1.mp4')}
+                  sleepSrc={assetUrl('characters/pudge-sleep-v1.mp4')}
+                  wakeSrc={assetUrl('characters/pudge-wake-v1.mp4')}
+                  sleeping={Boolean(pet.is_sleeping)}
+                  className={`${pet.is_sleeping ? 'is-sleeping' : ''} ${hunger < 30 ? 'is-hungry' : ''}`}
+                />
+              ) : (
+                <img
+                  className={`hero-portrait ${pet.is_sleeping ? 'is-sleeping' : ''}`}
+                  src={`${import.meta.env.BASE_URL}assets/heroes/${heroSlug}/portrait.png`}
+                  alt={pet.hero_name || pet.name}
+                />
+              )}
               <div className="pet-name">{pet.name}</div>
             </div>
             <div className="stats-grid">
@@ -120,7 +158,7 @@ export function PetView() {
               ))}
             </div>
           </div>
-        ) : (
+        ) : view === 'status' ? (
           <div className="status-screen">
             <div className="status-row"><span>ІМ’Я</span><strong>{pet.name}</strong></div>
             <div className="status-row"><span>СТАН</span><strong>{pet.is_sleeping ? 'СОН' : 'ГОТОВИЙ'}</strong></div>
@@ -130,6 +168,63 @@ export function PetView() {
             <div className="status-row"><span>ЕНЕРГІЯ</span><strong>{pet.energy}/100</strong></div>
             <div className="status-row"><span>ДОСВІД</span><strong>{pet.xp}/100</strong></div>
             <div className="status-row"><span>ЗОЛОТО</span><strong>{pet.gold}</strong></div>
+            <div className="status-row">
+              <span>СТАДІЯ</span><strong>{pet.life_stage?.toUpperCase()}</strong>
+            </div>
+            <button
+              className={`notification-toggle ${notificationSettings?.enabled ? 'is-on' : ''}`}
+              type="button"
+              disabled={!notificationSettings}
+              onClick={() => updateSettings({ enabled: !notificationSettings.enabled })}
+            >
+              PUSH: {notificationSettings?.enabled ? 'УВІМКНЕНО' : 'ВИМКНЕНО'}
+            </button>
+            <button
+              className="settings-open-button"
+              type="button"
+              onClick={() => { playUiClick(); setView('settings'); }}
+            >
+              НАЛАШТУВАННЯ ТА НАВЧАННЯ
+            </button>
+          </div>
+        ) : (
+          <div className="settings-screen">
+            <div className="settings-heading">
+              <span>НАЛАШТУВАННЯ</span>
+              <strong>ЯК ГРАТИ</strong>
+            </div>
+            <button
+              className={`notification-toggle ${notificationSettings?.enabled ? 'is-on' : ''}`}
+              type="button"
+              disabled={!notificationSettings}
+              onClick={() => updateSettings({ enabled: !notificationSettings.enabled })}
+            >
+              PUSH-СПОВІЩЕННЯ: {notificationSettings?.enabled ? 'УВІМКНЕНО' : 'ВИМКНЕНО'}
+            </button>
+            <section className="tutorial-section">
+              <h2>КНОПКИ КОРПУСУ</h2>
+              {buttonLessons.map((lesson) => (
+                <div className="tutorial-row" key={lesson.title}>
+                  <strong>{lesson.title}</strong><span>{lesson.text}</span>
+                </div>
+              ))}
+            </section>
+            <section className="tutorial-section">
+              <h2>ДІЇ ГЕРОЯ</h2>
+              {actionLessons.map((lesson) => (
+                <div className="tutorial-row tutorial-row--action" key={lesson.id}>
+                  <img src={assetUrl(`icons-v1/${lesson.id}.png`)} alt="" />
+                  <strong>{lesson.title}</strong><span>{lesson.text}</span>
+                </div>
+              ))}
+            </section>
+            <button
+              className="settings-back-button"
+              type="button"
+              onClick={() => { playUiClick(); setView('status'); }}
+            >
+              НАЗАД ДО СТАТУСУ
+            </button>
           </div>
         )}
         <div className={`message ${message ? 'is-visible' : ''}`}>{message}</div>

@@ -1,0 +1,9 @@
+{
+  "id": 97,
+  "slug": "magnataur",
+  "internalName": "npc_dota_hero_magnataur",
+  "name": "Magnus",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/magnataur/portrait.png"
+}

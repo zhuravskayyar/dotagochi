@@ -1,0 +1,9 @@
+{
+  "id": 135,
+  "slug": "dawnbreaker",
+  "internalName": "npc_dota_hero_dawnbreaker",
+  "name": "Dawnbreaker",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/dawnbreaker/portrait.png"
+}

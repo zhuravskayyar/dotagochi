@@ -1,0 +1,9 @@
+{
+  "id": 126,
+  "slug": "void_spirit",
+  "internalName": "npc_dota_hero_void_spirit",
+  "name": "Void Spirit",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/void_spirit/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 78,
+  "slug": "brewmaster",
+  "internalName": "npc_dota_hero_brewmaster",
+  "name": "Brewmaster",
+  "primaryAttribute": 3,
+  "complexity": 3,
+  "portrait": "/assets/heroes/brewmaster/portrait.png"
+}

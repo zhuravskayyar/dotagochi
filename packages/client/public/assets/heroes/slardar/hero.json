@@ -1,0 +1,9 @@
+{
+  "id": 28,
+  "slug": "slardar",
+  "internalName": "npc_dota_hero_slardar",
+  "name": "Slardar",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/slardar/portrait.png"
+}

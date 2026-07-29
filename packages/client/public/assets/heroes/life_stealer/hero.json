@@ -1,0 +1,9 @@
+{
+  "id": 54,
+  "slug": "life_stealer",
+  "internalName": "npc_dota_hero_life_stealer",
+  "name": "Lifestealer",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/life_stealer/portrait.png"
+}

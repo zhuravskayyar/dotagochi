@@ -1,0 +1,9 @@
+{
+  "id": 58,
+  "slug": "enchantress",
+  "internalName": "npc_dota_hero_enchantress",
+  "name": "Enchantress",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/enchantress/portrait.png"
+}

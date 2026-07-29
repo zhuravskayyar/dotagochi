@@ -1,0 +1,9 @@
+{
+  "id": 105,
+  "slug": "techies",
+  "internalName": "npc_dota_hero_techies",
+  "name": "Techies",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/techies/portrait.png"
+}

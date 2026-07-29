@@ -1,0 +1,9 @@
+{
+  "id": 46,
+  "slug": "templar_assassin",
+  "internalName": "npc_dota_hero_templar_assassin",
+  "name": "Templar Assassin",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/templar_assassin/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 102,
+  "slug": "abaddon",
+  "internalName": "npc_dota_hero_abaddon",
+  "name": "Abaddon",
+  "primaryAttribute": 3,
+  "complexity": 1,
+  "portrait": "/assets/heroes/abaddon/portrait.png"
+}

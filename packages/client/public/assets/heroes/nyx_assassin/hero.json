@@ -1,0 +1,9 @@
+{
+  "id": 88,
+  "slug": "nyx_assassin",
+  "internalName": "npc_dota_hero_nyx_assassin",
+  "name": "Nyx Assassin",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/nyx_assassin/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 39,
+  "slug": "queenofpain",
+  "internalName": "npc_dota_hero_queenofpain",
+  "name": "Queen of Pain",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/queenofpain/portrait.png"
+}

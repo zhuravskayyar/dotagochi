@@ -1,0 +1,9 @@
+{
+  "id": 32,
+  "slug": "riki",
+  "internalName": "npc_dota_hero_riki",
+  "name": "Riki",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/riki/portrait.png"
+}

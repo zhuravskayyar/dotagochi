@@ -1,0 +1,9 @@
+{
+  "id": 16,
+  "slug": "sand_king",
+  "internalName": "npc_dota_hero_sand_king",
+  "name": "Sand King",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/sand_king/portrait.png"
+}

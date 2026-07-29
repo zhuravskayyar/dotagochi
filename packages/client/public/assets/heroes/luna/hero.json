@@ -1,0 +1,9 @@
+{
+  "id": 48,
+  "slug": "luna",
+  "internalName": "npc_dota_hero_luna",
+  "name": "Luna",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/luna/portrait.png"
+}

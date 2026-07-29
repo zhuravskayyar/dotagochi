@@ -1,0 +1,9 @@
+{
+  "id": 85,
+  "slug": "undying",
+  "internalName": "npc_dota_hero_undying",
+  "name": "Undying",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/undying/portrait.png"
+}

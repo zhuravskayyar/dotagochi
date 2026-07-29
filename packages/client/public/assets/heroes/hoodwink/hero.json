@@ -1,0 +1,9 @@
+{
+  "id": 123,
+  "slug": "hoodwink",
+  "internalName": "npc_dota_hero_hoodwink",
+  "name": "Hoodwink",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/hoodwink/portrait.png"
+}

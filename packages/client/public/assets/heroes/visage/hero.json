@@ -1,0 +1,9 @@
+{
+  "id": 92,
+  "slug": "visage",
+  "internalName": "npc_dota_hero_visage",
+  "name": "Visage",
+  "primaryAttribute": 3,
+  "complexity": 3,
+  "portrait": "/assets/heroes/visage/portrait.png"
+}

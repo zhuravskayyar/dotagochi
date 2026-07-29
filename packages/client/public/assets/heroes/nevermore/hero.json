@@ -1,0 +1,9 @@
+{
+  "id": 11,
+  "slug": "nevermore",
+  "internalName": "npc_dota_hero_nevermore",
+  "name": "Shadow Fiend",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/nevermore/portrait.png"
+}

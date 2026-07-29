@@ -1,0 +1,9 @@
+{
+  "id": 43,
+  "slug": "death_prophet",
+  "internalName": "npc_dota_hero_death_prophet",
+  "name": "Death Prophet",
+  "primaryAttribute": 3,
+  "complexity": 1,
+  "portrait": "/assets/heroes/death_prophet/portrait.png"
+}

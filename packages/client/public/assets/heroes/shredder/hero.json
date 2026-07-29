@@ -1,0 +1,9 @@
+{
+  "id": 98,
+  "slug": "shredder",
+  "internalName": "npc_dota_hero_shredder",
+  "name": "Timbersaw",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/shredder/portrait.png"
+}

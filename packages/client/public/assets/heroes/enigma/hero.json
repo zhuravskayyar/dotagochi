@@ -1,0 +1,9 @@
+{
+  "id": 33,
+  "slug": "enigma",
+  "internalName": "npc_dota_hero_enigma",
+  "name": "Enigma",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/enigma/portrait.png"
+}

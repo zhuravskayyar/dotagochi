@@ -1,0 +1,9 @@
+{
+  "id": 73,
+  "slug": "alchemist",
+  "internalName": "npc_dota_hero_alchemist",
+  "name": "Alchemist",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/alchemist/portrait.png"
+}

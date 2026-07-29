@@ -1,0 +1,9 @@
+{
+  "id": 30,
+  "slug": "witch_doctor",
+  "internalName": "npc_dota_hero_witch_doctor",
+  "name": "Witch Doctor",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/witch_doctor/portrait.png"
+}

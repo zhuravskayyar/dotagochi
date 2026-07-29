@@ -1,0 +1,9 @@
+{
+  "id": 65,
+  "slug": "batrider",
+  "internalName": "npc_dota_hero_batrider",
+  "name": "Batrider",
+  "primaryAttribute": 3,
+  "complexity": 2,
+  "portrait": "/assets/heroes/batrider/portrait.png"
+}

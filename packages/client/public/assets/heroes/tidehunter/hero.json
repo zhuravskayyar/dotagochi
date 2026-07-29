@@ -1,0 +1,9 @@
+{
+  "id": 29,
+  "slug": "tidehunter",
+  "internalName": "npc_dota_hero_tidehunter",
+  "name": "Tidehunter",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/tidehunter/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 106,
+  "slug": "ember_spirit",
+  "internalName": "npc_dota_hero_ember_spirit",
+  "name": "Ember Spirit",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/ember_spirit/portrait.png"
+}

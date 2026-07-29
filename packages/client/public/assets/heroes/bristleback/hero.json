@@ -1,0 +1,9 @@
+{
+  "id": 99,
+  "slug": "bristleback",
+  "internalName": "npc_dota_hero_bristleback",
+  "name": "Bristleback",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/bristleback/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 64,
+  "slug": "jakiro",
+  "internalName": "npc_dota_hero_jakiro",
+  "name": "Jakiro",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/jakiro/portrait.png"
+}

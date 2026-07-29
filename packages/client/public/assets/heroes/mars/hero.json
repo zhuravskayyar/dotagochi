@@ -1,0 +1,9 @@
+{
+  "id": 129,
+  "slug": "mars",
+  "internalName": "npc_dota_hero_mars",
+  "name": "Mars",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/mars/portrait.png"
+}

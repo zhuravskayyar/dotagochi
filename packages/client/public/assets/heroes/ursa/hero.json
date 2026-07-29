@@ -1,0 +1,9 @@
+{
+  "id": 70,
+  "slug": "ursa",
+  "internalName": "npc_dota_hero_ursa",
+  "name": "Ursa",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/ursa/portrait.png"
+}

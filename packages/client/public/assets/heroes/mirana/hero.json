@@ -1,0 +1,9 @@
+{
+  "id": 9,
+  "slug": "mirana",
+  "internalName": "npc_dota_hero_mirana",
+  "name": "Mirana",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/mirana/portrait.png"
+}

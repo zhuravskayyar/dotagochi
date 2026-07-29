@@ -1,0 +1,9 @@
+{
+  "id": 27,
+  "slug": "shadow_shaman",
+  "internalName": "npc_dota_hero_shadow_shaman",
+  "name": "Shadow Shaman",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/shadow_shaman/portrait.png"
+}

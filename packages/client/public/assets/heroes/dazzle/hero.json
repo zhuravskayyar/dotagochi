@@ -1,0 +1,9 @@
+{
+  "id": 50,
+  "slug": "dazzle",
+  "internalName": "npc_dota_hero_dazzle",
+  "name": "Dazzle",
+  "primaryAttribute": 3,
+  "complexity": 1,
+  "portrait": "/assets/heroes/dazzle/portrait.png"
+}

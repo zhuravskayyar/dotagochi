@@ -1,0 +1,9 @@
+{
+  "id": 52,
+  "slug": "leshrac",
+  "internalName": "npc_dota_hero_leshrac",
+  "name": "Leshrac",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/leshrac/portrait.png"
+}

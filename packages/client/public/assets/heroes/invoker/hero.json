@@ -1,0 +1,9 @@
+{
+  "id": 74,
+  "slug": "invoker",
+  "internalName": "npc_dota_hero_invoker",
+  "name": "Invoker",
+  "primaryAttribute": 2,
+  "complexity": 3,
+  "portrait": "/assets/heroes/invoker/portrait.png"
+}

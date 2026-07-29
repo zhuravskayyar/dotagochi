@@ -1,0 +1,9 @@
+{
+  "id": 37,
+  "slug": "warlock",
+  "internalName": "npc_dota_hero_warlock",
+  "name": "Warlock",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/warlock/portrait.png"
+}

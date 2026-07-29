@@ -1,0 +1,9 @@
+{
+  "id": 15,
+  "slug": "razor",
+  "internalName": "npc_dota_hero_razor",
+  "name": "Razor",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/razor/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 81,
+  "slug": "chaos_knight",
+  "internalName": "npc_dota_hero_chaos_knight",
+  "name": "Chaos Knight",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/chaos_knight/portrait.png"
+}

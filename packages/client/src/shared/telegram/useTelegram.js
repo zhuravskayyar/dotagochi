@@ -1,9 +1,18 @@
 import { useEffect, useState } from 'react';
 import { getTelegramWebApp } from './webApp.js';
 
-const fallbackUserId = import.meta.env.VITE_DEV_USER_ID || 'dev-user';
+const configuredFallbackUserId = import.meta.env.VITE_DEV_USER_ID || 'dev-user';
+
+function getFallbackUserId() {
+  if (!import.meta.env.DEV || typeof window === 'undefined') {
+    return configuredFallbackUserId;
+  }
+  return new URLSearchParams(window.location.search).get('devUser')
+    || configuredFallbackUserId;
+}
 
 export function useTelegram() {
+  const fallbackUserId = getFallbackUserId();
   const [isReady, setIsReady] = useState(false);
   const [userId, setUserId] = useState(fallbackUserId);
 

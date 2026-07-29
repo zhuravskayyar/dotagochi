@@ -1,0 +1,9 @@
+{
+  "id": 119,
+  "slug": "dark_willow",
+  "internalName": "npc_dota_hero_dark_willow",
+  "name": "Dark Willow",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/dark_willow/portrait.png"
+}

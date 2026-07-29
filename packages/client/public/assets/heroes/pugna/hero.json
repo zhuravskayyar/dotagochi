@@ -1,0 +1,9 @@
+{
+  "id": 45,
+  "slug": "pugna",
+  "internalName": "npc_dota_hero_pugna",
+  "name": "Pugna",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/pugna/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 31,
+  "slug": "lich",
+  "internalName": "npc_dota_hero_lich",
+  "name": "Lich",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/lich/portrait.png"
+}

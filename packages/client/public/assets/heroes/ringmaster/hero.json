@@ -1,0 +1,9 @@
+{
+  "id": 131,
+  "slug": "ringmaster",
+  "internalName": "npc_dota_hero_ringmaster",
+  "name": "Ringmaster",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/ringmaster/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 67,
+  "slug": "spectre",
+  "internalName": "npc_dota_hero_spectre",
+  "name": "Spectre",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/spectre/portrait.png"
+}

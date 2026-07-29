@@ -143,9 +143,21 @@ function createCanvasRenderer(canvas, video) {
   };
 }
 
-export function ChromaKeyVideo({ src, className = '' }) {
+const SLEEP_LOOP_SECONDS = 2;
+const VIDEO_END_EPSILON = 0.06;
+
+export function ChromaKeyVideo({
+  src,
+  sleepSrc,
+  wakeSrc,
+  sleeping = false,
+  className = '',
+}) {
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
+  const phaseRef = useRef('idle');
+  const previousSleepingRef = useRef(null);
+  const playbackTickRef = useRef(() => {});
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -158,6 +170,7 @@ export function ChromaKeyVideo({ src, className = '' }) {
     const render = () => {
       if (!renderer || video.readyState < 2 || video.paused || video.ended) return;
       renderer();
+      playbackTickRef.current(video);
       if (typeof video.requestVideoFrameCallback === 'function') {
         const id = video.requestVideoFrameCallback(render);
         cancelFrame = () => video.cancelVideoFrameCallback(id);
@@ -179,7 +192,73 @@ export function ChromaKeyVideo({ src, className = '' }) {
       cancelFrame();
       video.removeEventListener('playing', start);
     };
-  }, [src]);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const switchClip = (nextSrc, phase, shouldLoop = false) => {
+      if (!nextSrc) return;
+      phaseRef.current = phase;
+      video.loop = shouldLoop;
+
+      if (video.getAttribute('src') !== nextSrc) {
+        video.src = nextSrc;
+      } else if (video.readyState >= 1) {
+        video.currentTime = 0;
+      }
+    };
+
+    const startSleepLoop = () => {
+      if (!Number.isFinite(video.duration)) return;
+      phaseRef.current = 'sleep-loop';
+      video.currentTime = Math.max(0, video.duration - SLEEP_LOOP_SECONDS);
+      const playPromise = video.play();
+      playPromise?.catch(() => {});
+    };
+
+    const returnToIdle = () => switchClip(src, 'idle', true);
+
+    playbackTickRef.current = (activeVideo) => {
+      if (!Number.isFinite(activeVideo.duration)) return;
+      const timeRemaining = activeVideo.duration - activeVideo.currentTime;
+
+      if (
+        (phaseRef.current === 'sleep-intro' || phaseRef.current === 'sleep-loop')
+        && timeRemaining <= VIDEO_END_EPSILON
+      ) {
+        startSleepLoop();
+      } else if (phaseRef.current === 'wake' && timeRemaining <= VIDEO_END_EPSILON) {
+        returnToIdle();
+      }
+    };
+
+    const handleEnded = () => {
+      if (phaseRef.current === 'sleep-intro' || phaseRef.current === 'sleep-loop') {
+        startSleepLoop();
+      } else if (phaseRef.current === 'wake') {
+        returnToIdle();
+      }
+    };
+
+    video.addEventListener('ended', handleEnded);
+
+    const wasSleeping = previousSleepingRef.current;
+    if (sleeping) {
+      switchClip(sleepSrc, 'sleep-intro');
+    } else if (wasSleeping) {
+      switchClip(wakeSrc, 'wake');
+    } else {
+      switchClip(src, 'idle', true);
+    }
+    previousSleepingRef.current = sleeping;
+
+    return () => {
+      video.removeEventListener('ended', handleEnded);
+      playbackTickRef.current = () => {};
+    };
+  }, [sleeping, sleepSrc, src, wakeSrc]);
 
   return (
     <div className={`chroma-character ${className}`.trim()}>

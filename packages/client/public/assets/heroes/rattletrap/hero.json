@@ -1,0 +1,9 @@
+{
+  "id": 51,
+  "slug": "rattletrap",
+  "internalName": "npc_dota_hero_rattletrap",
+  "name": "Clockwerk",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/rattletrap/portrait.png"
+}

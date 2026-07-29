@@ -1,0 +1,9 @@
+{
+  "id": 20,
+  "slug": "vengefulspirit",
+  "internalName": "npc_dota_hero_vengefulspirit",
+  "name": "Vengeful Spirit",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/vengefulspirit/portrait.png"
+}

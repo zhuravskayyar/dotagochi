@@ -1,0 +1,9 @@
+{
+  "id": 56,
+  "slug": "clinkz",
+  "internalName": "npc_dota_hero_clinkz",
+  "name": "Clinkz",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/clinkz/portrait.png"
+}

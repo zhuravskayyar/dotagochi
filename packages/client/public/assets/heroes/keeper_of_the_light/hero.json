@@ -1,0 +1,9 @@
+{
+  "id": 90,
+  "slug": "keeper_of_the_light",
+  "internalName": "npc_dota_hero_keeper_of_the_light",
+  "name": "Keeper of the Light",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/keeper_of_the_light/portrait.png"
+}

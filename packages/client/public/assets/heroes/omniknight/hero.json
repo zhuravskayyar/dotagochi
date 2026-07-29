@@ -1,0 +1,9 @@
+{
+  "id": 57,
+  "slug": "omniknight",
+  "internalName": "npc_dota_hero_omniknight",
+  "name": "Omniknight",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/omniknight/portrait.png"
+}

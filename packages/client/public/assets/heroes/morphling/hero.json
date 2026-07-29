@@ -1,0 +1,9 @@
+{
+  "id": 10,
+  "slug": "morphling",
+  "internalName": "npc_dota_hero_morphling",
+  "name": "Morphling",
+  "primaryAttribute": 1,
+  "complexity": 3,
+  "portrait": "/assets/heroes/morphling/portrait.png"
+}

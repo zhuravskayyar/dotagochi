@@ -1,0 +1,9 @@
+{
+  "id": 103,
+  "slug": "elder_titan",
+  "internalName": "npc_dota_hero_elder_titan",
+  "name": "Elder Titan",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/elder_titan/portrait.png"
+}

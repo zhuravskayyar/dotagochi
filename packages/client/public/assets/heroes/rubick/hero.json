@@ -1,0 +1,9 @@
+{
+  "id": 86,
+  "slug": "rubick",
+  "internalName": "npc_dota_hero_rubick",
+  "name": "Rubick",
+  "primaryAttribute": 2,
+  "complexity": 3,
+  "portrait": "/assets/heroes/rubick/portrait.png"
+}

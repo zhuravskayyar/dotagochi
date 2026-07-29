@@ -1,0 +1,9 @@
+{
+  "id": 61,
+  "slug": "broodmother",
+  "internalName": "npc_dota_hero_broodmother",
+  "name": "Broodmother",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/broodmother/portrait.png"
+}

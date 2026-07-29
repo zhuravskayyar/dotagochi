@@ -1,0 +1,9 @@
+{
+  "id": 41,
+  "slug": "faceless_void",
+  "internalName": "npc_dota_hero_faceless_void",
+  "name": "Faceless Void",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/faceless_void/portrait.png"
+}

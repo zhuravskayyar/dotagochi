@@ -1,0 +1,9 @@
+{
+  "id": 128,
+  "slug": "snapfire",
+  "internalName": "npc_dota_hero_snapfire",
+  "name": "Snapfire",
+  "primaryAttribute": 3,
+  "complexity": 1,
+  "portrait": "/assets/heroes/snapfire/portrait.png"
+}

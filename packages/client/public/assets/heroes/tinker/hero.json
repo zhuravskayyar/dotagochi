@@ -1,0 +1,9 @@
+{
+  "id": 34,
+  "slug": "tinker",
+  "internalName": "npc_dota_hero_tinker",
+  "name": "Tinker",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/tinker/portrait.png"
+}

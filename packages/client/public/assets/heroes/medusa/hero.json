@@ -1,0 +1,9 @@
+{
+  "id": 94,
+  "slug": "medusa",
+  "internalName": "npc_dota_hero_medusa",
+  "name": "Medusa",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/medusa/portrait.png"
+}

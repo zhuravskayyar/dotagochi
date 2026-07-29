@@ -1,0 +1,9 @@
+{
+  "id": 69,
+  "slug": "doom_bringer",
+  "internalName": "npc_dota_hero_doom_bringer",
+  "name": "Doom",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/doom_bringer/portrait.png"
+}

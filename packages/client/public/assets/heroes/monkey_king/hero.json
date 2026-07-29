@@ -1,0 +1,9 @@
+{
+  "id": 114,
+  "slug": "monkey_king",
+  "internalName": "npc_dota_hero_monkey_king",
+  "name": "Monkey King",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/monkey_king/portrait.png"
+}

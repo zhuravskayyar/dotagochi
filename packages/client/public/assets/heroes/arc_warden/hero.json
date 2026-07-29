@@ -1,0 +1,9 @@
+{
+  "id": 113,
+  "slug": "arc_warden",
+  "internalName": "npc_dota_hero_arc_warden",
+  "name": "Arc Warden",
+  "primaryAttribute": 3,
+  "complexity": 3,
+  "portrait": "/assets/heroes/arc_warden/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 107,
+  "slug": "earth_spirit",
+  "internalName": "npc_dota_hero_earth_spirit",
+  "name": "Earth Spirit",
+  "primaryAttribute": 0,
+  "complexity": 3,
+  "portrait": "/assets/heroes/earth_spirit/portrait.png"
+}

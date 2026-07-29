@@ -8,6 +8,7 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "migrate": "node src/database/migrate.js",
+    "sync:heroes": "node src/tools/sync-dota-heroes.js",
     "lint": "eslint src",
     "test": "vitest run"
   },

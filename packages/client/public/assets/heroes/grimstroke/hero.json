@@ -1,0 +1,9 @@
+{
+  "id": 121,
+  "slug": "grimstroke",
+  "internalName": "npc_dota_hero_grimstroke",
+  "name": "Grimstroke",
+  "primaryAttribute": 2,
+  "complexity": 2,
+  "portrait": "/assets/heroes/grimstroke/portrait.png"
+}

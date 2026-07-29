@@ -1,0 +1,9 @@
+{
+  "id": 40,
+  "slug": "venomancer",
+  "internalName": "npc_dota_hero_venomancer",
+  "name": "Venomancer",
+  "primaryAttribute": 3,
+  "complexity": 1,
+  "portrait": "/assets/heroes/venomancer/portrait.png"
+}

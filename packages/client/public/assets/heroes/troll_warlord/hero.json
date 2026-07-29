@@ -1,0 +1,9 @@
+{
+  "id": 95,
+  "slug": "troll_warlord",
+  "internalName": "npc_dota_hero_troll_warlord",
+  "name": "Troll Warlord",
+  "primaryAttribute": 1,
+  "complexity": 2,
+  "portrait": "/assets/heroes/troll_warlord/portrait.png"
+}

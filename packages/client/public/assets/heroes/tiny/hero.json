@@ -1,0 +1,9 @@
+{
+  "id": 19,
+  "slug": "tiny",
+  "internalName": "npc_dota_hero_tiny",
+  "name": "Tiny",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/tiny/portrait.png"
+}

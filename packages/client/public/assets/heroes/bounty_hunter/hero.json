@@ -1,0 +1,9 @@
+{
+  "id": 62,
+  "slug": "bounty_hunter",
+  "internalName": "npc_dota_hero_bounty_hunter",
+  "name": "Bounty Hunter",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/bounty_hunter/portrait.png"
+}

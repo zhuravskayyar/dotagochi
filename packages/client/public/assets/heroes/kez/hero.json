@@ -1,0 +1,9 @@
+{
+  "id": 145,
+  "slug": "kez",
+  "internalName": "npc_dota_hero_kez",
+  "name": "Kez",
+  "primaryAttribute": 1,
+  "complexity": 3,
+  "portrait": "/assets/heroes/kez/portrait.png"
+}

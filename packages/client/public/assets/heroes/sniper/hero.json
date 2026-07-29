@@ -1,0 +1,9 @@
+{
+  "id": 35,
+  "slug": "sniper",
+  "internalName": "npc_dota_hero_sniper",
+  "name": "Sniper",
+  "primaryAttribute": 1,
+  "complexity": 1,
+  "portrait": "/assets/heroes/sniper/portrait.png"
+}

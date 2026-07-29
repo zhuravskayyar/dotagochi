@@ -1,0 +1,9 @@
+{
+  "id": 59,
+  "slug": "huskar",
+  "internalName": "npc_dota_hero_huskar",
+  "name": "Huskar",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/huskar/portrait.png"
+}

@@ -1,0 +1,9 @@
+{
+  "id": 101,
+  "slug": "skywrath_mage",
+  "internalName": "npc_dota_hero_skywrath_mage",
+  "name": "Skywrath Mage",
+  "primaryAttribute": 2,
+  "complexity": 1,
+  "portrait": "/assets/heroes/skywrath_mage/portrait.png"
+}

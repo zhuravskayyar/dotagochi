@@ -1,0 +1,9 @@
+{
+  "id": 7,
+  "slug": "earthshaker",
+  "internalName": "npc_dota_hero_earthshaker",
+  "name": "Earthshaker",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/earthshaker/portrait.png"
+}

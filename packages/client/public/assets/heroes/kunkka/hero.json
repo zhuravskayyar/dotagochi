@@ -1,0 +1,9 @@
+{
+  "id": 23,
+  "slug": "kunkka",
+  "internalName": "npc_dota_hero_kunkka",
+  "name": "Kunkka",
+  "primaryAttribute": 0,
+  "complexity": 2,
+  "portrait": "/assets/heroes/kunkka/portrait.png"
+}

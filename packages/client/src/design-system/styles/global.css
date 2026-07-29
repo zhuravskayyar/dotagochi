@@ -212,6 +212,18 @@ button img { user-select: none; pointer-events: none; }
   letter-spacing: -.15px;
 }
 
+.selection-hint {
+  margin: 7px 2px -5px;
+  color: #796b59;
+  letter-spacing: .7px;
+  text-align: right;
+  font-size: 7px;
+}
+
+.selection-hint strong {
+  color: #d4a55a;
+}
+
 .action-icon {
   width: 34px;
   height: 34px;
@@ -456,6 +468,28 @@ button img { user-select: none; pointer-events: none; }
 
 .chroma-character.is-hungry {
   filter: saturate(.68) brightness(.82) drop-shadow(0 12px 8px #000d);
+}
+
+.hero-portrait {
+  position: relative;
+  z-index: 3;
+  width: min(92%, 330px);
+  aspect-ratio: 16 / 9;
+  margin: 0 0 38px;
+  object-fit: cover;
+  object-position: center 18%;
+  border: 2px solid #73503a;
+  box-shadow:
+    0 14px 22px #000d,
+    0 0 0 4px #08090acc,
+    0 0 24px #b84d2744;
+  animation: petFloat 4.2s ease-in-out infinite;
+  transition: filter .25s ease, opacity .25s ease;
+}
+
+.hero-portrait.is-sleeping {
+  opacity: .72;
+  filter: saturate(.5) brightness(.58);
 }
 
 .pet {
@@ -711,6 +745,254 @@ button img { user-select: none; pointer-events: none; }
 
 .status-row strong { color: #d4a55a; }
 
+.notification-toggle {
+  width: calc(100% - 16px);
+  margin: 16px 8px 0;
+  padding: 11px 14px;
+  color: #8f806a;
+  border: 1px solid #4a3b2e;
+  background: linear-gradient(#17191a, #090a0b);
+  box-shadow: inset 0 0 10px #000;
+  letter-spacing: 1px;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.notification-toggle.is-on {
+  color: #e6bd72;
+  border-color: #9c5a31;
+  box-shadow: inset 0 0 12px #000, 0 0 10px #b5482233;
+}
+
+.notification-toggle:disabled {
+  cursor: wait;
+  opacity: .45;
+}
+
+.settings-open-button,
+.settings-back-button {
+  width: calc(100% - 16px);
+  margin: 9px 8px 0;
+  padding: 11px 14px;
+  color: #d6ab66;
+  border: 1px solid #745037;
+  background: linear-gradient(#211914, #0b0c0d);
+  box-shadow: inset 0 0 12px #000, 0 0 10px #b5482222;
+  letter-spacing: 1px;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+.settings-screen {
+  min-height: 540px;
+  max-height: 580px;
+  padding: 16px 8px 24px;
+  overflow-y: auto;
+  border: 1px solid #342b23;
+  background:
+    linear-gradient(#0a0b0ce8, #0a0b0cf8),
+    url('/assets/ui/ancient-ruins-v1.webp') center / cover;
+  box-shadow: inset 0 0 34px #000;
+  scrollbar-color: #754229 #111;
+  scrollbar-width: thin;
+}
+
+.settings-heading {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 12px;
+  color: #8f806a;
+  letter-spacing: 2px;
+  font-size: 8px;
+}
+
+.settings-heading strong {
+  color: #d4a55a;
+  font-size: 16px;
+}
+
+.tutorial-section {
+  margin: 14px 8px 0;
+  text-align: left;
+}
+
+.tutorial-section h2 {
+  margin: 0 0 7px;
+  color: #d2a45d;
+  border-bottom: 1px solid #533a2d;
+  padding-bottom: 6px;
+  letter-spacing: 1.2px;
+  font-size: 9px;
+}
+
+.tutorial-row {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  min-height: 48px;
+  padding: 7px 5px;
+  border-bottom: 1px solid #33271f;
+  background: linear-gradient(90deg, #151719bb, transparent);
+}
+
+.tutorial-row img {
+  grid-row: 1 / 3;
+  width: 34px;
+  height: 34px;
+  margin: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 2px #000);
+}
+
+.tutorial-row--action {
+  grid-template-columns: 42px 83px minmax(0, 1fr);
+}
+
+.tutorial-row--action img {
+  grid-row: auto;
+}
+
+.tutorial-row strong {
+  color: #d8b06c;
+  letter-spacing: .5px;
+  font-size: 8px;
+}
+
+.tutorial-row span {
+  color: #9d917e;
+  line-height: 1.45;
+  font-family: 'Marcellus', serif;
+  font-size: 9px;
+}
+
+.egg-panel {
+  min-height: 660px;
+  padding-top: 34px;
+}
+
+.egg-heading {
+  display: grid;
+  gap: 7px;
+  color: #8f806a;
+  letter-spacing: 3px;
+  font-size: 9px;
+}
+
+.egg-heading strong {
+  color: #d4a55a;
+  text-shadow: 0 0 12px #c7452366;
+  font-size: 17px;
+}
+
+.egg-stage {
+  position: relative;
+  height: 390px;
+  display: grid;
+  place-items: center;
+  margin: 16px 0 12px;
+  overflow: hidden;
+  border: 1px solid #352e27;
+  background:
+    radial-gradient(circle at center, #9d391321, transparent 43%),
+    linear-gradient(#070809aa, #070809e8),
+    url('/assets/ui/ancient-ruins-v1.webp') center / cover;
+  box-shadow: inset 0 0 60px #000;
+}
+
+.egg-aura {
+  position: absolute;
+  width: 255px;
+  height: 255px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #e34e1f2b, #8a2d1112 45%, transparent 68%);
+  filter: blur(10px);
+  animation: eggAura 2.2s ease-in-out infinite;
+}
+
+.ancient-egg {
+  position: relative;
+  z-index: 2;
+  width: 280px;
+  height: 280px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 15px #000e) drop-shadow(0 0 12px #d94b2755);
+  transform-origin: 50% 82%;
+  animation: eggWobble 3.2s ease-in-out infinite;
+}
+
+.egg-stage--hatching .ancient-egg {
+  animation: eggHatch 1.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.egg-stage--revealed .ancient-egg {
+  opacity: 0;
+  transform: scale(1.4);
+  transition: .35s ease;
+}
+
+.egg-crack {
+  position: absolute;
+  z-index: 4;
+  width: 4px;
+  height: 105px;
+  opacity: 0;
+  background: #ffe0a1;
+  box-shadow: 0 0 8px #ff5a20, 0 0 20px #d93316;
+  clip-path: polygon(42% 0, 100% 0, 63% 28%, 100% 45%, 48% 62%, 71% 100%, 0 100%, 23% 65%, 0 47%, 48% 26%);
+}
+
+.egg-crack--one { transform: translate(-31px, -9px) rotate(-18deg); }
+.egg-crack--two { transform: translate(39px, 16px) rotate(22deg); }
+
+.egg-stage--hatching .egg-crack {
+  opacity: .95;
+  animation: crackPulse .32s steps(2, end) infinite;
+}
+
+.egg-flash {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, #fff7dfff, #ff6b2b88 28%, transparent 64%);
+}
+
+.egg-stage--revealed .egg-flash {
+  animation: eggFlash 1s ease-out both;
+}
+
+.egg-countdown {
+  display: grid;
+  gap: 6px;
+  color: #8f806a;
+  letter-spacing: 2px;
+  font-size: 8px;
+}
+
+.egg-countdown strong {
+  color: #e4b363;
+  font-family: 'Marcellus', serif;
+  text-shadow: 0 0 9px #d44c24aa;
+  font-size: 24px;
+}
+
+.egg-copy {
+  max-width: 330px;
+  margin: 16px auto 0;
+  color: #8f806a;
+  line-height: 1.6;
+  font-family: 'Marcellus', serif;
+  font-size: 10px;
+}
+
+.egg-error {
+  margin-top: 12px;
+  color: #e27755;
+  font-size: 9px;
+}
+
 .message {
   position: absolute !important;
   left: 24px;
@@ -786,6 +1068,38 @@ button img { user-select: none; pointer-events: none; }
 @keyframes petFloat {
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-5px) scale(1.006); }
+}
+
+@keyframes eggWobble {
+  0%, 72%, 100% { transform: rotate(0deg) translateY(0); }
+  78% { transform: rotate(-3deg) translateY(-2px); }
+  84% { transform: rotate(3deg) translateY(-2px); }
+  90% { transform: rotate(-1.5deg); }
+}
+
+@keyframes eggAura {
+  0%, 100% { opacity: .55; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes eggHatch {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  12% { transform: translateX(-5px) rotate(-3deg); }
+  24% { transform: translateX(6px) rotate(4deg); }
+  38% { transform: translateX(-8px) rotate(-5deg); }
+  52% { transform: translateX(8px) rotate(5deg); }
+  68% { transform: translateX(-6px) rotate(-4deg) scale(1.04); }
+  84% { transform: translateX(5px) rotate(3deg) scale(1.08); }
+}
+
+@keyframes crackPulse {
+  50% { filter: brightness(1.8); }
+}
+
+@keyframes eggFlash {
+  0% { opacity: 0; transform: scale(.3); }
+  20% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.4); }
 }
 
 @keyframes barShine {

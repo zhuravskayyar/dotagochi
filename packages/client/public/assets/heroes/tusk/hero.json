@@ -1,0 +1,9 @@
+{
+  "id": 100,
+  "slug": "tusk",
+  "internalName": "npc_dota_hero_tusk",
+  "name": "Tusk",
+  "primaryAttribute": 0,
+  "complexity": 1,
+  "portrait": "/assets/heroes/tusk/portrait.png"
+}
