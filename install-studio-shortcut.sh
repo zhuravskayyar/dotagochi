@@ -7,15 +7,14 @@ shortcut_home="${DOTA_TAMAGOTCHI_SHORTCUT_HOME:-${HOME}}"
 applications_dir="${XDG_DATA_HOME:-${shortcut_home}/.local/share}/applications"
 applications_launcher="${applications_dir}/${launcher_name}"
 icon_path="${project_root}/packages/client/public/assets/ui/egg/ancient-egg-v1.png"
+launcher_script="${project_root}/launch-studio.sh"
 
 if [[ "${project_root}" == *$'\n'* ]]; then
   echo "Шлях до проєкту не може містити перенесення рядка." >&2
   exit 1
 fi
 
-if [[ ! -x "${project_root}/start-app.sh" ]]; then
-  chmod +x "${project_root}/start-app.sh"
-fi
+chmod +x "${project_root}/start-app.sh" "${launcher_script}"
 
 if [[ ! -f "${icon_path}" ]]; then
   icon_path="applications-development"
@@ -30,8 +29,8 @@ Type=Application
 Version=1.0
 Name=Dota Tamagotchi Studio
 Comment=Оновити Git, синхронізувати базу й відкрити Animation Studio
-Exec="${project_root}/start-app.sh"
-TryExec=${project_root}/start-app.sh
+Exec="${launcher_script}"
+TryExec=${launcher_script}
 Path=${project_root}
 Icon=${icon_path}
 Terminal=true

@@ -9,6 +9,32 @@ studio_url="${client_url}/animation-studio"
 no_browser=false
 open_game=false
 
+node_is_supported() {
+  command -v node >/dev/null 2>&1 &&
+    command -v npm >/dev/null 2>&1 &&
+    [[ "$(node -p 'const major = Number(process.versions.node.split(`.`)[0]); major >= 20 && major < 27')" == "true" ]]
+}
+
+load_node_environment() {
+  if node_is_supported; then
+    return
+  fi
+
+  export NVM_DIR="${NVM_DIR:-${HOME}/.nvm}"
+  if [[ -s "${NVM_DIR}/nvm.sh" ]]; then
+    # The desktop launcher starts a non-interactive shell, so nvm is not loaded automatically.
+    # shellcheck disable=SC1090
+    source "${NVM_DIR}/nvm.sh"
+    nvm use --lts >/dev/null 2>&1 || true
+  fi
+
+  if ! node_is_supported; then
+    echo "Не знайдено сумісний Node.js 20–26." >&2
+    echo "Повторно запустіть Linux-інсталятор із сайту." >&2
+    exit 1
+  fi
+}
+
 for argument in "$@"; do
   case "$argument" in
     --no-browser) no_browser=true ;;
@@ -21,6 +47,7 @@ for argument in "$@"; do
   esac
 done
 
+load_node_environment
 cd "$project_root"
 
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then

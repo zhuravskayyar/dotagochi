@@ -220,7 +220,7 @@ if [[ ! -f .env ]]; then
   echo "✓ Створено локальний файл налаштувань .env"
 fi
 
-chmod +x start-app.sh install-studio-shortcut.sh
+chmod +x start-app.sh launch-studio.sh install-studio-shortcut.sh
 ./install-studio-shortcut.sh
 
 echo
