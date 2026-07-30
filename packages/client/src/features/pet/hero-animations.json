@@ -19,6 +19,11 @@
     "fallbackSrc": "assets/heroes/axe/sprite-v1.png",
     "aspectRatio": 1
   },
+  "bane": {
+    "src": "assets/heroes/bane/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/bane/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "dazzle": {
     "src": "assets/heroes/dazzle/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/dazzle/sprite-v1.png",

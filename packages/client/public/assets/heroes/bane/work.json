@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T06:30:37.001Z",
+  "work": {
+    "importedAt": "2026-07-30T06:30:37.001Z",
+    "version": 1,
+    "chromaKey": "0x4ae055",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "ec38ef25-ff8e-4ff2-8dd4-6eb7654eca91.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/bane/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/bane/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T06:30:37.001Z",
+      "version": 1,
+      "chromaKey": "0x4ae055",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "ec38ef25-ff8e-4ff2-8dd4-6eb7654eca91.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/bane/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/bane/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
