@@ -64,6 +64,11 @@
     "fallbackSrc": "assets/heroes/morphling/sprite-v1.png",
     "aspectRatio": 1
   },
+  "nevermore": {
+    "src": "assets/heroes/nevermore/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/nevermore/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "pudge": {
     "src": "assets/ui/characters/pudge-chroma-v1.mp4",
     "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",

@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T07:58:17.694Z",
+  "work": {
+    "importedAt": "2026-07-30T07:58:17.694Z",
+    "version": 1,
+    "chromaKey": "0x54df53",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "d1dc81ee-1898-47d2-b33f-1febcfbe471a.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/nevermore/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/nevermore/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T07:58:17.694Z",
+      "version": 1,
+      "chromaKey": "0x54df53",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "d1dc81ee-1898-47d2-b33f-1febcfbe471a.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/nevermore/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/nevermore/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
