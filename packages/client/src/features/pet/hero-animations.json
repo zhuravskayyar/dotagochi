@@ -59,6 +59,11 @@
     "fallbackSrc": "assets/heroes/mirana/sprite-v1.png",
     "aspectRatio": 1
   },
+  "morphling": {
+    "src": "assets/heroes/morphling/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/morphling/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "pudge": {
     "src": "assets/ui/characters/pudge-chroma-v1.mp4",
     "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",

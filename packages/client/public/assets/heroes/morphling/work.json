@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T07:46:24.290Z",
+  "work": {
+    "importedAt": "2026-07-30T07:46:24.290Z",
+    "version": 1,
+    "chromaKey": "0x44d74d",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "fbc333ed-1d37-446b-8115-bd4019132804.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/morphling/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/morphling/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T07:46:24.290Z",
+      "version": 1,
+      "chromaKey": "0x44d74d",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "fbc333ed-1d37-446b-8115-bd4019132804.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/morphling/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/morphling/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
