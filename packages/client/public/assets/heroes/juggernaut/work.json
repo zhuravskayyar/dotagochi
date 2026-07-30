@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T07:13:07.990Z",
+  "work": {
+    "importedAt": "2026-07-30T07:13:07.990Z",
+    "version": 1,
+    "chromaKey": "0x46d94d",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "044362b9-6305-4ac7-81cc-ac158c693042.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/juggernaut/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/juggernaut/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T07:13:07.990Z",
+      "version": 1,
+      "chromaKey": "0x46d94d",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "044362b9-6305-4ac7-81cc-ac158c693042.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/juggernaut/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/juggernaut/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}

@@ -49,6 +49,11 @@
     "fallbackSrc": "assets/heroes/earthshaker/sprite-v1.png",
     "aspectRatio": 1
   },
+  "juggernaut": {
+    "src": "assets/heroes/juggernaut/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/juggernaut/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "pudge": {
     "src": "assets/ui/characters/pudge-chroma-v1.mp4",
     "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",

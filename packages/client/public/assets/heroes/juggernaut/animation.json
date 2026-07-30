@@ -1,0 +1,10 @@
+{
+  "hero": "juggernaut",
+  "version": 1,
+  "chromaKey": "0x46d94d",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/juggernaut/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/juggernaut/sprite-v1.png",
+  "aspectRatio": 1
+}
