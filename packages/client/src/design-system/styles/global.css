@@ -462,6 +462,8 @@ button img { user-select: none; pointer-events: none; }
   display: block;
   width: 100%;
   height: 100%;
+  transform: translateY(var(--chroma-ground-shift, 0%));
+  transition: transform .16s ease-out;
 }
 
 .chroma-fallback {
@@ -472,7 +474,8 @@ button img { user-select: none; pointer-events: none; }
   height: 100%;
   object-fit: contain;
   opacity: 1;
-  transition: opacity .18s ease;
+  transform: translateY(var(--chroma-ground-shift, 0%));
+  transition: opacity .18s ease, transform .16s ease-out;
 }
 
 .chroma-fallback.is-hidden {

@@ -145,6 +145,106 @@ function createCanvasRenderer(canvas, video) {
 
 const SLEEP_LOOP_SECONDS = 2;
 const VIDEO_END_EPSILON = 0.06;
+const GROUND_SAMPLE_SIZE = 96;
+const GROUND_SCAN_LIMIT = 18;
+const GROUND_SCAN_INTERVAL = 3;
+const GROUND_TARGET_RATIO = 0.97;
+const MAX_GROUND_SHIFT_RATIO = 0.3;
+
+const clamp = (value, minimum, maximum) => (
+  Math.min(maximum, Math.max(minimum, value))
+);
+
+const smoothstep = (edgeStart, edgeEnd, value) => {
+  const progress = clamp((value - edgeStart) / (edgeEnd - edgeStart), 0, 1);
+  return progress * progress * (3 - 2 * progress);
+};
+
+export function findCharacterGroundRatio(pixels, width, height) {
+  if (!pixels || width <= 0 || height <= 0) return 1;
+
+  const left = Math.floor(width * 0.06);
+  const right = Math.ceil(width * 0.94);
+  const minimumForegroundPixels = Math.max(2, Math.round((right - left) * 0.025));
+
+  for (let y = height - 1; y >= 0; y -= 1) {
+    let foregroundPixels = 0;
+
+    for (let x = left; x < right; x += 1) {
+      const index = (y * width + x) * 4;
+      const sourceAlpha = pixels[index + 3] / 255;
+      if (sourceAlpha < 0.2) continue;
+
+      const red = pixels[index] / 255;
+      const green = pixels[index + 1] / 255;
+      const blue = pixels[index + 2] / 255;
+      const maxRB = Math.max(red, blue);
+      const greenDominance = green - maxRB;
+      const greenBrightness = smoothstep(0.3, 0.68, green);
+      const keyMask = smoothstep(0.1, 0.39, greenDominance) * greenBrightness;
+      const keyedAlpha = sourceAlpha * (1 - keyMask);
+
+      if (keyedAlpha >= 0.5) {
+        foregroundPixels += 1;
+        if (foregroundPixels >= minimumForegroundPixels) {
+          return (y + 1) / height;
+        }
+      }
+    }
+  }
+
+  return 1;
+}
+
+function createGroundDetector(video, onGroundRatioChange) {
+  const canvas = document.createElement('canvas');
+  canvas.width = GROUND_SAMPLE_SIZE;
+  canvas.height = GROUND_SAMPLE_SIZE;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  let renderedFrames = 0;
+  let scannedFrames = 0;
+  let deepestGroundRatio = 0;
+
+  const reset = () => {
+    renderedFrames = 0;
+    scannedFrames = 0;
+    deepestGroundRatio = 0;
+    onGroundRatioChange(1);
+  };
+
+  const measure = () => {
+    if (!context || scannedFrames >= GROUND_SCAN_LIMIT || video.readyState < 2) return;
+    renderedFrames += 1;
+    if ((renderedFrames - 1) % GROUND_SCAN_INTERVAL !== 0) return;
+
+    try {
+      context.clearRect(0, 0, GROUND_SAMPLE_SIZE, GROUND_SAMPLE_SIZE);
+      context.drawImage(video, 0, 0, GROUND_SAMPLE_SIZE, GROUND_SAMPLE_SIZE);
+      const frame = context.getImageData(
+        0,
+        0,
+        GROUND_SAMPLE_SIZE,
+        GROUND_SAMPLE_SIZE,
+      );
+      const groundRatio = findCharacterGroundRatio(
+        frame.data,
+        GROUND_SAMPLE_SIZE,
+        GROUND_SAMPLE_SIZE,
+      );
+      scannedFrames += 1;
+
+      if (groundRatio > deepestGroundRatio) {
+        deepestGroundRatio = groundRatio;
+        onGroundRatioChange(deepestGroundRatio);
+      }
+    } catch {
+      scannedFrames = GROUND_SCAN_LIMIT;
+      onGroundRatioChange(1);
+    }
+  };
+
+  return { measure, reset };
+}
 
 export function ChromaKeyVideo({
   src,
@@ -157,8 +257,10 @@ export function ChromaKeyVideo({
   className = '',
 }) {
   const [videoReady, setVideoReady] = useState(false);
+  const characterRef = useRef(null);
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
+  const groundDetectorRef = useRef(null);
   const phaseRef = useRef('idle');
   const previousSleepingRef = useRef(null);
   const playbackTickRef = useRef(() => {});
@@ -174,6 +276,7 @@ export function ChromaKeyVideo({
     const render = () => {
       if (!renderer || video.readyState < 2 || video.paused || video.ended) return;
       renderer();
+      groundDetectorRef.current?.measure();
       playbackTickRef.current(video);
       if (typeof video.requestVideoFrameCallback === 'function') {
         const id = video.requestVideoFrameCallback(render);
@@ -188,6 +291,17 @@ export function ChromaKeyVideo({
       cancelFrame();
       renderer ||= createWebGlRenderer(canvas, video) || createCanvasRenderer(canvas, video);
       if (!renderer) return;
+      groundDetectorRef.current ||= createGroundDetector(video, (groundRatio) => {
+        const groundShift = clamp(
+          GROUND_TARGET_RATIO - groundRatio,
+          0,
+          MAX_GROUND_SHIFT_RATIO,
+        );
+        characterRef.current?.style.setProperty(
+          '--chroma-ground-shift',
+          `${groundShift * 100}%`,
+        );
+      });
       render();
       setVideoReady(true);
     };
@@ -197,6 +311,7 @@ export function ChromaKeyVideo({
     return () => {
       cancelFrame();
       video.removeEventListener('playing', start);
+      groundDetectorRef.current = null;
     };
   }, []);
 
@@ -209,6 +324,7 @@ export function ChromaKeyVideo({
       if (!nextSrc) return;
       phaseRef.current = phase;
       video.loop = shouldLoop;
+      groundDetectorRef.current?.reset();
 
       if (video.getAttribute('src') !== nextSrc) {
         video.src = nextSrc;
@@ -269,6 +385,7 @@ export function ChromaKeyVideo({
 
   return (
     <div
+      ref={characterRef}
       className={`chroma-character ${className}`.trim()}
       style={{ '--chroma-aspect': aspectRatio }}
     >
