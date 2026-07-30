@@ -29,6 +29,11 @@
     "fallbackSrc": "assets/heroes/bloodseeker/sprite-v1.png",
     "aspectRatio": 1
   },
+  "crystal_maiden": {
+    "src": "assets/heroes/crystal_maiden/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/crystal_maiden/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "dazzle": {
     "src": "assets/heroes/dazzle/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/dazzle/sprite-v1.png",

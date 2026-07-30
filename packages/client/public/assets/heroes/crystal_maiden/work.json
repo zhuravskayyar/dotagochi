@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T06:45:01.500Z",
+  "work": {
+    "importedAt": "2026-07-30T06:45:01.500Z",
+    "version": 1,
+    "chromaKey": "0x4ede50",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "2489c18a-fbb2-4a40-8b6a-8ddd804eb04b.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/crystal_maiden/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/crystal_maiden/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T06:45:01.500Z",
+      "version": 1,
+      "chromaKey": "0x4ede50",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "2489c18a-fbb2-4a40-8b6a-8ddd804eb04b.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/crystal_maiden/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/crystal_maiden/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
