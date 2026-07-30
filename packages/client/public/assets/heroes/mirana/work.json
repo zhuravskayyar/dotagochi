@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T07:27:31.364Z",
+  "work": {
+    "importedAt": "2026-07-30T07:27:31.364Z",
+    "version": 1,
+    "chromaKey": "0x46d14e",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "2b8923c9-0c55-4554-9460-233075d0a15c.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/mirana/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/mirana/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T07:27:31.364Z",
+      "version": 1,
+      "chromaKey": "0x46d14e",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "2b8923c9-0c55-4554-9460-233075d0a15c.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/mirana/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/mirana/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
