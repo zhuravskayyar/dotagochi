@@ -9,6 +9,11 @@
     "fallbackSrc": "assets/heroes/ancient_apparition/sprite-v1.png",
     "aspectRatio": 1
   },
+  "antimage": {
+    "src": "assets/heroes/antimage/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/antimage/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "axe": {
     "src": "assets/heroes/axe/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/axe/sprite-v1.png",

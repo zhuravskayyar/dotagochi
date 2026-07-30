@@ -1,0 +1,10 @@
+{
+  "hero": "antimage",
+  "version": 1,
+  "chromaKey": "0x51d553",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/antimage/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/antimage/sprite-v1.png",
+  "aspectRatio": 1
+}
