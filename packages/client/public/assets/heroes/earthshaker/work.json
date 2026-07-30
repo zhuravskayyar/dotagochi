@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T07:01:26.665Z",
+  "work": {
+    "importedAt": "2026-07-30T07:01:26.665Z",
+    "version": 1,
+    "chromaKey": "0x56df5b",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "c64c0304-3de2-4230-a873-569cdf122b86.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/earthshaker/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/earthshaker/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T07:01:26.665Z",
+      "version": 1,
+      "chromaKey": "0x56df5b",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "c64c0304-3de2-4230-a873-569cdf122b86.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/earthshaker/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/earthshaker/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
