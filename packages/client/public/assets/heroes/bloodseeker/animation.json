@@ -1,0 +1,10 @@
+{
+  "hero": "bloodseeker",
+  "version": 1,
+  "chromaKey": "0x47db4c",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/bloodseeker/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/bloodseeker/sprite-v1.png",
+  "aspectRatio": 1
+}

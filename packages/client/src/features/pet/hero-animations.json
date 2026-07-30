@@ -24,6 +24,11 @@
     "fallbackSrc": "assets/heroes/bane/sprite-v1.png",
     "aspectRatio": 1
   },
+  "bloodseeker": {
+    "src": "assets/heroes/bloodseeker/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/bloodseeker/sprite-v1.png",
+    "aspectRatio": 1
+  },
   "dazzle": {
     "src": "assets/heroes/dazzle/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/dazzle/sprite-v1.png",

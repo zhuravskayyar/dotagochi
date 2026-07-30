@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T06:36:55.554Z",
+  "work": {
+    "importedAt": "2026-07-30T06:36:55.554Z",
+    "version": 1,
+    "chromaKey": "0x47db4c",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "5692c9a4-6160-494c-b239-fc11b453d637.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/bloodseeker/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/bloodseeker/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T06:36:55.554Z",
+      "version": 1,
+      "chromaKey": "0x47db4c",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "5692c9a4-6160-494c-b239-fc11b453d637.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/bloodseeker/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/bloodseeker/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
