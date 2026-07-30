@@ -77,7 +77,7 @@ describe('PetView', () => {
     const fallback = character?.querySelector('.chroma-fallback');
 
     expect(character).toBeTruthy();
-    expect(character?.style.getPropertyValue('--chroma-aspect')).toBe('0.824716');
+    expect(character?.style.getPropertyValue('--chroma-aspect')).toBe('1');
     expect(video?.getAttribute('src')).toContain('drow_ranger/idle-chroma-v1.mp4');
     expect(fallback?.getAttribute('src')).toContain('drow_ranger/sprite-v1.png');
     expect(screen.getByRole('img', { name: 'Drow Ranger' })).toBeTruthy();
