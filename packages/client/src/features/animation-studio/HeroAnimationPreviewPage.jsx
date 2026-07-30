@@ -35,6 +35,9 @@ export function HeroAnimationPreviewPage() {
           src={publicAssetUrl(hero.animation?.src)}
           fallbackSrc={publicAssetUrl(hero.animation?.fallbackSrc)}
           aspectRatio={hero.animation?.aspectRatio || 1}
+          chromaKey={hero.animation?.chromaKey}
+          similarity={hero.animation?.similarity}
+          blend={hero.animation?.blend}
         />
       )}
     </main>

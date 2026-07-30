@@ -255,6 +255,9 @@ export function buildRegistryEntry({
   hero,
   version,
   aspectRatio,
+  chromaKey,
+  similarity,
+  blend,
   sleep = false,
   wake = false,
 }) {
@@ -263,6 +266,9 @@ export function buildRegistryEntry({
     fallbackSrc: publicAssetPath(hero, `sprite-v${version}.png`),
     aspectRatio,
   };
+  if (chromaKey) entry.chromaKey = chromaKey;
+  if (Number.isFinite(similarity)) entry.similarity = similarity;
+  if (Number.isFinite(blend)) entry.blend = blend;
   if (sleep) {
     entry.sleepSrc = publicAssetPath(hero, `sleep-chroma-v${version}.mp4`);
   }
@@ -353,6 +359,9 @@ export async function importHeroAnimation(rawOptions) {
     hero,
     version,
     aspectRatio: dimensions.aspectRatio,
+    chromaKey: key,
+    similarity,
+    blend,
     sleep: Boolean(sleep),
     wake: Boolean(wake),
   });

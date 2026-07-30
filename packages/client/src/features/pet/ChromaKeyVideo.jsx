@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 const vertexShaderSource = `
   attribute vec2 a_position;
@@ -14,22 +19,80 @@ const vertexShaderSource = `
 const fragmentShaderSource = `
   precision mediump float;
   uniform sampler2D u_texture;
+  uniform vec3 u_keyColor;
+  uniform vec2 u_texelSize;
+  uniform float u_similarity;
+  uniform float u_blend;
   varying vec2 v_texCoord;
+
+  float smootherstep(float edgeStart, float edgeEnd, float value) {
+    float progress = clamp((value - edgeStart) / max(edgeEnd - edgeStart, 0.0001), 0.0, 1.0);
+    return progress * progress * progress * (progress * (progress * 6.0 - 15.0) + 10.0);
+  }
+
+  vec3 chromaticity(vec3 color) {
+    return color / max(color.r + color.g + color.b, 0.0001);
+  }
+
+  float keyMaskAt(vec2 textureCoordinate) {
+    vec3 color = texture2D(u_texture, textureCoordinate).rgb;
+    float rgbDistance = distance(color, u_keyColor) / 1.7320508;
+    float exactMask = 1.0 - smootherstep(
+      u_similarity,
+      u_similarity + u_blend,
+      rgbDistance
+    );
+
+    float chromaDistance = distance(chromaticity(color), chromaticity(u_keyColor));
+    float chromaStart = u_similarity * 0.45;
+    float chromaEnd = chromaStart + max(u_blend, 0.06);
+    float hueMask = 1.0 - smootherstep(chromaStart, chromaEnd, chromaDistance);
+    float maximum = max(color.r, max(color.g, color.b));
+    float minimum = min(color.r, min(color.g, color.b));
+    float saturationGate = smootherstep(0.035, 0.16, maximum - minimum);
+    float visibilityGate = smootherstep(0.025, 0.12, maximum);
+    float greenDominance = color.g - max(color.r, color.b);
+    float dominanceMask = smootherstep(0.035, 0.24, greenDominance)
+      * visibilityGate;
+
+    return max(
+      exactMask,
+      max(hueMask * saturationGate * visibilityGate, dominanceMask)
+    );
+  }
 
   void main() {
     vec4 source = texture2D(u_texture, v_texCoord);
+    float centerMask = keyMaskAt(v_texCoord);
+    float neighborMask =
+      keyMaskAt(v_texCoord + vec2(u_texelSize.x, 0.0))
+      + keyMaskAt(v_texCoord - vec2(u_texelSize.x, 0.0))
+      + keyMaskAt(v_texCoord + vec2(0.0, u_texelSize.y))
+      + keyMaskAt(v_texCoord - vec2(0.0, u_texelSize.y));
+    float keyMask = smootherstep(0.08, 0.92, centerMask * 0.6 + neighborMask * 0.1);
+
     float maxRB = max(source.r, source.b);
     float greenDominance = source.g - maxRB;
-    float greenBrightness = smoothstep(0.30, 0.68, source.g);
-    float keyMask = smoothstep(0.10, 0.39, greenDominance) * greenBrightness;
-    float edgeSpill = smoothstep(0.02, 0.24, greenDominance) * greenBrightness;
+    float chromaDistance = distance(chromaticity(source.rgb), chromaticity(u_keyColor));
+    float spillHue = 1.0 - smootherstep(
+      u_similarity * 0.45 + max(u_blend, 0.06),
+      u_similarity * 0.45 + max(u_blend, 0.06) + 0.12,
+      chromaDistance
+    );
+    float edgeSpill = smootherstep(0.005, 0.16, greenDominance)
+      * max(0.92, max(keyMask, spillHue * 0.82));
 
     vec3 color = source.rgb;
-    color.g = mix(color.g, maxRB * 0.74, edgeSpill * 0.96);
-    float alpha = 1.0 - keyMask;
+    float neutralGreen = mix((source.r + source.b) * 0.5, maxRB, 0.72);
+    color.g = mix(color.g, neutralGreen, edgeSpill);
+    float alpha = source.a * (1.0 - keyMask);
     gl_FragColor = vec4(color * alpha, alpha);
   }
 `;
+
+const DEFAULT_CHROMA_KEY = [0.33, 0.87, 0.33];
+const DEFAULT_SIMILARITY = 0.2;
+const DEFAULT_BLEND = 0.08;
 
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);
@@ -61,7 +124,75 @@ function createProgram(gl) {
   return program;
 }
 
-function createWebGlRenderer(canvas, video) {
+export function parseChromaKey(chromaKey) {
+  if (Array.isArray(chromaKey) && chromaKey.length >= 3) {
+    return chromaKey.slice(0, 3).map((channel) => clamp(Number(channel), 0, 1));
+  }
+
+  const normalized = String(chromaKey || '').trim().replace(/^#|^0x/i, '');
+  if (!/^[0-9a-f]{6}$/i.test(normalized)) return [...DEFAULT_CHROMA_KEY];
+
+  return [0, 2, 4].map((offset) => (
+    Number.parseInt(normalized.slice(offset, offset + 2), 16) / 255
+  ));
+}
+
+function chromaticity(red, green, blue) {
+  const total = Math.max(red + green + blue, 0.0001);
+  return [red / total, green / total, blue / total];
+}
+
+export function calculateChromaKeyMask(
+  red,
+  green,
+  blue,
+  {
+    keyColor = DEFAULT_CHROMA_KEY,
+    similarity = DEFAULT_SIMILARITY,
+    blend = DEFAULT_BLEND,
+  } = {},
+) {
+  const safeSimilarity = clamp(Number(similarity), 0.01, 1);
+  const safeBlend = clamp(Number(blend), 0.001, 1);
+  const rgbDistance = Math.hypot(
+    red - keyColor[0],
+    green - keyColor[1],
+    blue - keyColor[2],
+  ) / Math.sqrt(3);
+  const exactMask = 1 - smootherstep(
+    safeSimilarity,
+    safeSimilarity + safeBlend,
+    rgbDistance,
+  );
+
+  const sourceChroma = chromaticity(red, green, blue);
+  const keyChroma = chromaticity(...keyColor);
+  const chromaDistance = Math.hypot(
+    sourceChroma[0] - keyChroma[0],
+    sourceChroma[1] - keyChroma[1],
+    sourceChroma[2] - keyChroma[2],
+  );
+  const chromaStart = safeSimilarity * 0.45;
+  const chromaEnd = chromaStart + Math.max(safeBlend, 0.06);
+  const hueMask = 1 - smootherstep(chromaStart, chromaEnd, chromaDistance);
+  const maximum = Math.max(red, green, blue);
+  const minimum = Math.min(red, green, blue);
+  const saturationGate = smootherstep(0.035, 0.16, maximum - minimum);
+  const visibilityGate = smootherstep(0.025, 0.12, maximum);
+  const dominanceMask = smootherstep(
+    0.035,
+    0.24,
+    green - Math.max(red, blue),
+  ) * visibilityGate;
+
+  return Math.max(
+    exactMask,
+    hueMask * saturationGate * visibilityGate,
+    dominanceMask,
+  );
+}
+
+function createWebGlRenderer(canvas, video, chromaOptions) {
   const gl = canvas.getContext('webgl', {
     alpha: true,
     antialias: true,
@@ -95,6 +226,19 @@ function createWebGlRenderer(canvas, video) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
   gl.useProgram(program);
+  const keyColor = chromaOptions.keyColor;
+  gl.uniform3f(
+    gl.getUniformLocation(program, 'u_keyColor'),
+    keyColor[0],
+    keyColor[1],
+    keyColor[2],
+  );
+  gl.uniform1f(
+    gl.getUniformLocation(program, 'u_similarity'),
+    chromaOptions.similarity,
+  );
+  gl.uniform1f(gl.getUniformLocation(program, 'u_blend'), chromaOptions.blend);
+  const texelSizeLocation = gl.getUniformLocation(program, 'u_texelSize');
   const positionLocation = gl.getAttribLocation(program, 'a_position');
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.enableVertexAttribArray(positionLocation);
@@ -110,13 +254,18 @@ function createWebGlRenderer(canvas, video) {
 
   return () => {
     gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(
+      texelSizeLocation,
+      1 / Math.max(video.videoWidth, canvas.width),
+      1 / Math.max(video.videoHeight, canvas.height),
+    );
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
   };
 }
 
-function createCanvasRenderer(canvas, video) {
+function createCanvasRenderer(canvas, video, chromaOptions) {
   const context = canvas.getContext('2d', { willReadFrequently: true });
   if (!context) return null;
 
@@ -126,17 +275,59 @@ function createCanvasRenderer(canvas, video) {
     const frame = context.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = frame.data;
 
-    for (let index = 0; index < pixels.length; index += 4) {
+    const masks = new Float32Array(canvas.width * canvas.height);
+
+    for (let index = 0, pixelIndex = 0; index < pixels.length; index += 4, pixelIndex += 1) {
       const red = pixels[index] / 255;
       const green = pixels[index + 1] / 255;
       const blue = pixels[index + 2] / 255;
-      const maxRB = Math.max(red, blue);
-      const dominance = green - maxRB;
-      const brightness = Math.max(0, Math.min(1, (green - .3) / .38));
-      const mask = Math.max(0, Math.min(1, (dominance - .1) / .29)) * brightness;
-      const spill = Math.max(0, Math.min(1, (dominance - .02) / .22)) * brightness;
-      pixels[index + 1] = Math.round(green * (1 - spill) * 255 + maxRB * .74 * spill * 255);
-      pixels[index + 3] = Math.round((1 - mask) * 255);
+      masks[pixelIndex] = calculateChromaKeyMask(
+        red,
+        green,
+        blue,
+        chromaOptions,
+      );
+    }
+
+    for (let y = 0; y < canvas.height; y += 1) {
+      for (let x = 0; x < canvas.width; x += 1) {
+        const pixelIndex = y * canvas.width + x;
+        const index = pixelIndex * 4;
+        const left = masks[y * canvas.width + Math.max(0, x - 1)];
+        const right = masks[y * canvas.width + Math.min(canvas.width - 1, x + 1)];
+        const top = masks[Math.max(0, y - 1) * canvas.width + x];
+        const bottom = masks[Math.min(canvas.height - 1, y + 1) * canvas.width + x];
+        const mask = smootherstep(
+          0.08,
+          0.92,
+          masks[pixelIndex] * 0.6 + (left + right + top + bottom) * 0.1,
+        );
+        const red = pixels[index] / 255;
+        const green = pixels[index + 1] / 255;
+        const blue = pixels[index + 2] / 255;
+        const maxRB = Math.max(red, blue);
+        const sourceChroma = chromaticity(red, green, blue);
+        const keyChroma = chromaticity(...chromaOptions.keyColor);
+        const chromaDistance = Math.hypot(
+          sourceChroma[0] - keyChroma[0],
+          sourceChroma[1] - keyChroma[1],
+          sourceChroma[2] - keyChroma[2],
+        );
+        const spillStart = chromaOptions.similarity * 0.45
+          + Math.max(chromaOptions.blend, 0.06);
+        const spillHue = 1 - smootherstep(
+          spillStart,
+          spillStart + 0.12,
+          chromaDistance,
+        );
+        const spill = smootherstep(0.005, 0.16, green - maxRB)
+          * Math.max(0.92, mask, spillHue * 0.82);
+        const neutralGreen = ((red + blue) * 0.5) * 0.28 + maxRB * 0.72;
+        const sourceAlpha = pixels[index + 3] / 255;
+
+        pixels[index + 1] = Math.round((green * (1 - spill) + neutralGreen * spill) * 255);
+        pixels[index + 3] = Math.round(sourceAlpha * (1 - mask) * 255);
+      }
     }
 
     context.putImageData(frame, 0, 0);
@@ -155,14 +346,19 @@ const clamp = (value, minimum, maximum) => (
   Math.min(maximum, Math.max(minimum, value))
 );
 
-const smoothstep = (edgeStart, edgeEnd, value) => {
+const smootherstep = (edgeStart, edgeEnd, value) => {
   const progress = clamp((value - edgeStart) / (edgeEnd - edgeStart), 0, 1);
-  return progress * progress * (3 - 2 * progress);
+  return progress ** 3 * (progress * (progress * 6 - 15) + 10);
 };
 
-export function findCharacterGroundRatio(pixels, width, height) {
+export function findCharacterGroundRatio(pixels, width, height, chromaOptions = {}) {
   if (!pixels || width <= 0 || height <= 0) return 1;
 
+  const options = {
+    keyColor: chromaOptions.keyColor || DEFAULT_CHROMA_KEY,
+    similarity: chromaOptions.similarity ?? DEFAULT_SIMILARITY,
+    blend: chromaOptions.blend ?? DEFAULT_BLEND,
+  };
   const left = Math.floor(width * 0.06);
   const right = Math.ceil(width * 0.94);
   const minimumForegroundPixels = Math.max(2, Math.round((right - left) * 0.025));
@@ -178,10 +374,7 @@ export function findCharacterGroundRatio(pixels, width, height) {
       const red = pixels[index] / 255;
       const green = pixels[index + 1] / 255;
       const blue = pixels[index + 2] / 255;
-      const maxRB = Math.max(red, blue);
-      const greenDominance = green - maxRB;
-      const greenBrightness = smoothstep(0.3, 0.68, green);
-      const keyMask = smoothstep(0.1, 0.39, greenDominance) * greenBrightness;
+      const keyMask = calculateChromaKeyMask(red, green, blue, options);
       const keyedAlpha = sourceAlpha * (1 - keyMask);
 
       if (keyedAlpha >= 0.5) {
@@ -196,7 +389,7 @@ export function findCharacterGroundRatio(pixels, width, height) {
   return 1;
 }
 
-function createGroundDetector(video, onGroundRatioChange) {
+function createGroundDetector(video, onGroundRatioChange, chromaOptions) {
   const canvas = document.createElement('canvas');
   canvas.width = GROUND_SAMPLE_SIZE;
   canvas.height = GROUND_SAMPLE_SIZE;
@@ -230,6 +423,7 @@ function createGroundDetector(video, onGroundRatioChange) {
         frame.data,
         GROUND_SAMPLE_SIZE,
         GROUND_SAMPLE_SIZE,
+        chromaOptions,
       );
       scannedFrames += 1;
 
@@ -253,6 +447,9 @@ export function ChromaKeyVideo({
   fallbackSrc,
   label = 'Герой',
   aspectRatio = 1,
+  chromaKey,
+  similarity = DEFAULT_SIMILARITY,
+  blend = DEFAULT_BLEND,
   sleeping = false,
   className = '',
 }) {
@@ -264,6 +461,11 @@ export function ChromaKeyVideo({
   const phaseRef = useRef('idle');
   const previousSleepingRef = useRef(null);
   const playbackTickRef = useRef(() => {});
+  const chromaOptions = useMemo(() => ({
+    keyColor: parseChromaKey(chromaKey),
+    similarity: clamp(Number(similarity), 0.01, 1),
+    blend: clamp(Number(blend), 0.001, 1),
+  }), [blend, chromaKey, similarity]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -289,19 +491,24 @@ export function ChromaKeyVideo({
 
     const start = () => {
       cancelFrame();
-      renderer ||= createWebGlRenderer(canvas, video) || createCanvasRenderer(canvas, video);
+      renderer ||= createWebGlRenderer(canvas, video, chromaOptions)
+        || createCanvasRenderer(canvas, video, chromaOptions);
       if (!renderer) return;
-      groundDetectorRef.current ||= createGroundDetector(video, (groundRatio) => {
-        const groundShift = clamp(
-          GROUND_TARGET_RATIO - groundRatio,
-          0,
-          MAX_GROUND_SHIFT_RATIO,
-        );
-        characterRef.current?.style.setProperty(
-          '--chroma-ground-shift',
-          `${groundShift * 100}%`,
-        );
-      });
+      groundDetectorRef.current ||= createGroundDetector(
+        video,
+        (groundRatio) => {
+          const groundShift = clamp(
+            GROUND_TARGET_RATIO - groundRatio,
+            0,
+            MAX_GROUND_SHIFT_RATIO,
+          );
+          characterRef.current?.style.setProperty(
+            '--chroma-ground-shift',
+            `${groundShift * 100}%`,
+          );
+        },
+        chromaOptions,
+      );
       render();
       setVideoReady(true);
     };
@@ -313,7 +520,7 @@ export function ChromaKeyVideo({
       video.removeEventListener('playing', start);
       groundDetectorRef.current = null;
     };
-  }, []);
+  }, [chromaOptions]);
 
   useEffect(() => {
     const video = videoRef.current;

@@ -417,6 +417,21 @@ export function AnimationStudioPage() {
                   src={previewUrl}
                   fallbackSrc={fallbackUrl}
                   aspectRatio={previewAspect}
+                  chromaKey={
+                    idleObjectUrl
+                      ? settings.key
+                      : selectedHero.animation?.chromaKey
+                  }
+                  similarity={
+                    idleObjectUrl
+                      ? settings.similarity
+                      : selectedHero.animation?.similarity
+                  }
+                  blend={
+                    idleObjectUrl
+                      ? settings.blend
+                      : selectedHero.animation?.blend
+                  }
                   live={Boolean(idleObjectUrl)}
                 />
                 {selectedHero.animation && (

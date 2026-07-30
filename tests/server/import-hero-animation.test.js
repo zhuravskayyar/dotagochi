@@ -35,12 +35,18 @@ describe('hero animation importer', () => {
       hero: 'drow_ranger',
       version: 2,
       aspectRatio: 0.82,
+      chromaKey: '0x44db4b',
+      similarity: 0.2,
+      blend: 0.08,
       sleep: true,
       wake: true,
     })).toEqual({
       src: 'assets/heroes/drow_ranger/idle-chroma-v2.mp4',
       fallbackSrc: 'assets/heroes/drow_ranger/sprite-v2.png',
       aspectRatio: 0.82,
+      chromaKey: '0x44db4b',
+      similarity: 0.2,
+      blend: 0.08,
       sleepSrc: 'assets/heroes/drow_ranger/sleep-chroma-v2.mp4',
       wakeSrc: 'assets/heroes/drow_ranger/wake-chroma-v2.mp4',
     });

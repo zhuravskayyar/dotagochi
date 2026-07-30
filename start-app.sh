@@ -36,6 +36,10 @@ echo "Checking and installing project dependencies..."
 npm install --no-audit --no-fund
 npm run sync:animations
 
+if [[ ! -f .env ]]; then
+  cp .env.example .env
+fi
+
 local_commit="$(git rev-parse --short HEAD 2>/dev/null || printf 'unknown')"
 local_instance="$(
   node -e \
@@ -66,13 +70,7 @@ read_server_metadata() {
   mapfile -t server_metadata <<<"$metadata"
 }
 
-server_is_current() {
-  read_server_metadata &&
-    [[ "${server_metadata[0]}" == "$local_instance" ]] &&
-    [[ "${server_metadata[1]}" == "$local_commit" ]]
-}
-
-if check_endpoint "$server_url" && ! server_is_current; then
+if check_endpoint "$server_url"; then
   if ! read_server_metadata; then
     echo "Port 3001 is occupied by an old or unknown server. Stop it once and run Studio again." >&2
     exit 1
@@ -86,17 +84,24 @@ if check_endpoint "$server_url" && ! server_is_current; then
     exit 1
   fi
 
-  echo "Restarting the backend after a project update..."
+  echo "Stopping the backend before database synchronization..."
   kill "${server_metadata[2]}"
   restart_deadline=$((SECONDS + 10))
-  while check_endpoint "$server_url" && ! server_is_current; do
+  while check_endpoint "$server_url"; do
     if (( SECONDS >= restart_deadline )); then
-      echo "The old backend did not stop or reload within 10 seconds." >&2
+      echo "The backend did not stop within 10 seconds." >&2
       exit 1
     fi
     sleep 1
   done
 fi
+
+echo "Backing up and synchronizing the local database..."
+npm run prepare:database
+npm run migrate
+
+echo "Checking the GitHub account..."
+npm run github:connect || true
 
 if ! check_endpoint "$server_url"; then
   echo "Starting backend..."

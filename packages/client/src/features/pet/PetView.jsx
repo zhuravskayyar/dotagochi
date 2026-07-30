@@ -150,6 +150,9 @@ export function PetView() {
                   fallbackSrc={heroAnimation.fallbackSrc}
                   label={pet.hero_name || pet.name}
                   aspectRatio={heroAnimation.aspectRatio}
+                  chromaKey={heroAnimation.chromaKey}
+                  similarity={heroAnimation.similarity}
+                  blend={heroAnimation.blend}
                   sleeping={Boolean(pet.is_sleeping)}
                   className={`${pet.is_sleeping ? 'is-sleeping' : ''} ${hunger < 30 ? 'is-hungry' : ''}`}
                 />

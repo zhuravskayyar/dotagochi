@@ -21,6 +21,9 @@ function registryEntry(manifest) {
       ['sleepSrc', manifest.sleepSrc],
       ['wakeSrc', manifest.wakeSrc],
       ['aspectRatio', manifest.aspectRatio || 1],
+      ['chromaKey', manifest.chromaKey],
+      ['similarity', manifest.similarity],
+      ['blend', manifest.blend],
     ].filter(([, value]) => value !== undefined && value !== null),
   );
 }

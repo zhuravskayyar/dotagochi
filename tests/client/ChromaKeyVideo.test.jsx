@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
+  calculateChromaKeyMask,
   findCharacterGroundRatio,
+  parseChromaKey,
 } from '../../packages/client/src/features/pet/ChromaKeyVideo.jsx';
 
 const createGreenFrame = (width, height) => {
@@ -45,5 +47,28 @@ describe('character platform grounding', () => {
     paintForeground(pixels, width, 50, 94, 50, 94);
 
     expect(findCharacterGroundRatio(pixels, width, height)).toBe(0.8);
+  });
+});
+
+describe('chroma matte', () => {
+  const keyColor = parseChromaKey('0x54df53');
+  const options = { keyColor, similarity: 0.2, blend: 0.08 };
+
+  it('parses the imported per-hero key color', () => {
+    expect(keyColor).toEqual([
+      84 / 255,
+      223 / 255,
+      83 / 255,
+    ]);
+  });
+
+  it('removes the exact screen color without affecting fire colors', () => {
+    expect(calculateChromaKeyMask(...keyColor, options)).toBe(1);
+    expect(calculateChromaKeyMask(1, 0.35, 0.03, options)).toBeLessThan(0.01);
+  });
+
+  it('recognizes dark green edge spill by chromaticity', () => {
+    const spillMask = calculateChromaKeyMask(0.08, 0.35, 0.09, options);
+    expect(spillMask).toBeGreaterThan(0.1);
   });
 });

@@ -2,97 +2,152 @@
   "alchemist": {
     "src": "assets/heroes/alchemist/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/alchemist/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x52e84d",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "ancient_apparition": {
     "src": "assets/heroes/ancient_apparition/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/ancient_apparition/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x38db35",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "antimage": {
     "src": "assets/heroes/antimage/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/antimage/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x51d553",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "axe": {
     "src": "assets/heroes/axe/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/axe/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x51e136",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "bane": {
     "src": "assets/heroes/bane/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/bane/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x4ae055",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "bloodseeker": {
     "src": "assets/heroes/bloodseeker/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/bloodseeker/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x47db4c",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "crystal_maiden": {
     "src": "assets/heroes/crystal_maiden/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/crystal_maiden/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x4ede50",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "dazzle": {
     "src": "assets/heroes/dazzle/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/dazzle/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x49da4f",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "drow_ranger": {
     "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x44db4b",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "earthshaker": {
     "src": "assets/heroes/earthshaker/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/earthshaker/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x56df5b",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "juggernaut": {
     "src": "assets/heroes/juggernaut/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/juggernaut/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x46d94d",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "mirana": {
     "src": "assets/heroes/mirana/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/mirana/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x46d14e",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "morphling": {
     "src": "assets/heroes/morphling/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/morphling/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x44d74d",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "nevermore": {
     "src": "assets/heroes/nevermore/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/nevermore/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x54df53",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "pudge": {
     "src": "assets/ui/characters/pudge-chroma-v1.mp4",
     "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",
     "wakeSrc": "assets/ui/characters/pudge-wake-v1.mp4",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "runtime"
   },
   "rubick": {
     "src": "assets/heroes/rubick/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/rubick/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x4fe546",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "sniper": {
     "src": "assets/heroes/sniper/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/sniper/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x4cdf3e",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "spectre": {
     "src": "assets/heroes/spectre/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/spectre/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x49da51",
+    "similarity": 0.2,
+    "blend": 0.08
   },
   "tinker": {
     "src": "assets/heroes/tinker/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/tinker/sprite-v1.png",
-    "aspectRatio": 1
+    "aspectRatio": 1,
+    "chromaKey": "0x48de3f",
+    "similarity": 0.2,
+    "blend": 0.08
   }
 }

@@ -16,12 +16,14 @@
     "lint": "npm run lint --workspace=packages/client && npm run lint --workspace=packages/server",
     "test": "npm run test --workspace=packages/client && npm run test --workspace=packages/server",
     "migrate": "npm run migrate --workspace=packages/server",
+    "prepare:database": "node scripts/prepare-local-database.mjs",
+    "github:connect": "node scripts/connect-github.mjs",
     "sync:heroes": "node packages/server/src/tools/sync-dota-heroes.js",
     "sync:animations": "node scripts/sync-hero-animations.mjs",
     "add:animation": "node scripts/import-hero-animation.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20 <27"
   },
   "devDependencies": {}
 }

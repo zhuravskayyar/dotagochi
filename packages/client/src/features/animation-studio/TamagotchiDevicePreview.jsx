@@ -33,6 +33,9 @@ export function TamagotchiDevicePreview({
   src,
   fallbackSrc,
   aspectRatio = 1,
+  chromaKey,
+  similarity,
+  blend,
   live = false,
 }) {
   const [selectedAction, setSelectedAction] = useState(0);
@@ -110,6 +113,9 @@ export function TamagotchiDevicePreview({
                 fallbackSrc={fallbackSrc}
                 label={`Прев’ю ${hero.name}`}
                 aspectRatio={aspectRatio}
+                chromaKey={chromaKey}
+                similarity={similarity}
+                blend={blend}
                 className="studio-character-preview"
               />
             ) : (

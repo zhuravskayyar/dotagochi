@@ -5,7 +5,12 @@ readonly REPOSITORY_URL="https://github.com/zhuravskayyar/dotagochi.git"
 readonly ARCHIVE_URL="https://codeload.github.com/zhuravskayyar/dotagochi/tar.gz/refs/heads/main"
 readonly NVM_VERSION="v0.40.3"
 
-script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+installer_path="${BASH_SOURCE[0]:-}"
+if [[ -n "${installer_path}" && -f "${installer_path}" ]]; then
+  script_dir="$(cd -- "$(dirname -- "${installer_path}")" && pwd)"
+else
+  script_dir="${PWD}"
+fi
 project_dir="${script_dir}/dota-tamagotchi"
 browser_project_dir="${script_dir}/dota-tamagotchi-source"
 project_archive="${script_dir}/dota-tamagotchi-source.tar.gz"
@@ -48,7 +53,7 @@ download_file() {
 node_is_supported() {
   command -v node >/dev/null 2>&1 &&
     command -v npm >/dev/null 2>&1 &&
-    [[ "$(node -p 'Number(process.versions.node.split(`.`)[0]) >= 18')" == "true" ]]
+    [[ "$(node -p 'const major = Number(process.versions.node.split(`.`)[0]); major >= 20 && major < 27')" == "true" ]]
 }
 
 run_as_root() {
@@ -115,14 +120,37 @@ install_node() {
   nvm use --lts
 
   if ! node_is_supported; then
-    echo "Не вдалося підготувати Node.js 18 або новіший." >&2
+    echo "Не вдалося підготувати сумісну версію Node.js (20–26)." >&2
     exit 1
+  fi
+}
+
+update_existing_project() {
+  if [[ ! -d "${project_dir}/.git" ]]; then
+    echo "Проєкт знайдено без Git-метаданих; підключу його до GitHub після перевірки файлів."
+    return
+  fi
+
+  if [[ -n "$(git -C "${project_dir}" status --porcelain)" ]]; then
+    echo "У проєкті є локальні зміни. Автоматичне оновлення пропущено, щоб їх не втратити." >&2
+    return
+  fi
+
+  echo "Оновлюю наявний проєкт до актуальної main…"
+  if ! git -C "${project_dir}" fetch origin main; then
+    echo "GitHub зараз недоступний. Продовжую з локальною версією." >&2
+    return
+  fi
+
+  if ! git -C "${project_dir}" merge --ff-only origin/main; then
+    echo "Локальна main має власні коміти. Автоматичне об’єднання пропущено без видалення даних." >&2
   fi
 }
 
 prepare_project() {
   if [[ -f "${project_dir}/package.json" ]]; then
     echo "✓ Проєкт уже є у ${project_dir}"
+    update_existing_project
     return
   fi
 
@@ -192,20 +220,19 @@ if [[ ! -f .env ]]; then
   echo "✓ Створено локальний файл налаштувань .env"
 fi
 
-echo "Встановлюю залежності проєкту..."
-npm install --no-audit --no-fund
-
-echo "Готую локальну базу даних..."
-npm run migrate
-
-chmod +x start-app.sh
+chmod +x start-app.sh install-studio-shortcut.sh
+./install-studio-shortcut.sh
 
 echo
 echo "✓ Готово. Проєкт встановлено у:"
 echo "  ${project_dir}"
 echo
 echo "Запускаю застосунок. Наступного разу використовуйте:"
+echo "  ярлик «Dota Tamagotchi Studio» на робочому столі або в меню програм"
+echo "або:"
 echo "  cd \"${project_dir}\" && ./start-app.sh"
+echo
+echo "Під час першого запуску підтвердьте безпечний вхід у GitHub у браузері."
 echo
 
 exec ./start-app.sh
