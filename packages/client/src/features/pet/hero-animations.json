@@ -42,7 +42,7 @@
   "drow_ranger": {
     "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
-    "aspectRatio": 0.824716
+    "aspectRatio": 1
   },
   "earthshaker": {
     "src": "assets/heroes/earthshaker/idle-chroma-v1.mp4",

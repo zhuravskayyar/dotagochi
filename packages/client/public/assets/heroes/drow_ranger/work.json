@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-30T06:51:35.161Z",
+  "work": {
+    "importedAt": "2026-07-30T06:51:35.161Z",
+    "version": 1,
+    "chromaKey": "0x44db4b",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "60846d0d-c363-4218-94fa-de3b500a8daa.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
+      "aspectRatio": 1
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-30T06:51:35.161Z",
+      "version": 1,
+      "chromaKey": "0x44db4b",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "60846d0d-c363-4218-94fa-de3b500a8daa.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/drow_ranger/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/drow_ranger/sprite-v1.png",
+        "aspectRatio": 1
+      }
+    }
+  ]
+}
