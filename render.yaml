@@ -6,7 +6,7 @@ services:
     plan: free
     branch: main
     autoDeployTrigger: commit
-    buildCommand: npm ci && npm run build && npm run github:connect
+    buildCommand: npm ci --include=dev && npm run build && npm run github:connect
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
