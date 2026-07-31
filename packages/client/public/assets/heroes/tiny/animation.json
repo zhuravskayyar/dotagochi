@@ -1,0 +1,10 @@
+{
+  "hero": "tiny",
+  "version": 1,
+  "chromaKey": "0x13c721",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/tiny/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/tiny/sprite-v1.png",
+  "aspectRatio": 1
+}
