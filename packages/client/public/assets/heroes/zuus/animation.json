@@ -1,7 +1,7 @@
 {
   "hero": "zuus",
   "version": 1,
-  "chromaKey": "0x0ecc14",
+  "chromaKey": "0xff00ff",
   "similarity": 0.2,
   "blend": 0.08,
   "src": "assets/heroes/zuus/idle-chroma-v1.mp4",
