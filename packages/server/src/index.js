@@ -70,6 +70,11 @@ app.use('/api', (req, res) => {
 });
 
 if (config.env === 'production') {
+  if (config.rootRedirect) {
+    app.get('/', (req, res) => {
+      res.redirect(302, config.rootRedirect);
+    });
+  }
   // Studio imports are written to the source asset directory before they are
   // committed. Serve that directory ahead of the immutable Vite build so a
   // freshly imported animation is previewable immediately.

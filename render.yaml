@@ -18,6 +18,8 @@ services:
         value: /tmp/dota-tamagotchi.sqlite
       - key: ANIMATION_STUDIO_ENABLED
         value: true
+      - key: ROOT_REDIRECT
+        value: /animation-studio
       - key: VITE_API_URL
         value: /api
       - key: VITE_BASE_PATH
