@@ -134,11 +134,27 @@
     "aspectRatio": 1,
     "chromaKey": "runtime"
   },
+  "razor": {
+    "src": "assets/heroes/razor/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/razor/sprite-v1.png",
+    "aspectRatio": 1,
+    "chromaKey": "0x0ec618",
+    "similarity": 0.2,
+    "blend": 0.08
+  },
   "rubick": {
     "src": "assets/heroes/rubick/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/rubick/sprite-v1.png",
     "aspectRatio": 1,
     "chromaKey": "0x4fe546",
+    "similarity": 0.2,
+    "blend": 0.08
+  },
+  "sand_king": {
+    "src": "assets/heroes/sand_king/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/sand_king/sprite-v1.png",
+    "aspectRatio": 1,
+    "chromaKey": "0x10d11d",
     "similarity": 0.2,
     "blend": 0.08
   },

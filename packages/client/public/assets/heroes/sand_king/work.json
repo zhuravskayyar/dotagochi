@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T11:25:08.613Z",
+  "work": {
+    "importedAt": "2026-07-31T11:25:08.613Z",
+    "version": 1,
+    "chromaKey": "0x10d11d",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-48dda71f-f884-4c0f-97fc-d3a839f9e0b4.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/sand_king/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/sand_king/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0x10d11d",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T11:25:08.613Z",
+      "version": 1,
+      "chromaKey": "0x10d11d",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-48dda71f-f884-4c0f-97fc-d3a839f9e0b4.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/sand_king/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/sand_king/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0x10d11d",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}

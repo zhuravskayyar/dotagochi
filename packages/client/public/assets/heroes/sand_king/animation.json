@@ -1,0 +1,10 @@
+{
+  "hero": "sand_king",
+  "version": 1,
+  "chromaKey": "0x10d11d",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/sand_king/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/sand_king/sprite-v1.png",
+  "aspectRatio": 1
+}
