@@ -119,6 +119,14 @@
     "similarity": 0.2,
     "blend": 0.08
   },
+  "puck": {
+    "src": "assets/heroes/puck/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/puck/sprite-v1.png",
+    "aspectRatio": 1,
+    "chromaKey": "0x10c31b",
+    "similarity": 0.2,
+    "blend": 0.08
+  },
   "pudge": {
     "src": "assets/ui/characters/pudge-chroma-v1.mp4",
     "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",
