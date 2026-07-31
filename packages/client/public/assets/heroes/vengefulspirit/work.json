@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T14:00:22.732Z",
+  "work": {
+    "importedAt": "2026-07-31T14:00:22.732Z",
+    "version": 1,
+    "chromaKey": "0x15c820",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-06233e18-e430-4230-92f8-35e9d526fdd9.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/vengefulspirit/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/vengefulspirit/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0x15c820",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T14:00:22.732Z",
+      "version": 1,
+      "chromaKey": "0x15c820",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-06233e18-e430-4230-92f8-35e9d526fdd9.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/vengefulspirit/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/vengefulspirit/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0x15c820",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}
