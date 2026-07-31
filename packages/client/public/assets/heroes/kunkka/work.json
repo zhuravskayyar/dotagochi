@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T14:39:06.725Z",
+  "work": {
+    "importedAt": "2026-07-31T14:39:06.725Z",
+    "version": 1,
+    "chromaKey": "0xff00ff",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-17e305d9-9be3-4603-a06b-b03cc77b83a1.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/kunkka/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/kunkka/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0xff00ff",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T14:39:06.725Z",
+      "version": 1,
+      "chromaKey": "0xff00ff",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-17e305d9-9be3-4603-a06b-b03cc77b83a1.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/kunkka/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/kunkka/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0xff00ff",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}
