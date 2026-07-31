@@ -1,13 +1,13 @@
 {
   "completed": true,
-  "updatedAt": "2026-07-29T10:27:38.495Z",
+  "updatedAt": "2026-07-31T14:29:48.120Z",
   "work": {
-    "importedAt": "2026-07-29T10:27:38.495Z",
+    "importedAt": "2026-07-31T14:29:48.120Z",
     "version": 1,
-    "chromaKey": "0x4fe546",
+    "chromaKey": "0xed08d4",
     "aspectRatio": 1,
     "files": {
-      "idle": "1a7dfcc1-092c-49f6-894f-210fbd0ea47e.mp4",
+      "idle": "grok-video-1e748d6c-2683-46fc-9e35-26cd065fc627.mp4",
       "image": null,
       "sleep": null,
       "wake": null
@@ -15,10 +15,33 @@
     "assets": {
       "src": "assets/heroes/rubick/idle-chroma-v1.mp4",
       "fallbackSrc": "assets/heroes/rubick/sprite-v1.png",
-      "aspectRatio": 1
+      "aspectRatio": 1,
+      "chromaKey": "0xed08d4",
+      "similarity": 0.2,
+      "blend": 0.08
     }
   },
   "history": [
+    {
+      "importedAt": "2026-07-31T14:29:48.120Z",
+      "version": 1,
+      "chromaKey": "0xed08d4",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-1e748d6c-2683-46fc-9e35-26cd065fc627.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/rubick/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/rubick/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0xed08d4",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    },
     {
       "importedAt": "2026-07-29T10:27:38.495Z",
       "version": 1,

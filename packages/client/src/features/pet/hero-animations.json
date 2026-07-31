@@ -146,7 +146,7 @@
     "src": "assets/heroes/rubick/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/rubick/sprite-v1.png",
     "aspectRatio": 1,
-    "chromaKey": "0x4fe546",
+    "chromaKey": "0xed08d4",
     "similarity": 0.2,
     "blend": 0.08
   },
