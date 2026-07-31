@@ -76,6 +76,14 @@ export const animationStudioController = {
     }
   },
 
+  async publishChanges(req, res, next) {
+    try {
+      res.json(await gitSyncService.publishChanges());
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async githubStatus(req, res, next) {
     try {
       res.json(await githubAuthService.status());

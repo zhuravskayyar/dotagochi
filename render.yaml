@@ -20,6 +20,12 @@ services:
         value: true
       - key: ROOT_REDIRECT
         value: /animation-studio
+      - key: STUDIO_GIT_REMOTE
+        value: studio
+      - key: STUDIO_GIT_REMOTE_URL
+        value: https://github.com/zhuravskayyar/dotagochi-studio.git
+      - key: STUDIO_PUBLISH_REMOTE
+        value: origin
       - key: VITE_API_URL
         value: /api
       - key: VITE_BASE_PATH

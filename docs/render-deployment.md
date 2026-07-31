@@ -13,8 +13,8 @@ Studio розгортається як один Node.js web service: Express о�
 3. Задайте два секрети, коли Blueprint попросить їх:
 
    - `ADMIN_TOKEN` — довгий випадковий пароль для входу в Studio;
-   - `GITHUB_TOKEN` — fine-grained GitHub Personal Access Token лише для цього
-     репозиторію з дозволом **Contents: Read and write**.
+   - `GITHUB_TOKEN` — fine-grained GitHub Personal Access Token для репозиторіїв
+     `dotagochi` і `dotagochi-studio` з дозволом **Contents: Read and write**.
 
 4. Дочекайтеся зеленого health check `/api/health`.
 5. Відкрийте `https://dota-tamagotchi-studio.onrender.com/animation-studio` і
@@ -24,8 +24,14 @@ Studio розгортається як один Node.js web service: Express о�
 ## Як зберігаються зміни
 
 Кнопка **ЗБЕРЕГТИ Й ВІДПРАВИТИ** створює commit у `main` і відправляє його в
-GitHub. Render бачить commit і автоматично розгортає свіжу версію. Токен GitHub
-ніколи не передається браузеру.
+приватний робочий репозиторій `dotagochi-studio`. Кнопка **ОТРИМАТИ ЗМІНИ**
+синхронізується з цим самим робочим репозиторієм. Це однаково працює локально
+та на Render і не запускає deployment після кожного збереження героя.
+
+Кнопка **ОПУБЛІКУВАТИ В ОРИГІНАЛ** отримує актуальні зміни з робочого й
+основного репозиторіїв, синхронізує `dotagochi-studio`, після чого відправляє
+результат у `dotagochi`. Лише цей push запускає автоматичний deployment Render.
+Токен GitHub ніколи не передається браузеру.
 
 Blueprint використовує безкоштовний instance. Він засинає після 15 хвилин без
 HTTP-трафіку, а його локальна файлова система є тимчасовою. Тому не залишайте

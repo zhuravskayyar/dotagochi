@@ -66,7 +66,12 @@ export function assertOnlyStudioFiles(paths, heroSlug) {
   }
 }
 
-export function createGitSyncService(run = defaultRun) {
+export function createGitSyncService(run = defaultRun, options = {}) {
+  const {
+    remote = 'origin',
+    remoteUrl = '',
+    publishRemote = 'origin',
+  } = options;
   let busy = false;
 
   const runLocked = async (operation) => {
@@ -82,6 +87,25 @@ export function createGitSyncService(run = defaultRun) {
   };
 
   const git = (args) => run('git', args);
+
+  const ensureRemote = async (remoteName, url = '') => {
+    if (remoteName === 'origin' && !url) return;
+
+    try {
+      const current = await git(['remote', 'get-url', remoteName]);
+      if (url && current.stdout !== url) {
+        await git(['remote', 'set-url', remoteName, url]);
+      }
+    } catch (error) {
+      if (!url) {
+        throw studioError(
+          `Git remote «${remoteName}» не налаштований. ${error.message}`,
+          502,
+        );
+      }
+      await git(['remote', 'add', remoteName, url]);
+    }
+  };
 
   const ensureMainBranch = async () => {
     let { stdout } = await git(['branch', '--show-current']);
@@ -100,9 +124,9 @@ export function createGitSyncService(run = defaultRun) {
     }
   };
 
-  const pullWithRebase = async () => {
+  const pullWithRebase = async (remoteName = remote) => {
     try {
-      return await git(['pull', '--rebase', 'origin', 'main']);
+      return await git(['pull', '--rebase', remoteName, 'main']);
     } catch (pullError) {
       let conflicts = [];
       try {
@@ -149,6 +173,7 @@ export function createGitSyncService(run = defaultRun) {
         const slug = validateHeroSlug(heroSlug);
         const heroPath = `packages/client/public/assets/heroes/${slug}`;
         await ensureMainBranch();
+        await ensureRemote(remote, remoteUrl);
 
         const stagedBefore = await git(['diff', '--cached', '--name-only']);
         assertOnlyStudioFiles(parsePathList(stagedBefore.stdout), slug);
@@ -174,7 +199,7 @@ export function createGitSyncService(run = defaultRun) {
         }
 
         await pullWithRebase();
-        const pushResult = await git(['push', 'origin', 'main']);
+        const pushResult = await git(['push', remote, 'main']);
         const { stdout: commit } = await git(['rev-parse', '--short', 'HEAD']);
         return {
           operation: 'push',
@@ -192,6 +217,7 @@ export function createGitSyncService(run = defaultRun) {
     async pullChanges() {
       return runLocked(async () => {
         await ensureMainBranch();
+        await ensureRemote(remote, remoteUrl);
         const status = await git(['status', '--porcelain', '--untracked-files=all']);
         if (status.stdout) {
           throw studioError(
@@ -220,7 +246,40 @@ export function createGitSyncService(run = defaultRun) {
         };
       });
     },
+
+    async publishChanges() {
+      return runLocked(async () => {
+        await ensureMainBranch();
+        await ensureRemote(remote, remoteUrl);
+        await ensureRemote(publishRemote);
+
+        const status = await git(['status', '--porcelain', '--untracked-files=all']);
+        if (status.stdout) {
+          throw studioError(
+            'Є незбережені локальні зміни. Спочатку натисніть «Зберегти й відправити», а потім публікуйте.',
+          );
+        }
+
+        await pullWithRebase(remote);
+        if (publishRemote !== remote) {
+          await pullWithRebase(publishRemote);
+          await git(['push', remote, 'main']);
+        }
+        const pushResult = await git(['push', publishRemote, 'main']);
+        const { stdout: commit } = await git(['rev-parse', '--short', 'HEAD']);
+        return {
+          operation: 'publish',
+          commit,
+          message: `Опубліковано в основний репозиторій · ${commit}`,
+          detail: pushResult.stderr || pushResult.stdout,
+        };
+      });
+    },
   };
 }
 
-export const gitSyncService = createGitSyncService();
+export const gitSyncService = createGitSyncService(defaultRun, {
+  remote: process.env.STUDIO_GIT_REMOTE || 'studio',
+  remoteUrl: process.env.STUDIO_GIT_REMOTE_URL || '',
+  publishRemote: process.env.STUDIO_PUBLISH_REMOTE || 'origin',
+});

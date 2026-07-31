@@ -314,6 +314,26 @@ export function AnimationStudioPage() {
     }
   };
 
+  const publishChanges = async () => {
+    if (Object.values(files).some(Boolean)) {
+      setError('Є вибрані, але ще не імпортовані файли. Спочатку збережіть їх.');
+      return;
+    }
+    setSyncing('publish');
+    setError('');
+    setMessage('ПУБЛІКАЦІЯ В ОСНОВНИЙ РЕПОЗИТОРІЙ...');
+    try {
+      const payload = await animationStudioApi.publishChanges();
+      setMessage(payload.message);
+      await loadHeroes();
+    } catch (syncError) {
+      setError(syncError.message);
+      setMessage('');
+    } finally {
+      setSyncing('');
+    }
+  };
+
   const connectGithub = async () => {
     setGithubBusy(true);
     setError('');
@@ -503,7 +523,7 @@ export function AnimationStudioPage() {
               <section className="studio-git-sync" aria-label="Синхронізація зі співробітником">
                 <div>
                   <span>КОМАНДНА СИНХРОНІЗАЦІЯ</span>
-                  <strong>GITHUB · MAIN</strong>
+                  <strong>GITHUB · STUDIO → ORIGINAL</strong>
                   <small>
                     Надішліть папку поточного героя або отримайте готові роботи колеги.
                   </small>
@@ -524,6 +544,14 @@ export function AnimationStudioPage() {
                     onClick={pullChanges}
                   >
                     {syncing === 'pull' ? 'ОТРИМАННЯ...' : 'ОТРИМАТИ ЗМІНИ'}
+                  </button>
+                  <button
+                    className="studio-git-publish"
+                    type="button"
+                    disabled={Boolean(syncing) || saving}
+                    onClick={publishChanges}
+                  >
+                    {syncing === 'publish' ? 'ПУБЛІКАЦІЯ...' : 'ОПУБЛІКУВАТИ В ОРИГІНАЛ'}
                   </button>
                 </div>
                 <div

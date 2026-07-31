@@ -164,4 +164,44 @@ describe('Animation Studio Git sync', () => {
     ).rejects.toThrow(/Конфліктні файли/);
     expect(calls.some(([, args]) => args.join(' ') === 'rebase --abort')).toBe(true);
   });
+
+  it('publishes the work repository to the original repository explicitly', async () => {
+    const calls = [];
+    const run = vi.fn(async (command, args) => {
+      calls.push([command, args]);
+      const signature = `${command} ${args.join(' ')}`;
+      if (signature === 'git branch --show-current') {
+        return { stdout: 'main', stderr: '' };
+      }
+      if (signature === 'git remote get-url studio') {
+        return {
+          stdout: 'https://github.com/zhuravskayyar/dotagochi-studio.git',
+          stderr: '',
+        };
+      }
+      if (signature.startsWith('git status --porcelain')) {
+        return { stdout: '', stderr: '' };
+      }
+      if (signature === 'git rev-parse --short HEAD') {
+        return { stdout: 'feed123', stderr: '' };
+      }
+      return { stdout: '', stderr: '' };
+    });
+
+    const result = await createGitSyncService(run, {
+      remote: 'studio',
+      remoteUrl: 'https://github.com/zhuravskayyar/dotagochi-studio.git',
+      publishRemote: 'origin',
+    }).publishChanges();
+
+    const gitCalls = calls.map(([, args]) => args.join(' '));
+    expect(gitCalls).toContain('pull --rebase studio main');
+    expect(gitCalls).toContain('pull --rebase origin main');
+    expect(gitCalls).toContain('push studio main');
+    expect(gitCalls).toContain('push origin main');
+    expect(gitCalls.indexOf('push studio main')).toBeLessThan(
+      gitCalls.indexOf('push origin main'),
+    );
+    expect(result).toMatchObject({ operation: 'publish', commit: 'feed123' });
+  });
 });

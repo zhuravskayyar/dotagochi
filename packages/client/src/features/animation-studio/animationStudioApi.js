@@ -74,6 +74,12 @@ export const animationStudioApi = {
     });
   },
 
+  publishChanges() {
+    return request('/git/publish', {
+      method: 'POST',
+    });
+  },
+
   githubStatus() {
     return request('/github/status');
   },

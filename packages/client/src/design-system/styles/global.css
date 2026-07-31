@@ -1884,6 +1884,13 @@ button img { user-select: none; pointer-events: none; }
   background: linear-gradient(#14231a, #0a100c);
 }
 
+.studio-git-sync .studio-git-publish {
+  grid-column: 1 / -1;
+  border-color: #87692f;
+  color: #f2d58b;
+  background: linear-gradient(#3b2b0e, #171005);
+}
+
 .studio-git-sync button:hover:not(:disabled) {
   filter: brightness(1.25);
 }

@@ -8,6 +8,7 @@ const {
   githubStatusSpy,
   importSpy,
   listSpy,
+  publishSpy,
   pullSpy,
   pushSpy,
   statusSpy,
@@ -16,6 +17,7 @@ const {
   githubStatusSpy: vi.fn(),
   importSpy: vi.fn(),
   listSpy: vi.fn(),
+  publishSpy: vi.fn(),
   pullSpy: vi.fn(),
   pushSpy: vi.fn(),
   statusSpy: vi.fn(),
@@ -32,6 +34,7 @@ vi.mock(
       connectGithub: githubConnectSpy,
       pushHero: pushSpy,
       pullChanges: pullSpy,
+      publishChanges: publishSpy,
     },
   }),
 );
@@ -138,6 +141,11 @@ describe('AnimationStudioPage', () => {
       commit: 'abc1234',
       message: 'Уже актуально · abc1234',
     });
+    publishSpy.mockResolvedValue({
+      operation: 'publish',
+      commit: 'abc1234',
+      message: 'Опубліковано в основний репозиторій · abc1234',
+    });
     window.history.replaceState({}, '', '/');
     window.open = vi.fn();
     URL.createObjectURL = vi.fn(() => 'blob:idle-preview');
@@ -222,6 +230,12 @@ describe('AnimationStudioPage', () => {
     }));
     await waitFor(() => expect(pullSpy).toHaveBeenCalledTimes(1));
     expect(await screen.findByText(/Уже актуально/)).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', {
+      name: 'ОПУБЛІКУВАТИ В ОРИГІНАЛ',
+    }));
+    await waitFor(() => expect(publishSpy).toHaveBeenCalledTimes(1));
+    expect(await screen.findByText(/Опубліковано в основний репозиторій/)).toBeTruthy();
   });
 
   it('starts browser GitHub login and shows the device code', async () => {

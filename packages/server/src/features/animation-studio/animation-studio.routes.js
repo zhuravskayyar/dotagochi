@@ -67,6 +67,7 @@ animationStudioRoutes.patch(
 );
 animationStudioRoutes.post('/git/push', animationStudioController.pushHero);
 animationStudioRoutes.post('/git/pull', animationStudioController.pullChanges);
+animationStudioRoutes.post('/git/publish', animationStudioController.publishChanges);
 animationStudioRoutes.get('/github/status', animationStudioController.githubStatus);
 animationStudioRoutes.post('/github/connect', animationStudioController.connectGithub);
 animationStudioRoutes.post(
