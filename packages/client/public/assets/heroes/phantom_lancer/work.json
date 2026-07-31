@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T11:05:01.935Z",
+  "work": {
+    "importedAt": "2026-07-31T11:05:01.935Z",
+    "version": 1,
+    "chromaKey": "0x0ccd1f",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-9b0f1c27-9e15-43d3-b892-22391d7be3b3.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/phantom_lancer/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/phantom_lancer/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0x0ccd1f",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T11:05:01.935Z",
+      "version": 1,
+      "chromaKey": "0x0ccd1f",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-9b0f1c27-9e15-43d3-b892-22391d7be3b3.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/phantom_lancer/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/phantom_lancer/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0x0ccd1f",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}

@@ -111,6 +111,14 @@
     "similarity": 0.2,
     "blend": 0.08
   },
+  "phantom_lancer": {
+    "src": "assets/heroes/phantom_lancer/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/phantom_lancer/sprite-v1.png",
+    "aspectRatio": 1,
+    "chromaKey": "0x0ccd1f",
+    "similarity": 0.2,
+    "blend": 0.08
+  },
   "pudge": {
     "src": "assets/ui/characters/pudge-chroma-v1.mp4",
     "sleepSrc": "assets/ui/characters/pudge-sleep-v1.mp4",
