@@ -95,6 +95,14 @@
     "similarity": 0.2,
     "blend": 0.08
   },
+  "lina": {
+    "src": "assets/heroes/lina/idle-chroma-v1.mp4",
+    "fallbackSrc": "assets/heroes/lina/sprite-v1.png",
+    "aspectRatio": 1,
+    "chromaKey": "0x00ff00",
+    "similarity": 0.2,
+    "blend": 0.08
+  },
   "mirana": {
     "src": "assets/heroes/mirana/idle-chroma-v1.mp4",
     "fallbackSrc": "assets/heroes/mirana/sprite-v1.png",
