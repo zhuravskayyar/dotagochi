@@ -61,6 +61,8 @@ chmod +x install-studio-shortcut.sh
 
 ## Animation Studio на Render
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fzhuravskayyar%2Fdotagochi)
+
 Репозиторій містить Blueprint `render.yaml`, який розгортає Studio як один
 Node.js web service у Frankfurt. Express віддає API, production-збірку React і
 нові анімації з робочої теки. Детальна інструкція та потрібні секрети описані в

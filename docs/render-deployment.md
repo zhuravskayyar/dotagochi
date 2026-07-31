@@ -6,8 +6,8 @@ Studio розгортається як один Node.js web service: Express о�
 
 ## Перший запуск
 
-1. Відкрийте [Render Dashboard](https://dashboard.render.com/) і підключіть
-   GitHub-репозиторій `zhuravskayyar/dotagochi`.
+1. Натисніть [Deploy to Render](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fzhuravskayyar%2Fdotagochi)
+   і підключіть GitHub-репозиторій `zhuravskayyar/dotagochi`.
 2. Виберіть **New → Blueprint**, репозиторій і гілку `main`. Render автоматично
    знайде `render.yaml`.
 3. Задайте два секрети, коли Blueprint попросить їх:
