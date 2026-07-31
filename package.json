@@ -7,6 +7,7 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "npm run migrate && npm run start --workspace=packages/server",
     "predev": "npm run sync:animations",
     "dev": "npm run dev --workspace=packages/server & npm run dev --workspace=packages/client",
     "predev:client": "npm run sync:animations",

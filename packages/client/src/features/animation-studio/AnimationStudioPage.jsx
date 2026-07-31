@@ -61,6 +61,10 @@ function formatWorkDate(value) {
 }
 
 export function AnimationStudioPage() {
+  const [accessToken, setAccessToken] = useState(
+    () => animationStudioApi.getAccessToken?.() || '',
+  );
+  const [needsAccessToken, setNeedsAccessToken] = useState(false);
   const [heroes, setHeroes] = useState([]);
   const [selectedSlug, setSelectedSlug] = useState('');
   const [filter, setFilter] = useState('all');
@@ -97,6 +101,7 @@ export function AnimationStudioPage() {
     setError('');
     try {
       const payload = await animationStudioApi.listHeroes();
+      setNeedsAccessToken(false);
       setHeroes(payload.heroes);
       setSelectedSlug((current) => (
         current || payload.heroes.find((hero) => !hero.completed)?.slug
@@ -104,7 +109,12 @@ export function AnimationStudioPage() {
         || ''
       ));
     } catch (loadError) {
-      setError(loadError.message);
+      if (loadError.status === 401) {
+        setNeedsAccessToken(true);
+        setError(accessToken ? 'НЕВІРНИЙ ТОКЕН ДОСТУПУ' : 'ВВЕДІТЬ ТОКЕН ДОСТУПУ');
+      } else {
+        setError(loadError.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -327,6 +337,45 @@ export function AnimationStudioPage() {
       setGithubBusy(false);
     }
   };
+
+  const unlockStudio = async (event) => {
+    event.preventDefault();
+    const token = accessToken.trim();
+    animationStudioApi.setAccessToken?.(token);
+    setAccessToken(token);
+    setNeedsAccessToken(false);
+    await Promise.all([loadHeroes(), loadGithubAuth()]);
+  };
+
+  if (needsAccessToken) {
+    return (
+      <main className="animation-studio studio-access-page">
+        <header className="studio-header">
+          <div>
+            <p>DOTA-GOCHI · SECURE TOOL</p>
+            <h1>ANIMATION STUDIO</h1>
+          </div>
+        </header>
+        <form className="studio-access" onSubmit={unlockStudio}>
+          <span>ЗАХИЩЕНИЙ ДОСТУП</span>
+          <h2>ВВЕДІТЬ ТОКЕН STUDIO</h2>
+          <p>Використайте значення ADMIN_TOKEN, задане в Render.</p>
+          <input
+            autoComplete="current-password"
+            autoFocus
+            type="password"
+            value={accessToken}
+            aria-label="Токен доступу"
+            onChange={(event) => setAccessToken(event.target.value)}
+          />
+          {error && <div className="studio-alert" role="alert">{error}</div>}
+          <button type="submit" disabled={!accessToken.trim()}>
+            ВІДКРИТИ STUDIO
+          </button>
+        </form>
+      </main>
+    );
+  }
 
   return (
     <main className="animation-studio">

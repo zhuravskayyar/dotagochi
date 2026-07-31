@@ -21,6 +21,11 @@ const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '../../..',
 );
+const clientDist = path.join(projectRoot, 'packages/client/dist');
+const heroAssets = path.join(
+  projectRoot,
+  'packages/client/public/assets/heroes',
+);
 const serverInstance = createHash('sha256')
   .update(projectRoot)
   .digest('hex')
@@ -59,6 +64,21 @@ app.use('/api/egg-generation', eggGenerationRoutes);
 app.use('/api/notifications', notificationsRoutes);
 app.use('/api/animation-studio', animationStudioRoutes);
 app.use('/api/admin', adminRoutes);
+
+app.use('/api', (req, res) => {
+  res.status(404).json({ error: 'API route not found.' });
+});
+
+if (config.env === 'production') {
+  // Studio imports are written to the source asset directory before they are
+  // committed. Serve that directory ahead of the immutable Vite build so a
+  // freshly imported animation is previewable immediately.
+  app.use('/assets/heroes', express.static(heroAssets));
+  app.use(express.static(clientDist));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
+}
 
 app.use(errorHandler);
 

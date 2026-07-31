@@ -59,6 +59,13 @@ chmod +x install-studio-shortcut.sh
 встановить усі npm-залежності, запустить відсутні client/server процеси та відкриє
 застосунок у браузері. Уже запущені процеси повторно не створюються.
 
+## Animation Studio на Render
+
+Репозиторій містить Blueprint `render.yaml`, який розгортає Studio як один
+Node.js web service у Frankfurt. Express віддає API, production-збірку React і
+нові анімації з робочої теки. Детальна інструкція та потрібні секрети описані в
+[`docs/render-deployment.md`](docs/render-deployment.md).
+
 ## Скрипты
 
 | Команда            | Описание                                   |

@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: dota-tamagotchi-studio
+    runtime: node
+    region: frankfurt
+    plan: free
+    branch: main
+    autoDeployTrigger: commit
+    buildCommand: npm ci && npm run build && npm run github:connect
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.14.1
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_PATH
+        value: /tmp/dota-tamagotchi.sqlite
+      - key: ANIMATION_STUDIO_ENABLED
+        value: true
+      - key: VITE_API_URL
+        value: /api
+      - key: VITE_BASE_PATH
+        value: /
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false

@@ -1167,6 +1167,62 @@ button img { user-select: none; pointer-events: none; }
   filter: drop-shadow(0 24px 42px #000);
 }
 
+.studio-access-page {
+  width: min(620px, calc(100vw - 32px));
+}
+
+.studio-access {
+  display: grid;
+  gap: 16px;
+  padding: clamp(28px, 6vw, 64px);
+  border: 1px solid #5e4937;
+  border-top: 0;
+  background: linear-gradient(145deg, #171414f5, #0b0d0ff5);
+  box-shadow: inset 0 0 42px #000a;
+}
+
+.studio-access > span {
+  color: #c98850;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2.4px;
+}
+
+.studio-access h2,
+.studio-access p {
+  margin: 0;
+}
+
+.studio-access p {
+  color: #a99c8b;
+  font-size: 12px;
+}
+
+.studio-access input {
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #72543e;
+  color: #f0e3ca;
+  background: #090b0d;
+  font: inherit;
+}
+
+.studio-access button {
+  min-height: 46px;
+  border: 1px solid #a1663e;
+  color: #f6e1bf;
+  background: linear-gradient(#7f452c, #4a281c);
+  font: inherit;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+}
+
+.studio-access button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 .studio-header {
   display: flex;
   align-items: flex-end;

@@ -84,7 +84,15 @@ export function createGitSyncService(run = defaultRun) {
   const git = (args) => run('git', args);
 
   const ensureMainBranch = async () => {
-    const { stdout } = await git(['branch', '--show-current']);
+    let { stdout } = await git(['branch', '--show-current']);
+    if (
+      !stdout
+      && Boolean(process.env.RENDER)
+      && process.env.RENDER_GIT_BRANCH === 'main'
+    ) {
+      await git(['switch', '-C', 'main']);
+      stdout = 'main';
+    }
     if (stdout !== 'main') {
       throw studioError(
         `Синхронізація Studio доступна лише в гілці main. Поточна: ${stdout || 'невідома'}.`,

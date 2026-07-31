@@ -52,7 +52,7 @@ function commandEnvironment({
 async function run(
   command,
   args,
-  { allowFailure = false, clearGitHubTokens = true } = {},
+  { allowFailure = false, clearGitHubTokens = false } = {},
 ) {
   try {
     const result = await execFileAsync(command, args, {
@@ -318,6 +318,8 @@ export function createGitHubAuthService({
   return {
     async status() {
       const gh = await locateCli();
+      const profile = gh ? await authenticatedProfile(gh) : null;
+      if (profile) await setupGit(gh, profile);
       return response(gh);
     },
 
