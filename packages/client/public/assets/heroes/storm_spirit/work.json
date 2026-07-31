@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T11:33:47.649Z",
+  "work": {
+    "importedAt": "2026-07-31T11:33:47.649Z",
+    "version": 1,
+    "chromaKey": "0x15c51e",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-bd22aabf-07fa-4d62-b5f1-98c9f86e1eee.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/storm_spirit/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/storm_spirit/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0x15c51e",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T11:33:47.649Z",
+      "version": 1,
+      "chromaKey": "0x15c51e",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-bd22aabf-07fa-4d62-b5f1-98c9f86e1eee.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/storm_spirit/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/storm_spirit/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0x15c51e",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}

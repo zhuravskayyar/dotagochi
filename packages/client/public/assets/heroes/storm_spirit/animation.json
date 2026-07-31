@@ -1,0 +1,10 @@
+{
+  "hero": "storm_spirit",
+  "version": 1,
+  "chromaKey": "0x15c51e",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/storm_spirit/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/storm_spirit/sprite-v1.png",
+  "aspectRatio": 1
+}
