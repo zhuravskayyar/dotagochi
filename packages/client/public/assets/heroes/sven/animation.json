@@ -1,0 +1,10 @@
+{
+  "hero": "sven",
+  "version": 1,
+  "chromaKey": "0x13c61e",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/sven/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/sven/sprite-v1.png",
+  "aspectRatio": 1
+}
