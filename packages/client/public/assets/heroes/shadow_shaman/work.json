@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T15:45:04.996Z",
+  "work": {
+    "importedAt": "2026-07-31T15:45:04.996Z",
+    "version": 1,
+    "chromaKey": "0xff00ff",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-b1f24170-7871-4fc1-8f13-dbd3aa34eb4a.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/shadow_shaman/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/shadow_shaman/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0xff00ff",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T15:45:04.996Z",
+      "version": 1,
+      "chromaKey": "0xff00ff",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-b1f24170-7871-4fc1-8f13-dbd3aa34eb4a.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/shadow_shaman/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/shadow_shaman/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0xff00ff",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}
