@@ -20,6 +20,7 @@
     "github:connect": "node scripts/connect-github.mjs",
     "sync:heroes": "node packages/server/src/tools/sync-dota-heroes.js",
     "sync:animations": "node scripts/sync-hero-animations.mjs",
+    "patch:animation-loops": "node scripts/patch-animation-loops.mjs",
     "add:animation": "node scripts/import-hero-animation.mjs"
   },
   "engines": {

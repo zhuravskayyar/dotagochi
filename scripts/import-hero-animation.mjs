@@ -13,6 +13,7 @@ const registryFile = path.join(
   projectRoot,
   'packages/client/src/features/pet/hero-animations.json',
 );
+export const SEAMLESS_LOOP_TAG = 'dota-tamagotchi:seamless-loop:v1';
 
 const HELP = `
 Імпорт анімації героя:
@@ -32,6 +33,7 @@ const HELP = `
   --key               chroma-колір: auto або 0x00ff00, типово auto
   --similarity        чутливість видалення фону, типово 0.20
   --blend             м'якість краю, типово 0.08
+  --loop-blend        м'який стик idle-циклу в секундах, типово 0.6
   --no-chroma         не видаляти фон із --image
   --force             дозволити заміну наявних файлів
   --help              показати цю довідку
@@ -49,6 +51,7 @@ const valueOptions = new Set([
   'key',
   'similarity',
   'blend',
+  'loop-blend',
 ]);
 const flagOptions = new Set(['force', 'no-chroma', 'help']);
 
@@ -122,12 +125,13 @@ function probeVideo(file) {
     '-select_streams',
     'v:0',
     '-show_entries',
-    'stream=width,height',
+    'stream=width,height:format=duration:format_tags=comment',
     '-of',
     'json',
     file,
   ]);
-  const stream = JSON.parse(output).streams?.[0];
+  const metadata = JSON.parse(output);
+  const stream = metadata.streams?.[0];
   if (!stream?.width || !stream?.height) {
     throw new Error(`Не вдалося визначити розмір відео: ${file}`);
   }
@@ -135,6 +139,8 @@ function probeVideo(file) {
     width: stream.width,
     height: stream.height,
     aspectRatio: Number((stream.width / stream.height).toFixed(6)),
+    duration: Number(metadata.format?.duration),
+    comment: metadata.format?.tags?.comment || '',
   };
 }
 
@@ -182,21 +188,47 @@ async function assertWritable(destination, force) {
   }
 }
 
-async function copyVideo(source, destination, force) {
+export function buildSeamlessLoopFilter(duration, loopBlend) {
+  const blendDuration = Math.min(loopBlend, duration / 3);
+  const blendStart = duration - blendDuration;
+
+  return [
+    '[0:v]split=3[main][tail][head]',
+    `[main]trim=start=0:end=${blendStart},setpts=PTS-STARTPTS[maintrim]`,
+    `[tail]trim=start=${blendStart}:end=${duration},setpts=PTS-STARTPTS[tailtrim]`,
+    `[head]trim=start=0:end=${blendDuration},reverse,setpts=PTS-STARTPTS[headtrim]`,
+    `[tailtrim][headtrim]xfade=transition=fade:duration=${blendDuration}:offset=0[seam]`,
+    '[maintrim][seam]concat=n=2:v=1:a=0[outv]',
+  ].join(';');
+}
+
+async function copyVideo(source, destination, force, options = {}) {
   await assertWritable(destination, force);
   if (path.resolve(source) === path.resolve(destination)) return;
 
-  if (path.extname(source).toLowerCase() === '.mp4') {
+  const loopBlend = Number(options.loopBlend || 0);
+  const duration = Number(options.duration || 0);
+  if (path.extname(source).toLowerCase() === '.mp4' && !loopBlend) {
     await fs.copyFile(source, destination);
     return;
   }
 
-  run('ffmpeg', [
+  const args = [
     '-y',
     '-i',
     source,
-    '-map',
-    '0:v:0',
+  ];
+  if (loopBlend && duration > 0) {
+    args.push(
+      '-filter_complex',
+      buildSeamlessLoopFilter(duration, loopBlend),
+      '-map',
+      '[outv]',
+    );
+  } else {
+    args.push('-map', '0:v:0');
+  }
+  args.push(
     '-an',
     '-c:v',
     'libx264',
@@ -208,8 +240,38 @@ async function copyVideo(source, destination, force) {
     'yuv420p',
     '-movflags',
     '+faststart',
-    destination,
-  ]);
+  );
+  if (loopBlend) {
+    args.push(
+      '-metadata',
+      `comment=${SEAMLESS_LOOP_TAG};blend=${loopBlend}`,
+    );
+  }
+  args.push(destination);
+  run('ffmpeg', args);
+}
+
+export async function patchVideoLoop(
+  file,
+  { loopBlend = 0.6, force = false } = {},
+) {
+  const metadata = probeVideo(file);
+  if (!force && metadata.comment.startsWith(SEAMLESS_LOOP_TAG)) {
+    return { file, skipped: true, duration: metadata.duration };
+  }
+
+  const temporaryFile = `${file}.seamless-${process.pid}.mp4`;
+  try {
+    await copyVideo(file, temporaryFile, true, {
+      duration: metadata.duration,
+      loopBlend,
+    });
+    await fs.copyFile(temporaryFile, file);
+  } finally {
+    await fs.rm(temporaryFile, { force: true });
+  }
+
+  return { file, skipped: false, duration: metadata.duration };
 }
 
 async function createFallback({
@@ -284,16 +346,21 @@ export async function importHeroAnimation(rawOptions) {
   const frame = Number.parseFloat(rawOptions.frame || '0');
   const similarity = Number.parseFloat(rawOptions.similarity || '0.20');
   const blend = Number.parseFloat(rawOptions.blend || '0.08');
+  const loopBlend = Number.parseFloat(rawOptions['loop-blend'] || '0.6');
   const force = Boolean(rawOptions.force);
 
   if (!Number.isInteger(version) || version < 1) {
     throw new Error('--version має бути цілим числом від 1.');
   }
-  if (![frame, similarity, blend].every(Number.isFinite)) {
-    throw new Error('--frame, --similarity і --blend мають бути числами.');
+  if (![frame, similarity, blend, loopBlend].every(Number.isFinite)) {
+    throw new Error('--frame, --similarity, --blend і --loop-blend мають бути числами.');
   }
-  if (similarity < 0.01 || similarity > 1 || blend < 0 || blend > 1) {
-    throw new Error('--similarity має бути 0.01–1, а --blend — 0–1.');
+  if (
+    similarity < 0.01 || similarity > 1
+    || blend < 0 || blend > 1
+    || loopBlend < 0 || loopBlend > 2
+  ) {
+    throw new Error('--similarity має бути 0.01–1, --blend — 0–1, а --loop-blend — 0–2 с.');
   }
 
   const video = path.resolve(rawOptions.video || '');
@@ -317,7 +384,10 @@ export async function importHeroAnimation(rawOptions) {
   const dimensions = probeVideo(video);
   const idleName = `idle-chroma-v${version}.mp4`;
   const spriteName = `sprite-v${version}.png`;
-  await copyVideo(video, path.join(heroDir, idleName), force);
+  await copyVideo(video, path.join(heroDir, idleName), force, {
+    duration: dimensions.duration,
+    loopBlend,
+  });
   if (sleep) {
     await copyVideo(
       sleep,

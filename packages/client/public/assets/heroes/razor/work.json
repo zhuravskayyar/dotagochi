@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T11:17:27.442Z",
+  "work": {
+    "importedAt": "2026-07-31T11:17:27.441Z",
+    "version": 1,
+    "chromaKey": "0x0ec618",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-24404d81-722d-4b7d-8577-db14d140c80d.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/razor/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/razor/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0x0ec618",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T11:17:27.441Z",
+      "version": 1,
+      "chromaKey": "0x0ec618",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-24404d81-722d-4b7d-8577-db14d140c80d.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/razor/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/razor/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0x0ec618",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}

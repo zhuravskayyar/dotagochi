@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   buildRegistryEntry,
+  buildSeamlessLoopFilter,
+  SEAMLESS_LOOP_TAG,
   parseArgs,
   publicAssetPath,
   validateHeroSlug,
@@ -50,6 +52,16 @@ describe('hero animation importer', () => {
       sleepSrc: 'assets/heroes/drow_ranger/sleep-chroma-v2.mp4',
       wakeSrc: 'assets/heroes/drow_ranger/wake-chroma-v2.mp4',
     });
+  });
+
+  it('builds a crossfade that returns the idle clip to its first frame', () => {
+    const filter = buildSeamlessLoopFilter(6, 0.6);
+
+    expect(filter).toContain('trim=start=0:end=5.4');
+    expect(filter).toContain('trim=start=0:end=0.6,reverse');
+    expect(filter).toContain('xfade=transition=fade:duration=0.6:offset=0');
+    expect(filter).toContain('concat=n=2:v=1:a=0[outv]');
+    expect(SEAMLESS_LOOP_TAG).toBe('dota-tamagotchi:seamless-loop:v1');
   });
 
   it('merges automatic assets with manually tracked progress', () => {
