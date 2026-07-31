@@ -6,6 +6,13 @@ const publicAssetUrl = (assetPath) => (
   assetPath ? `${import.meta.env.BASE_URL}${assetPath.replace(/^\//, '')}` : ''
 );
 
+const chromaKeyPresets = [
+  { label: 'AUTO', value: 'auto' },
+  { label: 'GREEN', value: '0x00ff00' },
+  { label: 'BLUE', value: '0x0000ff' },
+  { label: 'PINK', value: '0xff00ff' },
+];
+
 function useObjectUrl(file) {
   const [url, setUrl] = useState('');
 
@@ -567,6 +574,25 @@ export function AnimationStudioPage() {
                 <details className="studio-advanced">
                   <summary>ТОЧНІ НАЛАШТУВАННЯ CHROMA KEY</summary>
                   <div>
+                    <div className="studio-chroma-presets" aria-label="CHROMA KEY PRESETS">
+                      {chromaKeyPresets.map(({ label, value }) => (
+                        <button
+                          className={settings.key.toLowerCase() === value ? 'is-active' : ''}
+                          key={value}
+                          type="button"
+                          onClick={() => setSetting('key', value)}
+                        >
+                          <i
+                            style={{
+                              '--chroma-preset-color': value === 'auto'
+                                ? '#777'
+                                : value.replace('0x', '#'),
+                            }}
+                          />
+                          {label}
+                        </button>
+                      ))}
+                    </div>
                     {[
                       ['version', 'VERSION', 'number', '1'],
                       ['frame', 'FRAME SEC', 'number', '0.1'],
@@ -577,6 +603,7 @@ export function AnimationStudioPage() {
                       <label key={name}>
                         <span>{label}</span>
                         <input
+                          name={name}
                           type={type}
                           step={step || undefined}
                           min={type === 'number' ? '0' : undefined}

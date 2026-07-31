@@ -51,14 +51,8 @@ const fragmentShaderSource = `
     float minimum = min(color.r, min(color.g, color.b));
     float saturationGate = smootherstep(0.035, 0.16, maximum - minimum);
     float visibilityGate = smootherstep(0.025, 0.12, maximum);
-    float greenDominance = color.g - max(color.r, color.b);
-    float dominanceMask = smootherstep(0.035, 0.24, greenDominance)
-      * visibilityGate;
 
-    return max(
-      exactMask,
-      max(hueMask * saturationGate * visibilityGate, dominanceMask)
-    );
+    return max(exactMask, hueMask * saturationGate * visibilityGate);
   }
 
   void main() {
@@ -71,20 +65,18 @@ const fragmentShaderSource = `
       + keyMaskAt(v_texCoord - vec2(0.0, u_texelSize.y));
     float keyMask = smootherstep(0.08, 0.92, centerMask * 0.6 + neighborMask * 0.1);
 
-    float maxRB = max(source.r, source.b);
-    float greenDominance = source.g - maxRB;
-    float chromaDistance = distance(chromaticity(source.rgb), chromaticity(u_keyColor));
-    float spillHue = 1.0 - smootherstep(
-      u_similarity * 0.45 + max(u_blend, 0.06),
-      u_similarity * 0.45 + max(u_blend, 0.06) + 0.12,
-      chromaDistance
+    float keyMinimum = min(u_keyColor.r, min(u_keyColor.g, u_keyColor.b));
+    float keyRange = max(
+      max(u_keyColor.r, max(u_keyColor.g, u_keyColor.b)) - keyMinimum,
+      0.0001
     );
-    float edgeSpill = smootherstep(0.005, 0.16, greenDominance)
-      * max(0.92, max(keyMask, spillHue * 0.82));
-
-    vec3 color = source.rgb;
-    float neutralGreen = mix((source.r + source.b) * 0.5, maxRB, 0.72);
-    color.g = mix(color.g, neutralGreen, edgeSpill);
+    vec3 keyWeights = (u_keyColor - vec3(keyMinimum)) / keyRange;
+    vec3 otherWeights = vec3(1.0) - keyWeights;
+    float neutral = dot(source.rgb, otherWeights)
+      / max(otherWeights.r + otherWeights.g + otherWeights.b, 0.0001);
+    vec3 neutralized = mix(source.rgb, vec3(neutral), keyWeights);
+    float edgeSpill = smootherstep(0.02, 0.98, keyMask) * 0.82;
+    vec3 color = mix(source.rgb, neutralized, edgeSpill);
     float alpha = source.a * (1.0 - keyMask);
     gl_FragColor = vec4(color * alpha, alpha);
   }
@@ -179,16 +171,9 @@ export function calculateChromaKeyMask(
   const minimum = Math.min(red, green, blue);
   const saturationGate = smootherstep(0.035, 0.16, maximum - minimum);
   const visibilityGate = smootherstep(0.025, 0.12, maximum);
-  const dominanceMask = smootherstep(
-    0.035,
-    0.24,
-    green - Math.max(red, blue),
-  ) * visibilityGate;
-
   return Math.max(
     exactMask,
     hueMask * saturationGate * visibilityGate,
-    dominanceMask,
   );
 }
 
@@ -226,12 +211,11 @@ function createWebGlRenderer(canvas, video, chromaOptions) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
   gl.useProgram(program);
-  const keyColor = chromaOptions.keyColor;
   gl.uniform3f(
     gl.getUniformLocation(program, 'u_keyColor'),
-    keyColor[0],
-    keyColor[1],
-    keyColor[2],
+    chromaOptions.keyColor[0],
+    chromaOptions.keyColor[1],
+    chromaOptions.keyColor[2],
   );
   gl.uniform1f(
     gl.getUniformLocation(program, 'u_similarity'),
@@ -268,6 +252,19 @@ function createWebGlRenderer(canvas, video, chromaOptions) {
 function createCanvasRenderer(canvas, video, chromaOptions) {
   const context = canvas.getContext('2d', { willReadFrequently: true });
   if (!context) return null;
+  const keyMinimum = Math.min(...chromaOptions.keyColor);
+  const keyRange = Math.max(
+    Math.max(...chromaOptions.keyColor) - keyMinimum,
+    0.0001,
+  );
+  const keyWeights = chromaOptions.keyColor.map(
+    (channel) => (channel - keyMinimum) / keyRange,
+  );
+  const otherWeights = keyWeights.map((weight) => 1 - weight);
+  const otherWeightTotal = Math.max(
+    otherWeights.reduce((sum, weight) => sum + weight, 0),
+    0.0001,
+  );
 
   return () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -305,27 +302,23 @@ function createCanvasRenderer(canvas, video, chromaOptions) {
         const red = pixels[index] / 255;
         const green = pixels[index + 1] / 255;
         const blue = pixels[index + 2] / 255;
-        const maxRB = Math.max(red, blue);
-        const sourceChroma = chromaticity(red, green, blue);
-        const keyChroma = chromaticity(...chromaOptions.keyColor);
-        const chromaDistance = Math.hypot(
-          sourceChroma[0] - keyChroma[0],
-          sourceChroma[1] - keyChroma[1],
-          sourceChroma[2] - keyChroma[2],
-        );
-        const spillStart = chromaOptions.similarity * 0.45
-          + Math.max(chromaOptions.blend, 0.06);
-        const spillHue = 1 - smootherstep(
-          spillStart,
-          spillStart + 0.12,
-          chromaDistance,
-        );
-        const spill = smootherstep(0.005, 0.16, green - maxRB)
-          * Math.max(0.92, mask, spillHue * 0.82);
-        const neutralGreen = ((red + blue) * 0.5) * 0.28 + maxRB * 0.72;
+        const channels = [red, green, blue];
+        const neutral = channels.reduce(
+          (sum, channel, channelIndex) => (
+            sum + channel * otherWeights[channelIndex]
+          ),
+          0,
+        ) / otherWeightTotal;
+        const spill = smootherstep(0.02, 0.98, mask) * 0.82;
         const sourceAlpha = pixels[index + 3] / 255;
 
-        pixels[index + 1] = Math.round((green * (1 - spill) + neutralGreen * spill) * 255);
+        for (let channelIndex = 0; channelIndex < 3; channelIndex += 1) {
+          const neutralized = channels[channelIndex] * (1 - keyWeights[channelIndex])
+            + neutral * keyWeights[channelIndex];
+          pixels[index + channelIndex] = Math.round(
+            (channels[channelIndex] * (1 - spill) + neutralized * spill) * 255,
+          );
+        }
         pixels[index + 3] = Math.round(sourceAlpha * (1 - mask) * 255);
       }
     }

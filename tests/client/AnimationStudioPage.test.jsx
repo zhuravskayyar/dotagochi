@@ -190,6 +190,23 @@ describe('AnimationStudioPage', () => {
     expect(screen.getByText('ПОВНЕ ПРЕВ’Ю ТАМАГОЧІ')).toBeTruthy();
   });
 
+  it('offers green, blue and pink chroma key presets', async () => {
+    const { container } = render(<AnimationStudioPage />);
+    await screen.findByRole('heading', { name: 'Axe' });
+
+    const keyInput = container.querySelector('input[name="key"]');
+    expect(keyInput.value).toBe('auto');
+
+    fireEvent.click(screen.getByRole('button', { name: 'BLUE' }));
+    expect(keyInput.value).toBe('0x0000ff');
+
+    fireEvent.click(screen.getByRole('button', { name: 'PINK' }));
+    expect(keyInput.value).toBe('0xff00ff');
+
+    fireEvent.click(screen.getByRole('button', { name: 'GREEN' }));
+    expect(keyInput.value).toBe('0x00ff00');
+  });
+
   it('pushes the selected hero and can receive team changes', async () => {
     render(<AnimationStudioPage />);
     await screen.findByRole('heading', { name: 'Axe' });

@@ -71,4 +71,28 @@ describe('chroma matte', () => {
     const spillMask = calculateChromaKeyMask(0.08, 0.35, 0.09, options);
     expect(spillMask).toBeGreaterThan(0.1);
   });
+
+  it('keeps Rubick green when the screen key is pink', () => {
+    const pinkOptions = {
+      ...options,
+      keyColor: parseChromaKey('0xff00ff'),
+    };
+
+    expect(calculateChromaKeyMask(1, 0, 1, pinkOptions)).toBe(1);
+    expect(calculateChromaKeyMask(0.15, 0.85, 0.12, pinkOptions)).toBeLessThan(0.01);
+  });
+
+  it('keeps Zeus blue when the screen key is green', () => {
+    expect(calculateChromaKeyMask(0.08, 0.4, 1, options)).toBeLessThan(0.01);
+  });
+
+  it('supports a blue screen key', () => {
+    const blueOptions = {
+      ...options,
+      keyColor: parseChromaKey('0x0000ff'),
+    };
+
+    expect(calculateChromaKeyMask(0, 0, 1, blueOptions)).toBe(1);
+    expect(calculateChromaKeyMask(0.15, 0.85, 0.12, blueOptions)).toBeLessThan(0.01);
+  });
 });

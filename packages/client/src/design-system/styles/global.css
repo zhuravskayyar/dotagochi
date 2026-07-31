@@ -2084,6 +2084,41 @@ button img { user-select: none; pointer-events: none; }
   padding: 0 10px 10px;
 }
 
+.studio-chroma-presets {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 6px;
+}
+
+.studio-chroma-presets button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid #443b33;
+  color: #8b7b6d;
+  background: #121416;
+  font: 700 7px/1 monospace;
+  cursor: pointer;
+}
+
+.studio-chroma-presets button.is-active {
+  border-color: #b56843;
+  color: #ffe4ce;
+  background: #2b1812;
+}
+
+.studio-chroma-presets i {
+  width: 8px;
+  height: 8px;
+  border: 1px solid #ffffff55;
+  border-radius: 50%;
+  background: var(--chroma-preset-color);
+  box-shadow: 0 0 5px color-mix(in srgb, var(--chroma-preset-color), transparent 35%);
+}
+
 .studio-advanced label {
   display: grid;
   gap: 5px;
