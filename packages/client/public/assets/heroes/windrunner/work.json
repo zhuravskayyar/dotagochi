@@ -1,0 +1,46 @@
+{
+  "completed": true,
+  "updatedAt": "2026-07-31T14:03:16.243Z",
+  "work": {
+    "importedAt": "2026-07-31T14:03:16.243Z",
+    "version": 1,
+    "chromaKey": "0x14c721",
+    "aspectRatio": 1,
+    "files": {
+      "idle": "grok-video-6397806b-4984-41aa-bec5-2f0bed046830.mp4",
+      "image": null,
+      "sleep": null,
+      "wake": null
+    },
+    "assets": {
+      "src": "assets/heroes/windrunner/idle-chroma-v1.mp4",
+      "fallbackSrc": "assets/heroes/windrunner/sprite-v1.png",
+      "aspectRatio": 1,
+      "chromaKey": "0x14c721",
+      "similarity": 0.2,
+      "blend": 0.08
+    }
+  },
+  "history": [
+    {
+      "importedAt": "2026-07-31T14:03:16.243Z",
+      "version": 1,
+      "chromaKey": "0x14c721",
+      "aspectRatio": 1,
+      "files": {
+        "idle": "grok-video-6397806b-4984-41aa-bec5-2f0bed046830.mp4",
+        "image": null,
+        "sleep": null,
+        "wake": null
+      },
+      "assets": {
+        "src": "assets/heroes/windrunner/idle-chroma-v1.mp4",
+        "fallbackSrc": "assets/heroes/windrunner/sprite-v1.png",
+        "aspectRatio": 1,
+        "chromaKey": "0x14c721",
+        "similarity": 0.2,
+        "blend": 0.08
+      }
+    }
+  ]
+}
