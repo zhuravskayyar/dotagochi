@@ -1,0 +1,10 @@
+{
+  "hero": "zuus",
+  "version": 1,
+  "chromaKey": "0x0ecc14",
+  "similarity": 0.2,
+  "blend": 0.08,
+  "src": "assets/heroes/zuus/idle-chroma-v1.mp4",
+  "fallbackSrc": "assets/heroes/zuus/sprite-v1.png",
+  "aspectRatio": 1
+}
